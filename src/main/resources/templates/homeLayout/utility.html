@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiện ích tại rạp phim - F-Cine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" th:href="@{/css/variables.css}" />
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="stylesheet" th:href="@{/css/components.css}" />
+  <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+  <style>
+    body { font-family: 'Poppins', sans-serif; background-color: #111; color: #eee; scroll-behavior: smooth; }
+    .header-section { background-color: #b71c1c; color: #fff; padding: 20px 0; text-align: center; }
+    .header-section h1 { font-weight: 700; font-size: 42px; }
+    .content-container { max-width: 1200px; margin: auto; padding: 40px 20px; }
+    .feature-item { background: #222; padding: 30px; border-radius: 10px; margin-bottom: 30px; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.3); display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+    .feature-item:nth-child(odd) { flex-direction: row; text-align: left; }
+    .feature-item:nth-child(even) { flex-direction: row-reverse; text-align: right; }
+    .feature-item img { width: 400px; height: 250px; object-fit: cover; border-radius: 10px; }
+    .feature-text { flex: 1; min-width: 300px; font-size: 20px; }
+    .feature-item:hover { background: #333; transform: translateY(-5px); }
+    .feature-item h3 { color: #ff3b3b; margin-bottom: 15px; font-size: 26px; }
+    .feature-text p { margin-bottom: 0; }
+    footer { background-color: #222; color: #aaa; padding: 20px 0; text-align: center; margin-top: 50px; }
+    #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: #fff; border: 3px solid #ffcb05; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; display: none; }
+    #backToTop:hover { transform: scale(1.15); box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+    #backToTop img { width: 40px; height: 40px; }
+  </style>
+</head>
+
+<body>
+<div th:replace="homeLayout/header :: header"></div>
+
+<div style="padding-top: 130px" class="header-section">
+  <h1><i class="bi bi-stars"></i> Tiện ích tại F-Cine</h1>
+</div>
+
+<div class="content-container">
+  <div class="feature-item">
+    <img th:src="@{/images/combo1.jpg}" />
+    <div class="feature-text">
+      <h3><i class="bi bi-cup-straw"></i> Combo bắp nước hấp dẫn</h3>
+      <p>Thoải mái lựa chọn combo bắp nước với giá ưu đãi dành cho hội viên thân thiết. Chất lượng bắp rang bơ tươi ngon, đồ uống đa dạng, phục vụ nhanh chóng ngay tại quầy với đội ngũ nhân viên nhiệt tình.</p>
+      <p>Chúng tôi liên tục cập nhật các hương vị mới và chương trình khuyến mãi đặc biệt cho khách hàng thân thiết, mang đến trải nghiệm thưởng thức phim trọn vẹn hơn bao giờ hết.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <img th:src="@{/images/combo1.jpg}" />
+    <div class="feature-text">
+      <h3><i class="bi bi-wifi"></i> Wi-Fi miễn phí tốc độ cao</h3>
+      <p>Khách hàng được cung cấp Wi-Fi miễn phí tốc độ cao tại toàn bộ khu vực rạp F-Cine trong suốt quá trình trải nghiệm. Đường truyền ổn định, kết nối nhanh chóng, giúp khách hàng dễ dàng lướt web, check-in, chia sẻ khoảnh khắc cùng bạn bè.</p>
+      <p>Đặc biệt, hệ thống mạng được bảo mật nhiều lớp, đảm bảo an toàn thông tin khi khách hàng sử dụng các dịch vụ trực tuyến tại rạp.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <img th:src="@{/images/combo1.jpg}" />
+    <div class="feature-text">
+      <h3><i class="bi bi-car-front"></i> Bãi đỗ xe rộng rãi, an toàn</h3>
+      <p>Hệ thống bãi giữ xe rộng lớn, bảo vệ túc trực 24/7, đảm bảo an toàn cho phương tiện khách hàng. Với khu vực đỗ xe thông minh, khách hàng dễ dàng tìm chỗ trống và tiết kiệm thời gian khi đến rạp.</p>
+      <p>Chúng tôi trang bị hệ thống camera giám sát hiện đại, an ninh chặt chẽ, tạo sự yên tâm tuyệt đối cho khách hàng suốt thời gian thưởng thức bộ phim.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <img th:src="@{/images/combo1.jpg}" />
+    <div class="feature-text">
+      <h3><i class="bi bi-ticket-detailed"></i> Đặt vé trực tuyến</h3>
+      <p>Đặt vé nhanh chóng, dễ dàng thông qua website và ứng dụng chính thức của F-Cine. Chỉ với vài thao tác đơn giản, khách hàng có thể lựa chọn suất chiếu, vị trí chỗ ngồi ưng ý và thanh toán an toàn qua nhiều phương thức linh hoạt.</p>
+      <p>Hệ thống luôn cập nhật lịch chiếu mới nhất, chương trình khuyến mãi đặc biệt dành riêng cho khách hàng đặt vé online.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <img th:src="@{/images/combo1.jpg}" />
+    <div class="feature-text">
+      <h3><i class="bi bi-person-hearts"></i> Khu vực check-in sống ảo</h3>
+      <p>Không gian trang trí hiện đại, lý tưởng để khách hàng chụp hình, check-in trước và sau khi xem phim. Các góc trang trí được thiết kế theo chủ đề phim hot, mùa lễ hội, mang lại những bức ảnh độc đáo, ấn tượng.</p>
+      <p>Đội ngũ nhân viên hỗ trợ chụp hình chuyên nghiệp sẵn sàng giúp khách hàng lưu giữ kỷ niệm đẹp tại FCine.</p>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <img th:src="@{/images/combo1.jpg}" />
+    <div class="feature-text">
+      <h3><i class="bi bi-speaker"></i> Phòng chiếu công nghệ cao</h3>
+      <p>Hệ thống âm thanh Dolby Atmos, màn hình lớn chuẩn 4K mang lại trải nghiệm điện ảnh sống động và chân thực nhất cho mọi khán giả. Ghế ngồi êm ái, khoảng cách hợp lý, tầm nhìn tối ưu từ mọi vị trí trong phòng chiếu.</p>
+      <p>F-Cine không ngừng cập nhật công nghệ chiếu mới nhất, hệ thống lọc không khí trong lành, mang đến không gian thưởng thức phim lý tưởng suốt cả năm.</p>
+    </div>
+  </div>
+</div>
+
+<div th:replace="homeLayout/footer :: footer"></div>
+
+<div id="backToTop">
+  <img src="/images/Postk.png" alt="Back to Top">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const scrollBtn = document.getElementById("backToTop");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) { scrollBtn.style.display = "flex"; }
+    else { scrollBtn.style.display = "none"; }
+  });
+  scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
+</body>
+</html>

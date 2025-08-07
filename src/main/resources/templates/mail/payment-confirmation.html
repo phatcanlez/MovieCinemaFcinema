@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận thanh toán - CinemaMax</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 750px;
+            margin: 40px auto;
+            background: linear-gradient(135deg, #2d0000, #640000);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(100, 0, 0, 0.7);
+        }
+        .header {
+            background: linear-gradient(135deg, #640000, #3c0000);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 50, 50, 0.5);
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6666;
+        }
+        .section h3 {
+            color: #ff6666;
+            margin: 0 0 15px 0;
+            font-size: 18px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .info-label {
+            color: #cccccc;
+            font-weight: 500;
+        }
+        .info-value {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .total-amount {
+            background: linear-gradient(135deg, #ff3333, #cc0000);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .total-amount .amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .qr-section {
+            text-align: center;
+            margin: 25px 0;
+        }
+        .qr-code {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #aaaaaa;
+            background: #2d0000;
+            border-top: 1px solid rgba(100, 0, 0, 0.3);
+        }
+        .footer a {
+            color: #ff6666;
+            text-decoration: none;
+        }
+        .highlight {
+            color: #ff6666;
+            font-weight: bold;
+        }
+        .success-status {
+            color: #4CAF50;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+            .info-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🎬 Xác nhận thanh toán thành công</h1>
+        <p style="margin: 10px 0; color: #e0e0e0;">Cảm ơn bạn đã lựa chọn CinemaMax!</p>
+    </div>
+
+    <div class="content">
+        <p style="font-size: 16px; color: #e0e0e0; margin-bottom: 25px;">
+            Xin chào <span class="highlight">{{customerName}}</span>,
+        </p>
+        <p style="color: #e0e0e0;">
+            Thanh toán của bạn đã được xử lý thành công. Dưới đây là thông tin chi tiết:
+        </p>
+
+        <!-- Payment Information Section -->
+        <div class="section">
+            <h3>💳 Thông tin thanh toán</h3>
+            <div class="info-row">
+                <span class="info-label">Mã đặt vé:</span>
+                <span class="info-value">{{bookingId}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Mã thanh toán:</span>
+                <span class="info-value">{{paymentId}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Phương thức thanh toán:</span>
+                <span class="info-value">{{paymentMethod}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Thời gian thanh toán:</span>
+                <span class="info-value">{{paymentDate}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Trạng thái:</span>
+                <span class="info-value success-status">✅ {{paymentStatus}}</span>
+            </div>
+        </div>
+
+        <!-- Movie Information Section -->
+        <div class="section">
+            <h3>🎭 Thông tin phim</h3>
+            <div class="info-row">
+                <span class="info-label">Tên phim:</span>
+                <span class="info-value">{{movieName}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Phòng chiếu:</span>
+                <span class="info-value">{{cinemaRoom}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Suất chiếu:</span>
+                <span class="info-value">{{showTime}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Ngày chiếu:</span>
+                <span class="info-value">{{showDate}}</span>
+            </div>
+        </div>
+
+        <!-- Ticket Details Section -->
+        <div class="section">
+            <h3>🎫 Chi tiết vé</h3>
+            <div class="info-row">
+                <span class="info-label">Số ghế:</span>
+                <span class="info-value">{{seatInfo}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Số lượng vé:</span>
+                <span class="info-value">{{ticketCount}} vé</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Combo:</span>
+                <span class="info-value">{{comboInfo}}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Điểm đã sử dụng:</span>
+                <span class="info-value">{{usedPoints}} điểm</span>
+            </div>
+        </div>
+
+        <!-- Total Amount Section -->
+        <div class="total-amount">
+            <div style="font-size: 16px; margin-bottom: 10px;">Tổng thanh toán</div>
+            <div class="amount">{{totalAmount}} VNĐ</div>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="qr-section">
+            <h3 style="color: #ff6666;">📱 Mã vé của bạn</h3>
+            <p style="color: #cccccc;">Vui lòng xuất trình mã này tại quầy để nhận vé</p>
+            <div class="qr-code">
+                <div style="background: #000; color: #fff; padding: 20px; font-size: 18px; font-family: monospace;">
+                    {{qrCode}}
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Notes -->
+        <div class="section">
+            <h3>⚠️ Lưu ý quan trọng</h3>
+            <ul style="color: #e0e0e0; margin: 0; padding-left: 20px;">
+                <li>Vui lòng có mặt tại rạp trước giờ chiếu 15-30 phút</li>
+                <li>Mang theo mã vé hoặc email này để nhận vé</li>
+                <li>Không được hoàn tiền sau khi đã thanh toán</li>
+                <li>Liên hệ hotline nếu cần hỗ trợ: 1900-xxxx</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 CinemaMax. <a href="mailto:support@cinemamax.com">Liên hệ hỗ trợ</a> | <a href="#">Điều khoản sử dụng</a></p>
+        <p>Email này được gửi tự động, vui lòng không trả lời.</p>
+    </div>
+</div>
+</body>
+</html>

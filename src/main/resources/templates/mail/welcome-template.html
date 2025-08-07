@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${subject}">Chào mừng bạn đến với CinemaMax!</title>
+    <!-- Load Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Playfair Display', serif, 'Times New Roman', serif; /* Fallback font */
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            width: 100%;
+            max-width: 650px;
+            margin: 40px auto;
+            background: linear-gradient(135deg, #2d0000, #640000);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(100, 0, 0, 0.7);
+            position: relative;
+            z-index: 1;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 50, 50, 0.3) 0%, transparent 70%);
+            z-index: 0;
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+        .header {
+            background: linear-gradient(135deg, #640000, #3c0000);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 50, 50, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+        .content {
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .content p {
+            font-size: 16px;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+        .content .highlight {
+            color: #ff6666;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #ff3333, #cc0000);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(255, 50, 50, 0.4);
+            text-transform: uppercase;
+        }
+        .button:hover {
+            background: linear-gradient(135deg, #ff6666, #e60000);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 50, 50, 0.6);
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #aaaaaa;
+            background: #2d0000;
+            border-top: 1px solid rgba(100, 0, 0, 0.3);
+        }
+        .footer a {
+            color: #ff6666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #ff9999;
+        }
+        @keyframes glowPulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .content p {
+                font-size: 14px;
+            }
+            .button {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Chào mừng bạn đến với <span class="highlight">CinemaMax</span>!</h1>
+    </div>
+    <div class="content">
+        <p>Xin chào <span th:text="${name}"></span>,</p>
+        <p th:text="${content}">Cảm ơn bạn đã đăng ký tài khoản tại CinemaMax. Vui lòng đăng nhập để cập nhật thông tin cá nhân và khám phá thế giới điện ảnh đỉnh cao!</p>
+        <a th:href="${link}" th:text="${button}" class="button">Đăng nhập ngay</a>
+    </div>
+    <div class="footer">
+        <p>© 2025 CinemaMax. <a href="mailto:support@cinemamax.com">Liên hệ hỗ trợ</a> | <a th:href="@{/terms}">Điều khoản sử dụng</a></p>
+    </div>
+</div>
+</body>
+</html>

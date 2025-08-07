@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" <head>
+<meta charset="UTF-8">
+<title>Tuyển dụng - F-Cine</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #111;
+        color: #eee;
+    }
+
+    .header-section {
+        background-color: #b71c1c;
+        color: #fff;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .header-section h1 {
+        font-weight: 700;
+        font-size: 42px;
+    }
+
+    .content-container {
+        background: #1c1c1c;
+        padding: 50px;
+        border-radius: 15px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .job-card {
+        background: #222;
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        transition: 0.3s;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .job-card:hover {
+        background: #333;
+        transform: translateY(-5px);
+    }
+
+    .job-card h3 {
+        color: #ff3b3b;
+        margin-bottom: 15px;
+    }
+
+    .apply-btn {
+        background-color: #ff3b3b;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+
+    .apply-btn:hover {
+        background-color: #e02929;
+    }
+</style>
+</head>
+
+<body>
+
+    <div th:replace="layout/header :: header"></div>
+
+    <div class="header-section">
+        <h1><i class="bi bi-person-workspace"></i> Tuyển dụng tại F-Cine</h1>
+    </div>
+
+    <div class="content-container mt-5 mb-5">
+
+        <div class="job-card">
+            <h3>Nhân viên Bán vé</h3>
+            <p>Phục vụ khách hàng, hỗ trợ bán vé, kiểm soát vé vào rạp, chăm sóc khách hàng tại quầy vé.</p>
+            <p><strong>Yêu cầu:</strong> Tốt nghiệp THPT, giao tiếp tốt, ngoại hình ưa nhìn, linh hoạt ca làm việc.</p>
+            <a href="#" class="apply-btn">Ứng tuyển</a>
+        </div>
+
+        <div class="job-card">
+            <h3>Nhân viên Kỹ thuật</h3>
+            <p>Quản lý, kiểm tra hệ thống máy chiếu, âm thanh, đảm bảo thiết bị hoạt động ổn định trong giờ chiếu phim.
+            </p>
+            <p><strong>Yêu cầu:</strong> Tốt nghiệp Cao đẳng/Đại học CNTT, kỹ thuật điện tử, có kinh nghiệm bảo trì
+                thiết bị điện tử là lợi thế.</p>
+            <a href="#" class="apply-btn">Ứng tuyển</a>
+        </div>
+
+        <div class="job-card">
+            <h3>Nhân viên Quầy bắp nước</h3>
+            <p>Chuẩn bị và phục vụ bắp rang, nước uống cho khách hàng, đảm bảo khu vực sạch sẽ, vệ sinh an toàn thực
+                phẩm.</p>
+            <p><strong>Yêu cầu:</strong> Siêng năng, vui vẻ, có thể làm việc cuối tuần và lễ Tết.</p>
+            <a href="#" class="apply-btn">Ứng tuyển</a>
+        </div>
+
+    </div>
+
+    <div th:replace="layout/footer :: footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

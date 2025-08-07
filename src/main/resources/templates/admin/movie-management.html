@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> FCinema - Movies Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/admin/admin-mainlayout.css}" />
+    <link rel="stylesheet" th:href="@{/css/loading.css}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
+<body>
+    <div class="d-flex">
+        <div th:replace="~{adminLayout/navbar :: adminNavbar(activePage='movies')}"></div>
+        <!-- Main Content -->
+        <div class="main-content p-4">
+            <h2 class="text-danger">
+                <i class="fa fa-film me-2"></i>Movie Management
+            </h2>
+
+            <div class="card-body">
+                <!-- Search Section -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <form th:action="@{/admin/movie-management}" method="get" class="mb-3">
+                        <div class="input-group" style="width: 400px;">
+                            <input type="text" class="form-control" id="searchInput" name="search" th:value="${search}"
+                                placeholder="Movie names..." />
+                            <input type="hidden" name="page" th:value="${currentPage}" />
+                            <input type="hidden" name="size" th:value="${pageSize}" />
+                            <button class="btn btn-danger" type="submit">
+                                <i class="fas fa-search"></i>
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                    <!--Add button-->
+                    <button class="btn btn-danger mb-2" id="addMovieButton"><i class="fas fa-plus"></i>
+                        Add Movie
+                    </button>
+                </div>
+
+                <!-- Movie List Section -->
+                <div class="table-responsive">
+                    <table class="table table-striped text-center align-middle">
+                        <thead>
+                            <!-- <th>Id</th> -->
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <!--                                <th>Duration</th>-->
+                            <!--                                <th>Rating</th>-->
+                            <!--                                <th>Version</th>-->
+                            <th>Status</th>
+                            <th>Action</th>
+                        </thead>
+
+                        <tbody>
+                            <tr th:unless="${movies != null and !movies.isEmpty()}">
+                                <td colspan="10" class="text-center">No result found!</td>
+                            </tr>
+                            <tr th:each="movie : ${movies}">
+                                <!-- <td th:text="${movie.movieId}"></td> -->
+                                <td>
+                                    <img th:src="${movie.smallImage}" width="50">
+                                </td>
+                                <td>
+                                    <span th:text="${movie.movieNameEnglish}"></span></br>
+                                    <span th:text="${movie.movieNameVn}"></span>
+                                </td>
+                                <td th:text="${movie.fromDate}"></td>
+                                <td th:text="${movie.toDate}"></td>
+                                <!--                                    <td th:text="${movie.duration}"></td>-->
+                                <!--                                    <td th:text="${movie.rating}"></td>-->
+                                <!--                                    <td th:text="${movie.version}"></td>-->
+                                <td th:text="${movie.status}"></td>
+                                <td>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <!-- Edit button -->
+                                        <button class="btn btn-warning btn-sm editMovieButton"
+                                            th:attr="data-movie-id=${movie.movieId},
+                 data-movie-name-en=${movie.movieNameEnglish},
+                 data-movie-name-vn=${movie.movieNameVn},
+                 data-from-date=${#temporals.format(movie.fromDate, 'yyyy-MM-dd')},
+                 data-to-date=${#temporals.format(movie.toDate, 'yyyy-MM-dd')},
+                 data-duration=${movie.duration},
+                 data-actor=${movie.actor},
+                 data-director=${movie.director},
+                 data-content=${movie.content},
+                 data-movie-production-company=${movie.movieProductionCompany},
+                 data-rating=${movie.rating},
+                 data-version=${movie.version},
+                 data-status=${movie.status},
+                 data-poster-image=${movie.smallImage},
+                 data-banner-image=${movie.largeImage},
+                 data-price=${movie.price},
+                 data-selected-types=${movie.selectedTypeIds != null ? #strings.arrayJoin(movie.selectedTypeIds, ',') : ''}" data-bs-toggle="modal"
+                                            data-bs-target="#editMovieModal">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <!-- Tạo lịch button -->
+                                        <button class="btn btn-success btn-sm openScheduleModal" th:attr="data-movie-id=${movie.movieId},
+                         data-movie-name-vn=${movie.movieNameVn},
+                         data-from-date=${#temporals.format(movie.fromDate, 'yyyy-MM-dd')},
+                         data-to-date=${#temporals.format(movie.toDate, 'yyyy-MM-dd')}" data-bs-toggle="modal"
+                                            data-bs-target="#scheduleModal">
+                                            <i class="fas fa-clock"></i>
+                                        </button>
+                                        <!-- Delete button -->
+                                        <button class="btn btn-danger btn-sm delete-btn"
+                                            th:attr="data-id=${movie.movieId}" onclick="confirmDeleteMovie(this)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation" th:if="${totalPages > 1}">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                            <a class="page-link"
+                                th:href="@{/admin/movie-management(page=${currentPage - 1}, size=${pageSize}, search=${search})}">
+                                Previous
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages - 1)}"
+                            th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link"
+                                th:href="@{/admin/movie-management(page=${i}, size=${pageSize}, search=${search})}"
+                                th:text="${i}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                            <a class="page-link"
+                                th:href="@{/admin/movie-management(page=${currentPage + 1}, size=${pageSize}, search=${search})}">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!--  Create Schedule-->
+        <div class="modal fade" id="scheduleModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="scheduleModalLabel">Tạo lịch chiếu cho: <span
+                                id="movieTitle"></span></h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/admin/movie-schedule/save}" method="post" id="scheduleForm">
+                            <input type="hidden" name="movieId" id="scheduleMovieId" />
+                            <!-- Schedule Times -->
+                            <h4 class="text-center col-12 md-8 mb-3">Những xuất chiếu hợp lệ</h4>
+                            <!-- Phần chú thích trong modal -->
+                            <div class="row">
+                                <div class="col-8 mb-2">
+                                    <div class="row mb-1">
+                                        <div class="col-auto">
+                                            <span class="badge bg-danger me-2">&nbsp;&nbsp;</span>
+                                            <small class="text-danger fst-italic">
+                                                * Quá giờ
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-1">
+                                        <div class="col-auto">
+                                            <span class="badge bg-success me-2">&nbsp;&nbsp;</span>
+                                            <small class="text-success fst-italic">
+                                                * Đang chiếu
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <span class="badge bg-primary me-2">&nbsp;&nbsp;</span>
+                                            <small class="text-primary fst-italic">
+                                                * Đã chọn
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <!-- Input thật (ẩn) để lưu ngày chọn -->
+                                    <input type="text" name="showDate" id="showDate" hidden />
+
+                                    <!-- Icon dùng làm trigger -->
+                                    <span id="calendarTrigger" style="cursor: pointer;">
+                                        <img class="align-middle" width="80" height="80"
+                                            th:src="@{/images/calendar.png}" alt="Lịch">
+                                    </span>
+
+                                    <!-- Hiển thị ngày đã chọn -->
+                                    <span id="selected-date" class="ms-2 text-secondary small"></span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Chọn giờ chiếu:</label>
+                                <h5 id="warningSelectRoom" class="text-danger mb-2" style="display: none;">
+                                    ⚠ Vui lòng chọn phòng và ngày để hiển thị giờ chiếu.
+                                </h5>
+                                <div class="spinner-ring" id="schedule-loading"></div>
+                                <div class="row g-2" id="scheduleTimesWrapper"></div>
+                                <div class="text-danger small" id="error-scheduleTimes"></div>
+                            </div>
+
+                            <!-- Room Selection -->
+                            <div class="mb-3">
+                                <label for="cinemaRoomSelect" class="form-label fw-semibold">🎬 Chọn phòng
+                                    chiếu:</label>
+                                <select multiple class="form-select border-primary shadow-sm bg-dark text-white"
+                                    id="cinemaRoomSelect" required size="5">
+                                    <option value="" disabled>-- Chọn phòng --</option>
+                                    <option th:unless="${rooms != null and !rooms.isEmpty()}" disabled>Không có phòng
+                                        nào khả dụng
+                                    </option>
+                                    <option th:each="r : ${rooms}" th:value="${r.cinemaRoomId}"
+                                        th:text="${r.cinemaRoomName}">
+                                    </option>
+                                </select>
+
+                                <!-- Lỗi khi submit mà chưa chọn phòng -->
+                                <div id="error-roomId" class="text-danger small mt-1"></div>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="saveScheduleButton">
+                                    <span class="spinner-border spinner-border-sm d-none" role="status"
+                                        id="loadingSpinner"></span>
+                                    <span id="saveBtnText">Lưu lịch chiếu</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Loading Overlay -->
+            <div id="loading" class="modal-loading-open d-none">
+                <div class="modal-overlay"></div> <!-- lớp phủ mờ -->
+                <div class="modal-loading processing">
+                    <img th:src="@{/images/film.gif}" alt="Đang tải..."
+                        style="width: 100px; height: 100px; margin: auto 0;" />
+                </div>
+            </div>
+
+        </div>
+        <!-- Add Movie Modal -->
+        <div class="modal fade" id="addMovieModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Movie</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/admin/movies/add}" method="post" id="addMovieForm"
+                            enctype="multipart/form-data">
+                            <!-- Movie Name -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Movie Name (ENG) <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="addTitleEng" name="movieNameEnglish"
+                                        placeholder="Enter English Title">
+                                    <div class="text-danger small" id="error-addTitleEng"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Movie Name (VN) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="addTitleVn" name="movieNameVn"
+                                        placeholder="Enter Vietnamese Title">
+                                    <div class="text-danger small" id="error-addTitleVn"></div>
+                                </div>
+                            </div>
+
+                            <!-- Dates -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">From Date <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="addFromDate" name="fromDate">
+                                    <div class="text-danger small" id="error-addFromDate"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">To Date <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="addToDate" name="toDate">
+                                    <div class="text-danger small" id="error-addToDate"></div>
+                                </div>
+                            </div>
+
+                            <!-- Duration + Version -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Duration (minutes) <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" min="0" id="addDuration" name="duration"
+                                        placeholder="Enter Duration">
+                                    <div class="text-danger small" id="error-addDuration"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Version</label>
+                                    <div class="input-group">
+                                        <select class="form-select" name="version" id="addVersion">
+                                            <th:block th:each="version : ${movieVersion}">
+                                                <option th:value="${version}" th:text="${version.value}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Actor + Director -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Actor <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="addActor" name="actor"
+                                        placeholder="Enter Actors">
+                                    <div class="text-danger small" id="error-addActor"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Director <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="addDirector" name="director"
+                                        placeholder="Enter Director">
+                                    <div class="text-danger small" id="error-addDirector"></div>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label class="form-label">Content <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" name="content" id="addContent" rows="3"></textarea>
+                                    <div class="text-danger small" id="error-addContent"></div>
+                                </div>
+                            </div>
+
+                            <!-- Rating + Status -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Movie Price <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" min="0" id="addPrice" name="price"
+                                        placeholder="Enter Price">
+                                    <div class="text-danger small" id="error-addPrice"></div>
+                                </div>
+
+                                <!-- Production Company -->
+                                <div class="col-md-6 mb-3">
+                                    <label class=" form-label">Production Company <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="movieProductionCompany"
+                                        id="addProductionCompany">
+                                    <div class="text-danger small" id="error-addProductionCompany"></div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Movie Types <span class="text-danger">*</span></label>
+                                    <div class="row g-2">
+                                        <th:block th:each="type : ${allTypes}">
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="selectedTypeIds" th:value="${type.typeId}"
+                                                        th:id="'add_type_' + ${type.typeId}">
+                                                    <label class="form-check-label"
+                                                        th:for="'add_type_' + ${type.typeId}"
+                                                        th:text="${type.typeName}"></label>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                    <div class="text-danger small" id="error-addMovieType"></div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <!-- Trailer Movie -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Trailer Movie <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="trailerId" id="addTrailerUrl"
+                                            placeholder="https://www.youtube.com/watch?v=...">
+                                        <div class="text-danger small" id="error-addTrailerUrl"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Trailer + Banner Images -->
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Poster Image <span class="text-danger">*</span></label>
+                                    <input type="file" class="form-control" name="posterImageFile" id="addPosterUrl">
+                                    <div class="text-danger small" id="error-addPosterUrl"></div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="form-label">Banner Image <span class="text-danger">*</span></label>
+                                    <input type="file" class="form-control" name="bannerImageFile" id="addBannerUrl">
+                                    <div class="text-danger small" id="error-addBannerUrl"></div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Buttons -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" id="saveAddMovieButton">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Movie Modal -->
+        <div class="modal fade" id="editMovieModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Movie</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/admin/movies/edit}" method="post" enctype="multipart/form-data"
+                            id="editMovieForm">
+                            <input type="hidden" name="movieId" id="editMovieId" />
+                            <!-- Movie Name -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Movie Name (ENG)</label>
+                                    <input type="text" class="form-control" name="movieNameEnglish" id="editTitleEng">
+                                    <div class="text-danger small" id="error-editTitleEng"></div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Movie Name (VN)</label>
+                                    <input type="text" class="form-control" name="movieNameVn" id="editTitleVn">
+                                    <div class="text-danger small" id="error-editTitleVn"></div>
+                                </div>
+                            </div>
+
+                            <!-- Dates + Company -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">From Date</label>
+                                    <input type="date" class="form-control" name="fromDate" id="editFromDate">
+                                    <div class="text-danger small" id="error-editFromDate"></div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">To Date</label>
+                                    <input type="date" class="form-control" name="toDate" id="editToDate">
+                                    <div class="text-danger small" id="error-editToDate"></div>
+                                </div>
+                            </div>
+
+                            <!-- Duration + Version -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Duration (minutes)</label>
+                                    <input type="number" class="form-control" min="0" name="duration" id="editDuration">
+                                    <div class="text-danger small" id="error-editDuration"></div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Version</label>
+                                    <div class="input-group">
+                                        <select class="form-select" name="version" id="editVersion">
+                                            <th:block th:each="version : ${movieVersion}">
+                                                <option th:value="${version}" th:text="${version.value}"></option>
+                                            </th:block>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Actor + Director -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Actor</label>
+                                    <input type="text" class="form-control" name="actor" id="editActor">
+                                    <div class="text-danger small" id="error-editActor"></div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Director</label>
+                                    <input type="text" class="form-control" name="director" id="editDirector">
+                                    <div class="text-danger small" id="error-editDirector"></div>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="mb-3">
+                                <label class="form-label">Content</label>
+                                <textarea class="form-control" name="content" id="editContent" rows="3"></textarea>
+                                <div class="text-danger small" id="error-editContent"></div>
+                            </div>
+
+                            <!-- Rating + Status -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Movie Price</label>
+                                    <input type="number" class="form-control" min="0" id="editPrice" name="price"
+                                        placeholder="Enter Price">
+                                    <div class="text-danger small" id="error-editPrice"></div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Status</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="status" id="editStatus" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Movie Types + Company + Trailer -->
+                            <div class="row">
+                                <!-- LEFT: Movie Types -->
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Movie Types</label>
+                                    <div class="row g-2">
+                                        <th:block th:each="type : ${allTypes}">
+                                            <div class="col-md-4">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="selectedTypeIds" th:value="${type.typeId}"
+                                                        th:id="'edit_type_' + ${type.typeId}">
+                                                    <label class="form-check-label"
+                                                        th:for="'edit_type_' + ${type.typeId}"
+                                                        th:text="${type.typeName}"></label>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                    <div class="text-danger small" id="error-editMovieType"></div>
+                                </div>
+
+                                <!-- RIGHT: Company + Trailer in 2 rows -->
+                                <div class="col-md-6">
+                                    <!-- Production Company -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Production Company</label>
+                                        <input type="text" class="form-control" name="movieProductionCompany"
+                                            id="editProductionCompany">
+                                        <div class="text-danger small" id="error-editProductionCompany"></div>
+                                    </div>
+                                    <!-- Trailer Movie -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Trailer Movie</label>
+                                        <input type="text" class="form-control" name="trailerId" id="editTrailerUrl"
+                                            placeholder="https://www.youtube.com/watch?v=...">
+                                        <div class="text-danger small" id="error-editTrailerUrl"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Images -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Banner Image</label>
+                                    <input type="file" class="form-control" name="bannerImageFile" id="editBannerImage">
+                                    <div class="text-danger small" id="error-editBannerImage"></div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Poster Image</label>
+                                    <input type="file" class="form-control" name="posterImageFile" id="editPosterImage">
+                                    <div class="text-danger small" id="error-editPosterImage"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Banner preview -->
+                                <div class="col-md-6 mb-3">
+                                    <label>Current Banner</label><br>
+                                    <img id="currentBannerImage" src="" alt="Banner preview" style="max-height: 100px;">
+                                </div>
+
+                                <!-- Poster preview -->
+                                <div class="col-md-6 mb-3">
+                                    <label>Current Poster</label><br>
+                                    <img id="currentPosterImage" src="" alt="Poster preview" style="max-height: 100px;">
+                                </div>
+                            </div>
+                            <!-- Submit Buttons -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" id="saveEditMovieButton">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:src="@{/js/admin/admin-movie.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/js/validateFormMovie.js}"></script>
+<script th:src="@{/js/slider.js}"></script>
+<script type="module" th:src="@{/js/processSchedule.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    let successMsg = /*[[${successMessage}]]*/ '';
+    let errrMsg = /*[[${errorMessage}]]*/ '';
+    if (successMsg) {
+        showSuccess(successMsg);
+    } else if (errrMsg) {
+        showError(errrMsg)
+    }
+    /*]]>*/
+</script>
+
+
+</html>

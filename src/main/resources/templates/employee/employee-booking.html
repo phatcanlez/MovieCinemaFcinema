@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Ticket Booking</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!--CSS-->
+    <link rel="stylesheet" th:href="@{/css/employee/employee-booking.css}" />
+  </head>
+
+  <body>
+    <div class="d-flex">
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="content-container d-flex">
+          <!-- Step Container (Left) -->
+          <div class="step-container">
+            <!-- Progress Bar -->
+            <div class="progress mb-4">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: 20%"
+                id="progressBar"
+              >
+                Step 1 of 5
+              </div>
+            </div>
+            <!-- Step Content -->
+            <div id="stepContent">
+              <!-- Step 1: Select Movie, Date, and Showtime -->
+              <div class="step active" id="step1">
+                <h2>Select Movie, Date, and Showtime</h2>
+                <div class="mb-3">
+                  <label for="movieSelect" class="form-label"
+                    >Select Movie</label
+                  >
+                  <select class="form-select" id="movieSelect">
+                    <option value="">Select a movie</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="dateSelect" class="form-label">Select Date</label>
+                  <input
+                    type="date"
+                    id="dateSelect"
+                    class="form-control"
+                    disabled
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="showtimeSelect" class="form-label"
+                    >Select Showtime</label
+                  >
+                  <select class="form-select" id="showtimeSelect" disabled>
+                    <option value="">Select a showtime</option>
+                  </select>
+                </div>
+                <button class="btn btn-danger" id="nextStep1" disabled>
+                  Next
+                </button>
+              </div>
+
+              <!-- Step 2: Select Seats -->
+              <div id="step2" class="step">
+                <h2>Step 2 of 5</h2>
+                <h4>Select Seats</h4>
+                <p>
+                  STANDARD:
+                  <span
+                    style="
+                      color: #28a745;
+                      background-color: #28a745;
+                      display: inline-block;
+                      width: 15px;
+                      height: 15px;
+                      border-radius: 2px;
+                      vertical-align: middle;
+                      margin-right: 5px;
+                    "
+                    > </span
+                  >
+                  &nbsp;&nbsp;&nbsp; VIP:
+                  <span
+                    style="
+                      color: #dc3545;
+                      background-color: #dc3545;
+                      display: inline-block;
+                      width: 15px;
+                      height: 15px;
+                      border-radius: 2px;
+                      vertical-align: middle;
+                      margin-right: 5px;
+                    "
+                    > </span
+                  >
+                  &nbsp;&nbsp;&nbsp; Selected:
+                  <span
+                    style="
+                      color: #ffc107;
+                      background-color: #ffc107;
+                      display: inline-block;
+                      width: 15px;
+                      height: 15px;
+                      border-radius: 2px;
+                      vertical-align: middle;
+                      margin-right: 5px;
+                    "
+                    > </span
+                  >
+                  &nbsp;&nbsp;&nbsp; Occupied:
+                  <span
+                    style="
+                      color: #6c757d;
+                      background-color: #6c757d;
+                      display: inline-block;
+                      width: 15px;
+                      height: 15px;
+                      border-radius: 2px;
+                      vertical-align: middle;
+                    "
+                    > </span
+                  >
+                </p>
+                <div class="seat-map">
+                  <div class="screen-name text-center">Screen</div>
+                  <div class="column-labels" id="columnLabels"></div>
+                  <div id="seatMap"></div>
+                </div>
+                <div class="button-group">
+                  <button id="backStep2" class="btn btn-secondary">Back</button>
+                  <button id="nextStep2" class="btn btn-danger" disabled>
+                    Next
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 3: Select Combo -->
+              <div class="step" id="step3">
+                <h2>Select Combo</h2>
+                <div id="comboList" class="combo-container mb-3"></div>
+                <div class="button-group">
+                  <button class="btn btn-secondary" id="backStep3">Back</button>
+                  <button class="btn btn-danger" id="nextStep3" disabled>
+                    Next
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 4: Payment -->
+              <div class="step" id="step4">
+                <h2>Payment</h2>
+                <div class="form-group">
+                  <div class="mb-3">
+                    <label for="memberEmail">Member Email:</label>
+                    <div class="input-group">
+                      <input
+                        type="email"
+                        id="memberEmail"
+                        class="form-control"
+                        placeholder="Enter member email"
+                      />
+                      <button
+                        class="btn btn-primary"
+                        id="applyEmail"
+                        type="button"
+                      >
+                        Search Member
+                      </button>
+                    </div>
+                    <small class="form-text text-muted">
+                      Enter member email and click "Search Member" to check
+                      points balance.
+                    </small>
+                  </div>
+                  <div id="memberError"></div>
+                  <div id="memberPoints"></div>
+                  <button
+                    id="usePointsBtn"
+                    class="btn btn-secondary mt-2"
+                    style="display: none"
+                  >
+                    Use Points
+                  </button>
+                  <button
+                    id="removePointsBtn"
+                    class="btn btn-outline-danger"
+                    style="display: none"
+                  >
+                    Remove Points
+                  </button>
+                </div>
+                <div class="mb-3">
+                  <label for="promotionCode" class="form-label"
+                    >Promotion Code</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="promotionCode"
+                      placeholder="Enter promotion code (optional)"
+                    />
+                    <button
+                      class="btn btn-primary"
+                      id="applyPromotion"
+                      type="button"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                  <div id="promoError" class="mt-2"></div>
+                </div>
+                <div class="mb-3">
+                  <label for="paymentMethod" class="form-label"
+                    >Payment Method</label
+                  >
+                  <select class="form-select" id="paymentMethod">
+                    <option value="">Select a payment method</option>
+                    <option value="momo">Momo</option>
+                    <option value="cash">Cash</option>
+                  </select>
+                </div>
+                <div class="button-group">
+                  <button class="btn btn-secondary" id="backStep4">Back</button>
+                  <button class="btn btn-success" id="submitBooking" disabled>
+                    Book Ticket
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 5: Ticket Confirmation -->
+              <div class="step" id="step5">
+                <h2>Ticket Confirmation</h2>
+                <div id="ticketDetails" class="card p-3"></div>
+                <button class="btn btn-primary" id="newBooking">
+                  Book Another Ticket
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Information Panel (Right) -->
+          <div class="info-panel-container">
+            <div class="info-panel">
+              <h5>INFORMATION</h5>
+              <div class="info-details">
+                <p><strong>Date:</strong> <span id="infoDate">None</span></p>
+                <p><strong>Movie:</strong> <span id="infoMovie">None</span></p>
+                <p>
+                  <img
+                    id="infoSmallImage"
+                    src=""
+                    alt="Movie Image"
+                    style="display: none; max-width: 100px; margin-top: 5px"
+                  />
+                </p>
+                <p>
+                  <strong>Showtime:</strong> <span id="infoShowtime">None</span>
+                </p>
+                <p><strong>Room:</strong> <span id="infoRoom">None</span></p>
+                <p><strong>Seats:</strong> <span id="infoSeats">None</span></p>
+                <p>
+                  <strong>Combo:</strong> <span id="infoCombo">No Combo</span>
+                </p>
+                <p>
+                  <strong>Promotion Code:</strong>
+                  <span id="infoPromotionCode">None</span>
+                </p>
+              </div>
+              <hr class="info-separator" />
+              <div class="pricing">
+                <p>
+                  <strong>Seat Price:</strong> <span id="infoSeatPrice"></span>
+                </p>
+                <p>
+                  <strong>Combo Price:</strong>
+                  <span id="infoComboPrice"></span>
+                </p>
+                <p>
+                  <strong>Original Amount:</strong>
+                  <span id="infoOriginalAmount"></span>
+                </p>
+                <p>
+                  <strong>Discount Amount:</strong>
+                  <span id="infoDiscountAmount"></span>
+                </p>
+                <p>
+                  <strong>FINAL:</strong> <span id="infoFinalAmount"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS and Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--JS-->
+    <script th:src="@{/js/employee/employee-booking.js}"></script>
+  </body>
+</html>

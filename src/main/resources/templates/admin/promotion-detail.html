@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promotion Details</title>
+    <link rel="stylesheet" th:href="@{/css/admin/promotion-detail.css}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/admin/admin-mainlayout.css}" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <div
+      th:replace="~{adminLayout/navbar :: adminNavbar(activePage='promotions')}"
+    ></div>
+    <div class="main-content">
+      <div class="container mt-4">
+        <div class="back-link mb-4">
+          <a th:href="@{/admin/promotion-management}" class="back-link mb-4">
+            <i class="bi bi-arrow-left"></i> Back
+          </a>
+        </div>
+        <h2 class="promotion-title mb-4" th:text="${promotion.title}">
+          Promotion Details
+        </h2>
+
+        <!-- Alert messages for success/error -->
+        <div
+          th:if="${successMessage}"
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <span th:text="${successMessage}"></span>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div
+          th:if="${errorMessage}"
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <span th:text="${errorMessage}"></span>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <form
+              id="promotionForm"
+              th:action="@{/admin/promotion-management/update}"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- Image section -->
+                  <div class="text-center mb-4">
+                    <img
+                      th:if="${promotion.promotionImage != null && !promotion.promotionImage.isEmpty()}"
+                      th:src="${promotion.promotionImage}"
+                      alt="Promotion Image"
+                      class="promotion-image mb-3"
+                      id="promotionImage"
+                    />
+                    <div
+                      th:if="${promotion.promotionImage == null || promotion.promotionImage.isEmpty()}"
+                      class="no-image-placeholder"
+                    >
+                      <i class="bi bi-image"></i>
+                      <p>No image available</p>
+                    </div>
+                  </div>
+
+                  <!-- Image upload - visible only in edit mode -->
+                  <div id="editImageGroup" class="mb-3" style="display: none">
+                    <label for="promotionImageInput" class="form-label"
+                      >Upload New Image</label
+                    >
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="promotionImageInput"
+                      name="image"
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="editPromotionId" class="form-label"
+                      >Promotion ID</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="promotionId"
+                      th:value="${promotion.promotionId}"
+                      readonly
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="editPromotionCode" class="form-label"
+                      >Promotion Code</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editPromotionCode"
+                      name="promotionCode"
+                      th:value="${promotion.promotionCode}"
+                      readonly
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="editTitle" class="form-label">Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editTitle"
+                      name="title"
+                      th:value="${promotion.title}"
+                      readonly
+                    />
+                  </div>
+
+                  <!-- Discount Type Section -->
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Discount Type</label>
+
+                    <!-- Discount Type Selector (hiển thị chỉ khi ở chế độ chỉnh sửa) -->
+                    <div
+                      id="discountTypeSelector"
+                      class="btn-group w-100 mb-3"
+                      role="group"
+                      aria-label="Discount type selector"
+                      style="display: none"
+                    >
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="discountTypeRadio"
+                        id="percentDiscountRadio"
+                        autocomplete="off"
+                      />
+                      <label
+                        class="btn btn-outline-light"
+                        for="percentDiscountRadio"
+                      >
+                        Discount by Percentage (%)
+                      </label>
+
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="discountTypeRadio"
+                        id="directDiscountRadio"
+                        autocomplete="off"
+                      />
+                      <label
+                        class="btn btn-outline-light"
+                        for="directDiscountRadio"
+                      >
+                        Direct Discount (Fixed Amount)
+                      </label>
+                    </div>
+
+                    <!-- Discount Group 1: Percent Discount -->
+                    <div id="percentDiscountGroup" class="mb-3 p-2">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="editDiscountLevel" class="form-label"
+                            >Discount Level (%)</label
+                          >
+                          <input
+                            type="number"
+                            class="form-control discount-input"
+                            id="editDiscountLevel"
+                            name="discountLevel"
+                            min="1"
+                            max="20"
+                            th:value="${promotion.discountLevel}"
+                            readonly
+                          />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label
+                            for="editMaxAmountForPercentDiscount"
+                            class="form-label"
+                            >Max Discount Amount (VND)</label
+                          >
+                          <input
+                            type="number"
+                            class="form-control discount-input"
+                            id="editMaxAmountForPercentDiscount"
+                            name="maxAmountForPercentDiscount"
+                            min="1000"
+                            th:value="${promotion.maxAmountForPercentDiscount}"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Discount Group 2: Direct Amount Discount -->
+                    <div id="directDiscountGroup" class="mb-3 p-2">
+                      <div class="mb-3">
+                        <label for="editDiscountAmount" class="form-label"
+                          >Direct Discount Amount (VND)</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control discount-input"
+                          id="editDiscountAmount"
+                          name="discountAmount"
+                          min="1000"
+                          th:value="${promotion.discountAmount}"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Usage Limit -->
+                  <div class="mb-3">
+                    <label for="editUsageLimit" class="form-label"
+                      >Usage Limit</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="editUsageLimit"
+                      name="usageLimit"
+                      min="1"
+                      th:value="${promotion.usageLimit}"
+                      readonly
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="editStartTime" class="form-label"
+                      >Start Time</label
+                    >
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      id="editStartTime"
+                      name="startTime"
+                      th:value="${promotion.startTime}"
+                      readonly
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="editEndTime" class="form-label">End Time</label>
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      id="editEndTime"
+                      name="endTime"
+                      th:value="${promotion.endTime}"
+                      readonly
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="editDetail" class="form-label">Detail</label>
+                    <textarea
+                      class="form-control"
+                      id="editDetail"
+                      name="detail"
+                      rows="4"
+                      readonly
+                      th:text="${promotion.detail}"
+                    ></textarea>
+                  </div>
+
+                  <!-- Status field -->
+                  <div class="mb-3">
+                    <label for="isActive" class="form-label">Status</label>
+                    <div class="form-check form-switch">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="isActive"
+                        name="isActive"
+                        th:checked="${promotion.isActive}"
+                        th:value="true"
+                        disabled
+                      />
+                      <label class="form-check-label" for="isActive">
+                        <span th:if="${promotion.isActive}" class="text-success"
+                          >Active</span
+                        >
+                        <span
+                          th:unless="${promotion.isActive}"
+                          class="text-danger"
+                          >Inactive</span
+                        >
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- View Mode Buttons -->
+                  <div class="d-flex justify-content-between">
+                    <div id="viewButtons">
+                      <button
+                        type="button"
+                        class="btn btn-warning me-2"
+                        onclick="enableEditMode()"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-info me-2"
+                        onclick="toggleStatus()"
+                      >
+                        <span th:if="${promotion.isActive}">Deactivate</span>
+                        <span th:unless="${promotion.isActive}">Activate</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Edit Mode Buttons -->
+                  <div class="d-flex justify-content-between">
+                    <div id="editButtons" class="mt-4" style="display: none">
+                      <button type="submit" class="btn btn-success me-2">
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="cancelEdit()"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form
+      id="toggleStatusForm"
+      th:action="@{/admin/promotion-management/toggle-status/}"
+      method="post"
+      style="display: none"
+    >
+      <input
+        type="hidden"
+        name="promotionId"
+        th:value="${promotion.promotionId}"
+      />
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script th:src="@{/js/admin/promotion-detail.js}"></script>
+  </body>
+</html>

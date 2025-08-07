@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên hệ - F-Cine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/variables.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/components.css}" />
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #111; color: #eee; scroll-behavior: smooth; }
+        .header-section { background-color: #b71c1c; color: #fff; padding: 20px 0; text-align: center; }
+        .header-section h1 { font-weight: 700; font-size: 42px; }
+        .contact-container { max-width: 700px; margin: 50px auto; background: #222; padding: 40px; border-radius: 15px; box-shadow: 0 0 25px rgba(0,0,0,0.5); }
+        .contact-info { font-size: 20px; }
+        .contact-info i { color: #ffcb05; margin-right: 10px; }
+        footer { background-color: #222; color: #aaa; padding: 20px 0; text-align: center; margin-top: 50px; }
+        #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: #fff; border: 3px solid #ffcb05; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; display: none; }
+        #backToTop:hover { transform: scale(1.15); box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+        #backToTop img { width: 40px; height: 40px; }
+    </style>
+</head>
+
+<body>
+<div th:replace="homeLayout/header :: header"></div>
+
+<div style="padding-top: 130px" class="header-section">
+    <h1><i class="bi bi-envelope-paper"></i> Liên hệ với F-Cine</h1>
+</div>
+
+<div class="contact-container">
+    <div class="contact-info">
+        <p><i class="bi bi-person-fill"></i> Quản lý rạp: Nguyễn Văn A</p>
+        <p><i class="bi bi-telephone-fill"></i> Số điện thoại: 0901 234 567</p>
+        <p><i class="bi bi-envelope-fill"></i> Email: quanly@fcine.vn</p>
+        <p><i class="bi bi-geo-alt-fill"></i> Địa chỉ: Tầng 5, Trung tâm thương mại Vincom, Quận 1, TP. Hồ Chí Minh</p>
+        <hr>
+        <p><i class="bi bi-person-fill"></i> Nhân viên hỗ trợ: Trần Thị B</p>
+        <p><i class="bi bi-telephone-fill"></i> Số điện thoại: 0902 345 678</p>
+        <p><i class="bi bi-envelope-fill"></i> Email: hotro@fcine.vn</p>
+    </div>
+</div>
+
+<div th:replace="homeLayout/footer :: footer"></div>
+
+<div id="backToTop">
+    <img src="/images/Postk.png" alt="Back to Top">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const scrollBtn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) { scrollBtn.style.display = "flex"; }
+        else { scrollBtn.style.display = "none"; }
+    });
+    scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
+</body>
+</html>

@@ -1,0 +1,583 @@
+/* General body styling to match sidebar's dark gradient theme */
+body {
+  margin: 0;
+  padding: 0; /* Added to remove any default padding */
+  background: linear-gradient(135deg, #2a2a2a 0%, #3d3d3d 50%, #252525 100%);
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  min-height: 100vh; /* Ensure body takes full viewport height */
+}
+
+/* Card styling with sidebar-inspired borders and shadows */
+.card {
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(220, 53, 69, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  overflow: hidden;
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: 0 5px 16px rgba(220, 53, 69, 0.3),
+    inset 0 1px 0 rgba(220, 53, 69, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Add subtle gradient overlay like sidebar */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(220, 53, 69, 0.05) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-body .card-title {
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.card-body .display-4 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #dc3545;
+}
+
+/* Chart */
+#revenueChart {
+  max-height: 350px;
+}
+
+#revenue p {
+  font-size: 1.2rem;
+  margin-left: 1rem;
+  color: #fff;
+}
+
+/* Danger button to match sidebar's red accent */
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #ff1744 100%);
+  border: 1px solid #dc3545;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(220, 53, 69, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #ff1744 0%, #dc3545 100%);
+  border-color: #ff1744;
+  transform: translateX(3px);
+  box-shadow: 0 5px 16px rgba(220, 53, 69, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-danger::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-danger:hover::before {
+  left: 100%;
+}
+
+/* Warning button with a complementary style */
+.btn-warning {
+  background: linear-gradient(135deg, #ffc107 0%, #ffca2c 100%);
+  border: 1px solid #ffc107;
+  border-radius: 6px;
+  color: #212529;
+  font-weight: 500;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(255, 193, 7, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-warning:hover {
+  background: linear-gradient(135deg, #ffca2c 0%, #ffc107 100%);
+  border-color: #ffca2c;
+  transform: translateX(3px);
+  box-shadow: 0 5px 16px rgba(255, 193, 7, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-warning::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-warning:hover::before {
+  left: 100%;
+}
+
+/* Primary button with a complementary style */
+.btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #00aaff 100%);
+  border: 1px solid #007bff;
+  border-radius: 6px;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 123, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #00aaff 0%, #007bff 100%);
+  border-color: #00aaff;
+  transform: translateX(3px);
+  box-shadow: 0 5px 16px rgba(0, 123, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+/* Success button with a complementary style */
+.btn-success {
+  background: linear-gradient(135deg, #28a745 0%, #34c759 100%);
+  border: 1px solid #28a745;
+  border-radius: 6px;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 5px 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(40, 167, 69, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #34c759 0%, #28a745 100%);
+  border-color: #34c759;
+  transform: translateX(3px);
+  box-shadow: 0 5px 16px rgba(40, 167, 69, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-success::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-success:hover::before {
+  left: 100%;
+}
+
+/* Table styling to match sidebar's dark theme */
+.table {
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
+  border-radius: 10px;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.table th {
+  border-color: rgba(220, 53, 69, 0.3);
+  padding: 12px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(230, 33, 52, 0.87) 0%,
+    transparent 100%
+  );
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-align: center;
+}
+
+.table td {
+  border-color: rgba(220, 53, 69, 0.3);
+  padding: 12px;
+  text-align: center;
+}
+
+.table tr:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 53, 69, 0.15) 0%,
+    rgba(220, 53, 69, 0.05) 100%
+  );
+}
+
+.table-dark th,
+.table-dark td {
+  border-color: rgba(220, 53, 69, 0.3);
+  padding: 12px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.table-dark th {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 53, 69, 0.1) 0%,
+    transparent 100%
+  );
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* Navbar of dashboard */
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid rgba(220, 53, 69, 0.3);
+  background: linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%);
+  padding: 0;
+  margin-left: 0;
+  width: 50%;
+  border-radius: 10px 10px 0 0;
+}
+
+.navbar .nav-item {
+  flex: 1 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar .nav-link {
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: all 0.3s ease;
+  min-height: 40px;
+}
+
+.navbar .nav-link.active {
+  background: linear-gradient(135deg, #dc3545 0%, #ff1744 100%);
+  color: #ffffff;
+  border-bottom: none;
+}
+
+.navbar .nav-link:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(220, 53, 69, 0.15) 0%,
+    rgba(220, 53, 69, 0.05) 100%
+  );
+}
+
+.tab-pane {
+  padding-top: 1rem;
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
+  border-radius: 0 0 10px 10px;
+}
+
+/* Pagination for list table */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pagination .page-link {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+  color: #ffffff;
+  border: 1px solid #dc3545;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.2);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination .page-link:hover {
+  background: linear-gradient(135deg, #dc3545 0%, #e4606d 100%);
+  color: #ffffff;
+  border-color: #e4606d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+.pagination .page-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.pagination .page-link:hover::before {
+  left: 100%;
+}
+
+.pagination .active .page-link {
+  background: linear-gradient(135deg, #dc3545 0%, #e4606d 100%);
+  border-color: #e4606d;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.pagination .disabled .page-link {
+  background: linear-gradient(135deg, #333333 0%, #444444 100%);
+  border-color: #444444;
+  color: #666666;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+  border-radius: 6px;
+  padding: 8px 20px;
+}
+
+/* Modal styling to match sidebar's aesthetic */
+.modal-content {
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(220, 53, 69, 0.1);
+  backdrop-filter: blur(8px);
+  color: #fff;
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(220, 53, 69, 0.3);
+  background: red;
+  position: relative;
+}
+
+.modal-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #dc3545 50%,
+    transparent 100%
+  );
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+/* Close button styling */
+.btn-close-white {
+  filter: invert(1);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.btn-close-white:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  filter: invert(1) drop-shadow(0 0 3px rgba(220, 53, 69, 0.3));
+}
+
+/* Form control styling with white background and black text for prominence */
+.form-control {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid rgba(220, 53, 69, 0.5);
+  border-radius: 6px;
+  padding: 8px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(220, 53, 69, 0.2);
+}
+
+.form-control:focus {
+  color: #000000;
+  background: #ffffff;
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.15rem rgba(220, 53, 69, 0.3),
+    inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(220, 53, 69, 0.3);
+}
+
+/* Table responsive */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  width: 100%; /* Ensure full width */
+}
+
+/* Main content styling to fill remaining space */
+.main-content {
+  margin-left: 240px; /* Match sidebar width */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #2a2a2a 0%, #3d3d3d 50%, #252525 100%);
+  padding: 0;
+  transition: margin-left 0.3s ease;
+  width: calc(100% - 240px); /* Fill remaining width */
+  box-sizing: border-box; /* Include padding and borders in width calculation */
+}
+
+.mt-4 {
+  margin-top: 0 !important;
+}
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  body {
+    padding-top: 0;
+  }
+
+  .main-content {
+    margin-left: 0; /* Remove margin when sidebar is full-width */
+    width: 100%; /* Full width on mobile */
+  }
+
+  .card {
+    border-radius: 6px;
+  }
+
+  .table-responsive {
+    border-radius: 6px;
+  }
+
+  .modal-content {
+    border-radius: 6px;
+  }
+}
+
+table {
+  min-width: 700px;
+  width: 100%; /* Ensure table takes full container width */
+}
+
+/* No results row styling */
+#noResultsRow td {
+  color: #dc3545;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* Scrollbar styling to match sidebar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #dc3545 0%, #ff1744 100%);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff1744 0%, #dc3545 100%);
+}
+
+.schedule-item {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+

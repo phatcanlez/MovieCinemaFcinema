@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FCinema - Room Management</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/admin/admin-mainlayout.css}" />
+  </head>
+
+  <body>
+    <div class="d-flex">
+      <div
+        th:replace="~{adminLayout/navbar :: adminNavbar(activePage='rooms')}"
+      ></div>
+      <div class="main-content p-4">
+        <h2 class="text-danger">
+          <i class="fas fa-chair me-2"></i>Cinema Room Management
+        </h2>
+
+          <div class="card-body">
+            <!-- Search and Add button-->
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <!-- Search section -->
+              <form
+                      th:action="@{/admin/room-management}"
+                      method="get"
+                      class="mb-3"
+              >
+                <div class="input-group" style="width: 400px;">
+                  <input
+                          type="text"
+                          class="form-control"
+                          id="searchInput"
+                          name="search"
+                          th:value="${search}"
+                          placeholder="Enter Room ID or Room name,..."
+                  />
+                  <input type="hidden" name="page" th:value="${currentPage}" />
+                  <input type="hidden" name="size" th:value="${pageSize}" />
+                  <button class="btn btn-danger" type="submit">
+                    <i class="fas fa-search"></i>
+                    Search
+                  </button>
+                </div>
+              </form>
+              <!-- Add room -->
+              <a class="btn btn-danger mb-2" th:href="@{/admin/add-room}"
+                ><i class="fas fa-plus"></i>
+                Add Room
+              </a>
+            </div>
+
+            <!-- Room List Section -->
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Seat Quantity</th>
+                  <th>Detail</th>
+                </thead>
+                <tbody>
+                  <tr th:each="room, iterStat : ${roomPage.content}">
+                    <td th:text="${room.cinemaRoomId}"></td>
+                    <td th:text="${room.cinemaRoomName}"></td>
+                    <td th:text="${room.seatQuantity}"></td>
+                    <td>
+                      <a
+                        class="btn btn-primary btn-sm edit-btn me-2"
+                        th:href="@{/admin/room-management/room_detail(cinemaRoomId=${room.cinemaRoomId})}"
+                      >
+                        <i class="fas fa-info-circle"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr th:if="${roomPage.content.size() == 0}">
+                    <td colspan="10" class="text-center">No result found!</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" th:if="${roomPage.totalPages > 1}">
+              <ul class="pagination">
+                <li class="page-item" th:classappend="${roomPage.number == 0} ? 'disabled'">
+                  <a class="page-link" th:href="@{/admin/room-management(page=${roomPage.number - 1}, search=${search})}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, roomPage.totalPages - 1)}" th:classappend="${roomPage.number == i} ? 'active'">
+                  <a class="page-link" th:href="@{/admin/room-management(page=${i}, search=${search})}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${roomPage.number == roomPage.totalPages - 1} ? 'disabled'">
+                  <a class="page-link" th:href="@{/admin/room-management(page=${roomPage.number + 1}, search=${search})}">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Đặt script Bootstrap TRƯỚC script của bạn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/admin/admin-room.js}"></script>
+  </body>
+</html>

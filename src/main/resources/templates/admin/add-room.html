@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Room</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/admin/add-room.css}" />
+  </head>
+
+  <body>
+    <h1 class="page-title">Add Room</h1>
+
+    <div
+      th:if="${successMessage}"
+      class="alert alert-success alert-dismissible fade show"
+      role="alert"
+    >
+      <span th:text="${successMessage}"></span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div
+      th:if="${errorNameMess != null || errorSeatQuantityMess != null}"
+      class="alert alert-danger alert-dismissible fade show"
+      role="alert"
+    >
+      <span th:text="${errorNameMess}"></span>
+      <span th:text="${errorSeatQuantityMess}"></span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    <form
+      th:action="@{/admin/add-room/room-template}"
+      method="get"
+      id="createRoomForm"
+      class="combined-form"
+    >
+      <div class="form-content">
+        <!-- Input Fields (Left Side) -->
+        <div class="input-section">
+          <label for="maxCol">Column Quantity:</label>
+          <input
+            type="number"
+            id="maxCol"
+            name="maxCol"
+            th:value="${maxCol}"
+            min="5"
+            max="10"
+            required
+          /><br />
+
+          <label for="maxRow">Row Quantity:</label>
+          <input
+            type="number"
+            id="maxRow"
+            name="maxRow"
+            th:value="${maxRow}"
+            min="5"
+            max="20"
+            required
+          /><br />
+
+          <label for="roomName">Room Name:</label>
+          <input
+            type="text"
+            id="roomName"
+            name="roomName"
+            th:value="${roomName}"
+            required
+          /><br />
+          <button type="submit">Create Room</button>
+        </div>
+
+        <!-- Guidelines (Right Side) -->
+        <div class="guidelines-section">
+          <h3>Guidelines:</h3>
+          <p><strong>Left click:</strong> (STANDARD → VIP → STANDARD → ...)</p>
+          <p><strong>Right click:</strong> (Active ↔ Inactive)</p>
+          <p><strong>Color:</strong> 🟢 Standard | 🟡 VIP | 🔴 Inactive</p>
+        </div>
+      </div>
+    </form>
+
+    <!-- Seat Map Form (Below) -->
+    <th:block
+      th:if="${seatListWrapper != null and seatListWrapper.seatList != null}"
+    >
+      <form
+        id="seatForm"
+        th:action="@{/admin/save-seats}"
+        method="post"
+        th:object="${seatListWrapper}"
+      >
+        <input type="hidden" name="roomName" th:value="${roomName}" />
+        <div class="content-center">
+          <h3>Room: <span th:text="${roomName}"></span></h3>
+          <div id="seatMapContainer">
+            <div id="dynamicScreen" class="screen-area">Screen</div>
+            <table id="seatTable">
+              <th:block th:if="${maxRow != null and columnList != null}">
+                <tr th:each="i : ${#numbers.sequence(1, maxRow)}">
+                  <td th:each="col, colStat : ${columnList}">
+                    <th:block
+                      th:with="seatIndex=${(i-1) * #lists.size(columnList) + colStat.index}"
+                    >
+                      <!-- Kiểm tra seatIndex hợp lệ với null check -->
+                      <th:block
+                        th:if="${seatListWrapper.seatList != null and seatIndex >= 0 and seatIndex < seatListWrapper.seatList.size()}"
+                      >
+                        <th:block th:with="seat=*{seatList[__${seatIndex}__]}">
+                          <!-- Hidden inputs for form submission -->
+                          <input
+                            type="hidden"
+                            th:field="*{seatList[__${seatIndex}__].seatRow}"
+                            th:value="${i}"
+                          />
+                          <input
+                            type="hidden"
+                            th:field="*{seatList[__${seatIndex}__].seatColumn}"
+                            th:value="${col}"
+                          />
+                          <input
+                            type="hidden"
+                            th:field="*{seatList[__${seatIndex}__].seatType}"
+                            th:id="|seatType_${i}_${col}|"
+                          />
+                          <input
+                            type="hidden"
+                            th:field="*{seatList[__${seatIndex}__].active}"
+                            th:id="|isActive_${i}_${col}|"
+                          />
+
+                          <div th:if="${seat != null}">
+                            <button
+                              type="button"
+                              th:text="${col + i}"
+                              th:class="${'btn ' + (seat.active ? (seat.seatType == 'VIP' ? 'vip' : 'normal') : 'inactive')}"
+                              th:data-row="${i}"
+                              th:data-col="${col}"
+                              th:data-index="${seatIndex}"
+                              onclick="handleLeftClick(this)"
+                              oncontextmenu="handleRightClick(this, event)"
+                              title="Left click: change seat type | Right click: change active status"
+                            ></button>
+                          </div>
+                        </th:block>
+                      </th:block>
+                    </th:block>
+                  </td>
+                </tr>
+              </th:block>
+            </table>
+          </div>
+        </div>
+        <button type="submit" class="save-button">💾 Save Room</button>
+      </form>
+    </th:block>
+
+    <!-- Đặt script Bootstrap TRƯỚC script của bạn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/admin/add-room.js}"></script>
+  </body>
+</html>

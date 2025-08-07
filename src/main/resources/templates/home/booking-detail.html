@@ -1,0 +1,100 @@
+<!--booking-detail.html-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <body>
+    <!-- Modal Booking -->
+    <div
+      id="bookingModal"
+      class="modal"
+      th:fragment="modelBooking"
+      th:data-movie-id="${movie.movieId}"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">
+            🎫 Đặt Vé -
+            <span
+              th:text="${movie != null ? movie.movieNameVn : 'Unknown Movie'}"
+            ></span>
+          </h2>
+          <span class="close" onclick="closeBookingModal()">×</span>
+        </div>
+        <div class="booking-content">
+          <!-- Chọn ngày -->
+          <div class="booking-section">
+            <h3 class="section-title">📅 Chọn Ngày Chiếu</h3>
+            <div class="date-grid" id="dateGrid">
+              <!-- Được điền bởi JavaScript -->
+            </div>
+          </div>
+
+          <!-- Chọn suất chiếu -->
+          <div class="booking-section">
+            <h3 class="section-title">🎬 Chọn Suất Chiếu</h3>
+            <div class="showtime-grid" id="showtimeGrid">
+              <!-- Được điền bởi JavaScript -->
+            </div>
+
+            <!-- Tóm tắt đặt vé -->
+            <div class="booking-summary">
+              <h3 class="section-title">📝 Thông Tin Đặt Vé</h3>
+              <div class="summary-item">
+                <span class="summary-label">Phim:</span>
+                <span
+                  class="summary-value"
+                  th:text="${movie != null ? movie.movieNameVn : 'Unknown Movie'}"
+                ></span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Ngày chiếu:</span>
+                <span class="summary-value" id="selectedDate">Chưa chọn</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Suất chiếu:</span>
+                <span class="summary-value" id="selectedShowtime"
+                  >Chưa chọn</span
+                >
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Rạp:</span>
+                <span class="summary-value">FCine</span>
+              </div>
+              <div class="summary-item total-price">
+                <span class="summary-label">Giá vé:</span>
+                <span
+                  class="movie-price"
+                  th:text="'Từ ' + ${#numbers.formatDecimal(movie.price, 0, 'COMMA', 0, 'POINT') + ' đ'}"
+                >
+                </span>
+              </div>
+            </div>
+
+            <!-- Nút hành động -->
+            <div class="booking-actions">
+              <button
+                class="btn-booking btn-cancel"
+                onclick="closeBookingModal()"
+              >
+                ❌ Hủy
+              </button>
+              <button
+                class="btn-booking btn-continue"
+                id="continueBtn"
+                onclick="goToSeatSelection()"
+                disabled
+              >
+                🪑 Chọn Ghế
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

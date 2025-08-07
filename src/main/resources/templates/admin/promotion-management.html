@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FCinema - Promotions Management</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/admin/admin-mainlayout.css}"/>
+    <style>
+        .promotion-image {
+            max-width: 100px;
+            max-height: 60px;
+            object-fit: cover;
+        }
+
+        .modal-backdrop {
+            z-index: 1040;
+        }
+
+        .modal {
+            z-index: 1050;
+        }
+
+        .modal-content {
+            border: 1px solid #333;
+        }
+
+        .form-text {
+            color: #aaa !important;
+        }
+    </style>
+</head>
+
+<body>
+<div class="d-flex">
+    <div
+            th:replace="~{adminLayout/navbar :: adminNavbar(activePage='promotions')}"
+    ></div>
+
+    <!-- Main Content -->
+    <div class="main-content p-4 flex-grow-1">
+        <h2 class="text-danger">
+            <i class="fas fa-tags me-2"></i>Promotion Management
+        </h2>
+        <!-- Hiển thị thông báo thành công/lỗi -->
+        <div
+                th:if="${successMessage}"
+                class="alert alert-success alert-dismissible fade show"
+                role="alert"
+        >
+            <span th:text="${successMessage}"></span>
+            <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+            ></button>
+        </div>
+
+        <div
+                th:if="${errorMessage}"
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+        >
+            <span th:text="${errorMessage}"></span>
+            <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close"
+            ></button>
+        </div>
+
+        <div class="card-body">
+            <!-- Search and Add button -->
+            <div
+                    style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+            >
+                <!-- Search section -->
+                <form
+                        th:action="@{/admin/promotion-management}"
+                        method="get"
+                        class="mb-3"
+                >
+                    <div class="input-group" style="width: 400px">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="searchInput"
+                                name="search"
+                                th:value="${search}"
+                                placeholder="Enter Promotion ID or Title ..."
+                        />
+                        <input type="hidden" name="page" th:value="${currentPage}"/>
+                        <input type="hidden" name="size" th:value="${pageSize}"/>
+                        <button class="btn btn-danger" type="submit">
+                            <i class="fas fa-search"></i>
+                            Search
+                        </button>
+                    </div>
+                </form>
+                <!-- Add button -->
+                <button class="btn btn-danger mb-2" id="addPromotionButton">
+                    <i class="fas fa-plus"></i>
+                    Add Promotion
+                </button>
+            </div>
+
+            <!-- List table -->
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Code</th>
+                    <th>Title</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Detail</th>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="promotion, iterStat: ${promotions}">
+                        <td th:text="${promotion.promotionCode}"></td>
+                        <td th:text="${promotion.title}"></td>
+                        <td
+                                th:text="${#temporals.format(promotion.startTime, 'dd-MM-yyyy HH:mm')}"
+                        ></td>
+                        <td
+                                th:text="${#temporals.format(promotion.endTime, 'dd-MM-yyyy HH:mm')}"
+                        ></td>
+                        <td>
+                    <span th:if="${promotion.isActive}" class="badge bg-success"
+                    >Active</span
+                    >
+                            <span
+                                    th:unless="${promotion.isActive}"
+                                    class="badge bg-danger"
+                            >Inactive</span
+                            >
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm edit-btn me-2">
+                                <a
+                                        th:href="@{'/admin/promotion-management/detail/' + ${promotion.promotionId}}"
+                                        class="text-white text-decoration-none"
+                                >
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div
+                        th:if="${promotions == null || promotions.isEmpty()}"
+                        class="alert alert-info text-center mt-3"
+                >
+                    No promotions available. Use the "Add Promotion" button to create
+                    a new promotion.
+                </div>
+                <div
+                <div th:if="${promotions != null && !promotions.isEmpty()}">
+                </div>
+            </div>
+            <!-- Pagination -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li
+                            class="page-item"
+                            th:class="${currentPage == 0} ? 'disabled'"
+                    >
+                        <a
+                                class="page-link"
+                                th:href="@{/admin/promotion-management(page=${currentPage - 1}, size=${pageSize})}"
+                        >Previous</a
+                        >
+                    </li>
+                    <li
+                            class="page-item"
+                            th:each="p : ${#numbers.sequence(0, totalPages - 1)}"
+                            th:class="${currentPage == p} ? 'active'"
+                    >
+                        <a
+                                class="page-link"
+                                th:href="@{/admin/promotion-management(page=${p}, size=${pageSize})}"
+                                th:text="${p + 1}"
+                        ></a>
+                    </li>
+                    <li
+                            class="page-item"
+                            th:class="${currentPage + 1 >= totalPages} ? 'disabled'"
+                    >
+                        <a
+                                class="page-link"
+                                th:href="@{/admin/promotion-management(page=${currentPage + 1}, size=${pageSize})}"
+                        >Next</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!--      </div>-->
+
+    <!-- Add Promotion Modal -->
+    <div
+            class="modal fade"
+            id="addPromotionModal"
+            tabindex="-1"
+            aria-labelledby="addPromotionModalLabel"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPromotionModalLabel">
+                        Add Promotion
+                    </h5>
+                    <button
+                            type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
+                </div>
+
+                <div class="modal-body">
+                    <!-- Form cho thêm khuyến mãi -->
+                    <form
+                            id="addPromotionForm"
+                            th:action="@{/admin/promotion-management/add}"
+                            method="post"
+                            enctype="multipart/form-data"
+                    >
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="promotionCode" class="form-label"
+                                >Promotion Code</label
+                                >
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="promotionCode"
+                                        name="promotionCode"
+                                        placeholder="Enter unique code (e.g., SUMMER2025)"
+                                        required
+                                />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        id="title"
+                                        name="title"
+                                        placeholder="Enter Promotion Title"
+                                        required
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="startTime" class="form-label">Start Time</label>
+                                <input
+                                        type="datetime-local"
+                                        class="form-control"
+                                        id="startTime"
+                                        name="startTime"
+                                        required
+                                />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="endTime" class="form-label">End Time</label>
+                                <input
+                                        type="datetime-local"
+                                        class="form-control"
+                                        id="endTime"
+                                        name="endTime"
+                                        required
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Select discount type -->
+                        <div class="mb-3">
+                            <h6 class="text-primary">Select discount type:</h6>
+                            <div
+                                    class="btn-group w-100"
+                                    role="group"
+                                    aria-label="Discount type selector"
+                            >
+                                <input
+                                        type="radio"
+                                        class="btn-check"
+                                        name="discountTypeRadio"
+                                        id="percentDiscountRadio"
+                                        autocomplete="off"
+                                />
+                                <label
+                                        class="btn btn-outline-light"
+                                        for="percentDiscountRadio"
+                                >Discount by Percentage (%)</label
+                                >
+
+                                <input
+                                        type="radio"
+                                        class="btn-check"
+                                        name="discountTypeRadio"
+                                        id="directDiscountRadio"
+                                        autocomplete="off"
+                                />
+                                <label
+                                        class="btn btn-outline-light"
+                                        for="directDiscountRadio"
+                                >Direct Discount (Fixed Amount)</label
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Loại 1: Giảm theo % -->
+                        <div
+                                class="discount-type-container"
+                                id="percentDiscountContainer"
+                                style="display: none"
+                        >
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="discountLevel" class="form-label"
+                                        >Discount Level (%)</label
+                                        >
+                                        <input
+                                                type="number"
+                                                class="form-control"
+                                                id="discountLevel"
+                                                name="discountLevel"
+                                                min="1"
+                                                max="20"
+                                                placeholder="1-20%"
+                                        />
+                                        <div class="form-text">Discount percentage (1-20%)</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label
+                                                for="maxAmountForPercentDiscount"
+                                                class="form-label"
+                                        >Maximum discount amount (VNĐ)</label
+                                        >
+                                        <input
+                                                type="number"
+                                                class="form-control"
+                                                id="maxAmountForPercentDiscount"
+                                                name="maxAmountForPercentDiscount"
+                                                min="1000"
+                                                placeholder="Min 1.000đ"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="usageLimitPercent" class="form-label"
+                                        >Maximum usage</label
+                                        >
+                                        <input
+                                                type="number"
+                                                class="form-control"
+                                                id="usageLimitPercent"
+                                                name="usageLimit"
+                                                min="1"
+                                                placeholder="Number of times this promotion can be used"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loại 2: Giảm trực tiếp -->
+                        <div
+                                class="discount-type-container"
+                                id="directDiscountContainer"
+                                style="display: none"
+                        >
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="discountAmount" class="form-label"
+                                        >Direct discount amount (VNĐ)</label
+                                        >
+                                        <input
+                                                type="number"
+                                                class="form-control"
+                                                id="discountAmount"
+                                                name="discountAmount"
+                                                min="1000"
+                                                placeholder="Min 1.000đ"
+                                        />
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="usageLimitDirect" class="form-label"
+                                        >Maximum usage</label
+                                        >
+                                        <input
+                                                type="number"
+                                                class="form-control"
+                                                id="usageLimitDirect"
+                                                name="usageLimit"
+                                                min="1"
+                                                placeholder="Number of times this promotion can be used"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="promotionImage" class="form-label"
+                                >Promotion Image</label
+                                >
+                                <input
+                                        type="file"
+                                        class="form-control"
+                                        id="promotionImage"
+                                        name="image"
+                                        accept="image/*"
+                                        required
+                                />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="detail" class="form-label">Detail</label>
+                                <textarea
+                                        class="form-control"
+                                        id="detail"
+                                        name="detail"
+                                        rows="3"
+                                        placeholder="Enter Promotion Details"
+                                        required
+                                ></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" name="isActive" value="true"/>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >
+                                Close
+                            </button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-danger"
+                                    id="savePromotionButton"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/admin/admin-promotion.js}"></script>
+<script th:src="@{/js/admin/search-movie.js}"></script>
+</html>

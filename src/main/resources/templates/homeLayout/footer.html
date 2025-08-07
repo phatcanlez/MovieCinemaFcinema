@@ -1,0 +1,169 @@
+<footer class="footer-modern" th:fragment="footer">
+    <style>
+        .footer-modern {
+            background-color: #111;
+            color: #bbb;
+            font-family: 'Poppins', sans-serif;
+            padding: 40px 20px 0 20px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        .footer-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 30px;
+        }
+
+        .footer-col h5 {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 400;
+            font-size: 15px;
+        }
+
+        .footer-col ul li a:hover {
+            color: #ff3b3b;
+        }
+
+        .footer-brand img {
+            width: 120px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #ccc;
+        }
+
+        .contact-item {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .contact-item i {
+            color: #ff3b3b;
+            margin-right: 6px;
+        }
+
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            height: 290px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: #0f5132;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            margin-top: 30px;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .footer-bottom a {
+            color: #999;
+            margin: 0 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-bottom a:hover {
+            color: #ff3b3b;
+        }
+
+        @media (max-width: 992px) {
+            .footer-row {
+                grid-template-columns: 1fr;
+            }
+
+            .map-container {
+                height: 200px;
+            }
+        }
+    </style>
+
+    <div class="footer-container">
+        <div class="footer-row">
+            <div class="footer-col footer-brand"
+                style="border: darkred solid 1px; padding: 15px; border-radius: 10px; font-size: 22px">
+                <a href="#"><img th:src="@{/images/logo.png}" alt="Fcine Logo"></a>
+                <p>Trải nghiệm điện ảnh đỉnh cao với công nghệ hiện đại, không gian sang trọng và dịch vụ hoàn hảo.</p>
+                <div class="mt-3">
+                    <div class="contact-item"><i class="bi bi-telephone-fill"></i> 1900 8386</div>
+                    <div class="contact-item"><i class="bi bi-envelope-fill"></i> support@FCine.vn</div>
+                    <div class="contact-item"><i class="bi bi-geo-alt-fill"></i> Vincom Megamall, Thủ Đức, Hồ Chí Minh
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding-left: 60px; font-size: 24px" class="footer-col">
+                <h5>Về Chúng Tôi</h5>
+                <ul>
+                    <li><a th:href="@{/about-theater}">Giới thiệu</a></li>
+                    <li><a th:href="@{/utility}">Tiện ích</a></li>
+                    <li><a th:href="@{/contact}">Liên hệ</a></li>
+                    <li><a th:href="@{/partner}">Đối tác</a></li>
+                </ul>
+            </div>
+
+            <div style="padding-left: 30px; font-size: 24px" class="footer-col">
+                <h5>HỖ Trợ</h5>
+                <ul>
+                    <li><a th:href="@{/faq}">FAQ</a></li>
+                    <li><a th:href="@{/guide}">Hướng dẫn</a></li>
+                    <li><a th:href="@{/privacy-policy}">Chính sách</a></li>
+                    <li><a th:href="@{/privacy-policy}">Bảo mật</a></li>
+                    <li><a th:href="@{/terms}">Điều khoản</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.721514748201!2d106.7829418!3d10.8508875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527374c43baad%3A0xb8b244d75d12213e!2sFPT%20Software%20Tp.H%E1%BB%93%20Ch%C3%AD%20Minh!5e0!3m2!1svi!2s!4v1718072583832!5m2!1svi!2s"
+                        allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            &copy; 2022 <strong>F-Cine</strong> | All rights reserved.
+            <div class="mt-2">
+                <a href="@{/privacy-policy}">Một chữ tín</a> |
+                <a href="#">Vạn chữ tin</a>
+            </div>
+        </div>
+    </div>
+</footer>

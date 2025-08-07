@@ -1,0 +1,1355 @@
+/*components.css*/
+
+/* Movie Cards */
+.movie-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+}
+
+
+/* Buttons */
+.btn-primary-custom {
+    background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+/* Quick Booking Styles */
+.quick-booking-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+    .booking-header .booking-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    }
+
+.booking-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.quick-booking-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.quick-booking-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0.5;
+}
+
+/* Form Grid Layout */
+.booking-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+}
+
+.form-label {
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    height: 24px;
+}
+
+.form-label i {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+.form-control-modern {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    padding: 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    flex: 1;
+    min-height: 50px;
+    width: 100%;
+}
+
+.form-control-modern:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    color: white;
+    outline: none;
+}
+
+/* Option styling - black background with red text */
+.form-control-modern option {
+    background: #000000;
+    color: var(--primary-color);
+    padding: 10px 15px;
+    font-weight: 500;
+    border: none;
+}
+
+.form-control-modern option:hover {
+    background: #1a1a1a;
+    color: #ff4757;
+}
+
+.form-control-modern option:checked {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Date input specific styling */
+.form-control-modern[type="date"] {
+    color: white;
+    position: relative;
+}
+
+.form-control-modern[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: var(--primary-color);
+    border-radius: 3px;
+    cursor: pointer;
+    filter: invert(1);
+}
+
+/* Booking Actions */
+.booking-actions {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-booking-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #ff6b6b 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 1.2rem 3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(220, 53, 69, 0.3);
+    min-width: 280px;
+}
+
+.btn-booking-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(220, 53, 69, 0.4);
+    color: white;
+}
+.btn-booking-primary .btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-booking-primary:hover .btn-shine {
+    left: 100%;
+}
+
+.btn-booking-secondary {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    color: var(--text-light);
+    font-weight: 600;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-booking-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.booking-features {
+    margin-top: 1.5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+}
+
+.feature-icon {
+    margin-bottom: 0.5rem;
+}
+
+.feature-icon i {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon i {
+    color: #ff4757;
+    transform: scale(1.1);
+}
+
+.feature-text {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.feature-item:hover .feature-text {
+    color: white;
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .booking-form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    
+    .form-field {
+        min-height: 85px;
+    }
+    
+    .quick-booking-card {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .quick-booking-card {
+        padding: 1.5rem;
+        margin: 0 1rem 2rem 1rem;
+    }
+    
+    .booking-header .booking-title {
+        font-size: 1.8rem;
+    }
+    
+    .btn-booking-primary {
+        width: 100%;
+        min-width: auto;
+        padding: 1rem 2rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .booking-form-grid {
+        gap: 1rem;
+    }
+    
+    .form-field {
+        min-height: 75px;
+    }
+}
+
+@media (max-width: 576px) {
+    .booking-subtitle {
+        font-size: 1rem;
+    }
+    
+    .form-label {
+        font-size: 0.85rem;
+    }
+    
+    .form-control-modern {
+        padding: 0.875rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Animation for form elements */
+.form-field {
+    animation: slideInUp 0.6s ease forwards;
+}
+
+.form-field:nth-child(1) { animation-delay: 0.1s; }
+.form-field:nth-child(2) { animation-delay: 0.2s; }
+.form-field:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Additional existing styles... */
+.movie-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.movie-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.movie-poster-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.movie-poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-poster {
+    transform: scale(1.05);
+}
+
+/* Hover overlay giống movie-list */
+.hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.movie-card:hover .hover-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+.detail-btn {
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+}
+
+.movie-card:hover .detail-btn {
+    transform: translateY(0);
+}
+
+.detail-btn:hover {
+    background: rgba(220, 53, 69, 1);
+    transform: scale(1.05);
+    color: white;
+    text-decoration: none;
+}
+
+.movie-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.movie-info {
+    padding: 1.5rem;
+}
+
+.movie-title {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.movie-details {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.movie-price {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.promo-card {
+    background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    transition: transform 0.3s ease;
+}
+
+.promo-card:hover {
+    transform: translateY(-5px);
+}
+
+.promo-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.promo-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.promo-desc {
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary-custom {
+    background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+    color: white;
+}
+
+.btn-outline-light {
+    border-radius: 25px;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    transform: translateY(-2px);
+}
+
+.form-control-custom {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: white;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control-custom:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    color: white;
+    outline: none;
+}
+
+.form-control-custom::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title {
+    color: white;
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+
+
+
+/* Footer Styles */
+.footer-modern {
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    opacity: 0.5;
+}
+
+.footer-content {
+    padding: 4rem 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Brand Section */
+.footer-brand {
+    margin-bottom: 2rem;
+}
+
+.brand-title {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.brand-title i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.brand-description {
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.contact-info {
+    margin-top: 1.5rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    color: #cccccc;
+    font-size: 0.9rem;
+}
+
+.contact-item i {
+    color: var(--primary-color);
+    margin-right: 0.75rem;
+    font-size: 1rem;
+    width: 16px;
+}
+
+.contact-item:hover {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+/* Footer Sections */
+.footer-section {
+    margin-bottom: 2rem;
+}
+
+.footer-title {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--primary-color);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    padding: 0.25rem 0;
+}
+
+.footer-links a i {
+    font-size: 0.7rem;
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.footer-links a:hover i {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Social Section */
+.social-section {
+    margin-bottom: 1.5rem;
+}
+
+.social-text {
+    color: #cccccc;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.social-icons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.social-icon.facebook {
+    background: rgba(59, 89, 152, 0.2);
+    border: 1px solid rgba(59, 89, 152, 0.3);
+}
+
+.social-icon.facebook::before {
+    background: #3b5998;
+}
+
+.social-icon.youtube {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.social-icon.youtube::before {
+    background: #ff0000;
+}
+
+.social-icon.instagram {
+    background: rgba(225, 48, 108, 0.2);
+    border: 1px solid rgba(225, 48, 108, 0.3);
+}
+
+.social-icon.instagram::before {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-icon.twitter {
+    background: rgba(29, 161, 242, 0.2);
+    border: 1px solid rgba(29, 161, 242, 0.3);
+}
+
+.social-icon.twitter::before {
+    background: #1da1f2;
+}
+
+.social-icon.tiktok {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.social-icon.tiktok::before {
+    background: #000000;
+}
+
+.social-icon:hover::before {
+    transform: scale(1);
+}
+
+.social-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Newsletter */
+.newsletter-section {
+    margin-top: 1.5rem;
+}
+
+.newsletter-title {
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.newsletter-form .input-group {
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.newsletter-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+}
+
+.newsletter-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary-color);
+    box-shadow: none;
+    color: white;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-btn {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.newsletter-btn:hover {
+    background: #ff4757;
+    transform: scale(1.05);
+}
+
+/* App Download */
+.app-download {
+    text-align: right;
+}
+
+.app-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.app-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+.app-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.app-btn i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.app-btn div {
+    text-align: left;
+}
+
+.app-btn small {
+    display: block;
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.app-btn strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright {
+    color: #cccccc;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.copyright strong {
+    color: var(--primary-color);
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.footer-bottom-links a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+    color: var(--primary-color);
+}
+/* Promotion Section Styles */
+.section-subtitle {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Combo Card Styles */
+.combo-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.combo-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-color);
+}
+
+.combo-card.combo-popular {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 30px rgba(220, 53, 69, 0.3);
+}
+
+.combo-card.combo-popular::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), #ff6b6b, var(--primary-color));
+    z-index: 2;
+}
+
+/* Combo Badge */
+.combo-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 3;
+}
+
+.badge-text {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+}
+
+.combo-badge.popular .badge-text {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #000;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Combo Image */
+.combo-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.combo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.combo-card:hover .combo-image img {
+    transform: scale(1.1);
+}
+
+.combo-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: 2rem 1.5rem 1rem;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+}
+
+.combo-card:hover .combo-overlay {
+    transform: translateY(0);
+}
+
+.combo-items {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+}
+
+.combo-items .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.combo-items .item i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.combo-items .item span {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Combo Content */
+.combo-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.combo-title {
+    color: white;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+}
+
+.combo-description {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: center;
+    flex: 1;
+}
+
+/* Combo Pricing */
+.combo-pricing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.original-price {
+    color: #999;
+    font-size: 1rem;
+    text-decoration: line-through;
+    font-weight: 500;
+}
+
+.combo-price {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* Combo Actions */
+.combo-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn-combo-primary {
+    background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-combo-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(220, 53, 69, 0.4);
+    color: white;
+}
+
+.btn-combo-outline {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    color: var(--text-light);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-combo-outline:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Special Offers */
+.special-offers {
+    margin-top: 3rem;
+}
+
+.offer-banner {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.offer-banner:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.offer-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.offer-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), #ff6b6b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.offer-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.offer-text h5 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.offer-text p {
+    color: var(--text-light);
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .combo-image {
+        height: 200px;
+    }
+    
+    .combo-content {
+        padding: 1.25rem;
+    }
+    
+    .combo-title {
+        font-size: 1.1rem;
+    }
+    
+    .combo-description {
+        font-size: 0.85rem;
+    }
+    
+    .combo-pricing {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .combo-actions {
+        flex-direction: column;
+    }
+    
+    .btn-combo-outline {
+        width: 100%;
+        border-radius: 25px;
+        height: auto;
+        padding: 0.75rem;
+    }
+    
+    .offer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .offer-icon {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .combo-items {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .combo-items .item {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    
+    .combo-items .item i {
+        margin-bottom: 0;
+        font-size: 1.2rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+}
+
+/* Animation for combo cards */
+.combo-card {
+    animation: slideInUp 0.8s ease forwards;
+}
+
+/* Enhanced hover effects */
+.combo-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(220, 53, 69, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.combo-card:hover::after {
+    opacity: 1;
+}
+
+/* Navbar Styles */
+
+.navbar-custom.scrolled {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    transition: color 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #ffffff;
+}
+
+.navbar-custom .dropdown-menu {
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-custom .dropdown-item {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar-custom .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+#booking{
+    scroll-margin-top: 80px;}
+#now-showing{
+    scroll-margin-top: 80px;
+}
+#promotions{
+    scroll-margin-top: 80px;
+}
+
+

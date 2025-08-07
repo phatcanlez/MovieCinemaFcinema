@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="https://res.cloudinary.com/thaidev/image/upload/v1752116653/favicon_ij2fnu.png"
+    type="image/png" />
+  <title>FCine - Rạp Phim & Đặt Vé Online</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=My+Soul&family=Roboto+Slab:wght@100..900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/css/variables.css}" />
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="stylesheet" th:href="@{/css/components.css}" />
+  <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+  <link rel="stylesheet" th:href="@{/css/home/header.css}" />
+  <link rel="stylesheet" th:href="@{/css/hero-video.css}" />
+  <link rel="stylesheet" th:href="@{/css/chat.css}" />
+  <link rel="stylesheet" th:href="@{/css/combo-carousel.css}" />
+
+</head>
+
+<body>
+  <div th:replace="~{homeLayout/header :: header}"></div>
+
+  <section class="hero-section position-relative" id="home">
+    <div class="hero-overlay">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7">
+            <div class="hero-content fade-in-up">
+              <h1 class="hero-title">Trải Nghiệm Điện Ảnh<br />Đỉnh Cao</h1>
+              <p class="hero-subtitle">
+                Đặt vé xem phim online nhanh chóng, tiện lợi với hệ thống rạp
+                hiện đại nhất
+              </p>
+              <div class="d-flex gap-3">
+                <button class="btn btn-primary-custom" onclick="scrollToBooking()">
+                  <i class="bi bi-ticket-perforated"></i> ĐẶT VÉ NGAY
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-video-container">
+      <div class="video-wrapper">
+        <iframe id="heroVideo"
+          src="https://www.youtube.com/embed/iGg9PpNkRDk?autoplay=1&mute=1&rel=0&loop=1&playlist=QcHIhoBeu30"
+          title="FCine - Trải nghiệm điện ảnh đỉnh cao" allow="autoplay; encrypted-media" allowfullscreen
+          class="hero-video">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 mt-5" id="now-showing">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">PHIM ĐANG CHIẾU</h2>
+        <a class="btn btn-info" th:href="@{/movie-list}">
+          <i class="bi bi-list"></i> Xem Danh Sách Phim
+        </a>
+      </div>
+
+      <div id="movieCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div th:if="${#lists.isEmpty(movieList)}">
+            <div class="alert alert-info">Không có phim đang chiếu</div>
+          </div>
+
+          <th:block th:if="${!#lists.isEmpty(movieList)}">
+            <th:block th:with="totalMovies=${#lists.size(movieList)},
+                           slidesCount=${totalMovies / 4 + (totalMovies % 4 == 0 ? 0 : 1)}">
+              <th:block th:each="slideIndex : ${#numbers.sequence(0, slidesCount - 1)}">
+                <div th:class="${slideIndex == 0 ? 'carousel-item active' : 'carousel-item'}">
+                  <div class="row g-4">
+                    <th:block th:each="movieIndex : ${#numbers.sequence(slideIndex * 4, (slideIndex * 4) + 3)}">
+                      <div class="col-lg-3 col-md-6" th:if="${movieIndex < #lists.size(movieList)}">
+                        <div class="movie-card fade-in-up"
+                          th:style="${movieIndex % 4 > 0 ? 'animation-delay: 0.' + movieIndex % 4 + 's' : ''}">
+                          <div class="movie-poster-container">
+                            <a th:href="@{'/movie-detail/' + ${movieList[movieIndex].movieId}}">
+                              <img th:src="${movieList[movieIndex].smallImage}"
+                                th:alt="${movieList[movieIndex].movieNameVn}" class="movie-poster" />
+                            </a>
+                            <!-- Hover overlay với nút chi tiết -->
+                            <div class="hover-overlay">
+                              <a th:href="@{'/movie-detail/' + ${movieList[movieIndex].movieId}}" class="detail-btn">
+                                <i class="bi bi-card-text"></i> Chi Tiết
+                              </a>
+                            </div>
+                          </div>
+                          <div class="movie-info">
+                            <h5 class="movie-title" th:text="${movieList[movieIndex].movieNameVn}">
+                              Tên phim
+                            </h5>
+                            <p class="movie-details">
+                              <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2024</span>
+                              •
+                              <span
+                                th:text="${not #lists.isEmpty(movieList[movieIndex].types) ? #strings.listJoin(movieList[movieIndex].types, ', ') : 'Chưa phân loại'}">Thể
+                                loại</span>
+                              •
+                              <span th:text="${movieList[movieIndex].duration + ' phút'}">Thời lượng</span>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                              <!-- Sửa lại phần hiển thị giá phim -->
+                              <span class="movie-price" th:if="${movieList[movieIndex].price != null}"
+                                th:text="'Từ ' + ${#numbers.formatDecimal(movieList[movieIndex].price, 0, 'COMMA', 0, 'POINT') + ' đ'}">
+                              </span>
+
+                              <!-- Nếu không có giá -->
+                              <span class="movie-price" th:unless="${movieList[movieIndex].price != null}"
+                                th:text="'Từ 50,000 đ'">
+                              </span>
+
+                              <button class="btn btn-primary-custom btn-sm btn-book-movie"
+                                th:data-movie-id="${movieList[movieIndex].movieId}"
+                                th:data-movie-name="${movieList[movieIndex].movieNameVn}">
+                                <i class="bi bi-ticket"></i> ĐẶT VÉ
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </th:block>
+                  </div>
+                </div>
+              </th:block>
+            </th:block>
+          </th:block>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 mt-5 bg-dark" id="booking">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-xl-9">
+          <div class="quick-booking-wrapper fade-in-up" style="animation-delay: 0.3s">
+            <div class="booking-header text-center mb-4">
+              <h3 class="booking-title">
+                <i class="bi bi-ticket-perforated me-2"></i>
+                ĐẶT VÉ NHANH
+              </h3>
+              <p class="booking-subtitle">
+                Chọn phim và suất chiếu yêu thích của bạn
+              </p>
+            </div>
+
+            <div class="quick-booking-card">
+              <form id="quickBookingForm" class="booking-form">
+                <div class="booking-form-grid">
+                  <div class="form-field">
+                    <label class="form-label">
+                      <i class="bi bi-film me-2"></i>
+                      Chọn phim
+                    </label>
+                    <select class="form-control-modern" id="quickMovie" required>
+                      <option value="">-- Chọn phim --</option>
+                      <option th:each="movie : ${movieList}" th:value="${movie.movieId}" th:text="${movie.movieNameVn}">
+                        Tên phim
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">
+                      <i class="bi bi-calendar3 me-2"></i>
+                      Ngày chiếu
+                    </label>
+                    <input type="date" class="form-control-modern" id="quickDate" required />
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">
+                      <i class="bi bi-clock me-2"></i>
+                      Suất chiếu
+                    </label>
+                    <select class="form-control-modern" id="quickShowtime" required disabled>
+                      <option value="">-- Chọn suất chiếu --</option>
+                      <!-- Showtimes will be loaded dynamically -->
+                    </select>
+                    <div id="showtimeLoading" class="loading-spinner" style="display: none">
+                      Đang tải...
+                    </div>
+                  </div>
+                </div>
+
+                <div class="booking-actions">
+                  <button type="submit" class="btn btn-booking-primary" id="bookingSubmitBtn" disabled>
+                    <i class="bi bi-search me-2"></i>
+                    TÌM KIẾM GHẾ TRỐNG
+                    <span class="btn-shine"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div class="booking-features">
+              <div class="features-grid">
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <i class="bi bi-lightning-charge"></i>
+                  </div>
+                  <span class="feature-text">Đặt vé nhanh</span>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <i class="bi bi-shield-check"></i>
+                  </div>
+                  <span class="feature-text">Bảo mật cao</span>
+                </div>
+                <div class="feature-item">
+                  <div class="feature-icon">
+                    <i class="bi bi-percent"></i>
+                  </div>
+                  <span class="feature-text">Ưu đãi hấp dẫn</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-5 mt-3" id="combos" style="padding-top: 120px;">
+    <div class="container">
+      <h2 class="section-title" style="margin-top: 40px;">COMBO BẮP NƯỚC</h2>
+      <p class="section-subtitle text-center mb-5">
+        Thưởng thức phim cùng combo bắp nước hấp dẫn với giá ưu đãi
+      </p>
+
+      <!-- Loading state -->
+      <div id="combos-loading" class="text-center py-5">
+        <div class="spinner-border text-danger" role="status">
+          <span class="visually-hidden">Đang tải combo...</span>
+        </div>
+        <p class="mt-3 text-muted">Đang tải danh sách combo...</p>
+      </div>
+
+      <!-- Combo Carousel -->
+      <div id="combos-carousel" class="carousel slide" data-bs-ride="carousel" style="display: none;">
+        <div class="carousel-inner" id="combos-container">
+          <!-- Combos will be dynamically loaded here -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#combos-carousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#combos-carousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <!-- Error state -->
+      <div id="combos-error" class="text-center py-5" style="display: none;">
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          Không thể tải danh sách combo. Vui lòng thử lại sau.
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Nút mở khung chat 💬 -->
+  <div class="fc-chat-toggle" onclick="toggleChat()" style="
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    z-index: 999;
+  ">
+    💬
+  </div>
+
+  <!-- Tooltip cho nút chat -->
+  <div id="tooltip-chat" style="position: fixed;
+            bottom: 105px;
+            right: 75px;
+            background: #e50914;
+            color: #fff;
+            padding: 7px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.5s ease-out;
+            pointer-events: none;
+            z-index: 998;
+            box-shadow: 0 0 8px rgba(229, 9, 20, 0.5);">
+    💬 Chat nhanh với rạp phim
+  </div>
+
+  <!-- Nút Telegram 📩 -->
+  <a href="https://t.me/FCineBot" target="_blank" title="Chat với FCine trên Telegram" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #0088cc;
+    color: white;
+    font-size: 20px;
+    border-radius: 50%;
+    padding: 14px 16px;
+    text-decoration: none;
+    box-shadow: 0 0 12px rgba(0, 136, 204, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    z-index: 999;
+  " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    📩
+  </a>
+
+  <!-- Tooltip cho nút Telegram -->
+  <div id="tooltip-telegram" style="position: fixed;
+            bottom: 25px;
+            right: 75px;
+            background: #0088cc;
+            color: #fff;
+            padding: 7px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.5s ease-out;
+            pointer-events: none;
+            z-index: 998;
+            box-shadow: 0 0 8px rgba(0, 136, 204, 0.5);">
+    📩 Chat với bot FCine
+  </div>
+
+
+  <!-- Khung chat -->
+  <div class="fc-chat-container" id="fc-chat-box-container">
+    <h2>
+      🎬 Trợ lý Rạp Phim
+      <span onclick="toggleChat()" style="cursor: pointer; float: right">✖️</span>
+    </h2>
+
+    <div id="fc-chat-box"></div>
+
+    <div id="fc-chat-suggestions" style="
+      padding: 10px;
+      background: #222;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    ">
+      <div style="color: #fff; font-weight: bold">Gợi ý nhanh:</div>
+      <button class="fc-chat-button" onclick="handleSuggestion('Trailer phim M3GAN 2.0')">
+        Trailer phim M3GAN 2.0
+      </button>
+      <button class="fc-chat-button" onclick="handleSuggestion('Phim của đạo diễn Victor Vũ')">
+        Phim của đạo diễn Victor Vũ
+      </button>
+      <button class="fc-chat-button" onclick="handleSuggestion('Lịch phim hôm nay')">
+        Lịch phim hôm nay
+      </button>
+    </div>
+
+    <div class="fc-chat-input-container">
+      <input type="text" id="fc-user-input" placeholder="Hỏi về phim, suất chiếu, trailer..." />
+      <button class="fc-chat-button" onclick="sendMessage()">Gửi</button>
+    </div>
+  </div>
+
+
+  <div th:replace="~{homeLayout/footer :: footer}"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{/js/homepage.js}"></script>
+  <script th:src="@{/js/search.js}"></script>
+  <script th:src="@{/js/chat.js}"></script>
+  <script th:src="@{/js/combo-carousel.js}"></script>
+  <!-- Thêm vào cuối phần <body> trước các script khác -->
+  <script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        /*<![CDATA[*/
+        var needsProfileCompletion = /*[[${needsProfileCompletion}]]*/ false;
+        var isNewGoogleUser = /*[[${isNewGoogleUser}]]*/ false;
+        /*]]>*/
+
+        if (needsProfileCompletion) {
+            var message = isNewGoogleUser
+                ? 'Chào mừng bạn đến với FCine! Vui lòng hoàn thiện thông tin cá nhân để có trải nghiệm tốt nhất.'
+                : 'Vui lòng hoàn thiện thông tin cá nhân để có thể sử dụng đầy đủ các tính năng.';
+
+            // Tạo thông báo bootstrap
+            var alertHtml = `
+                <div class="alert alert-warning alert-dismissible fade show position-fixed"
+                     style="top: 80px; right: 20px; z-index: 1050; max-width: 400px;" role="alert">
+                    <i class="bi bi-info-circle me-2"></i>
+                    ${message}
+                    <a href="/customer/profile" class="btn btn-sm btn-outline-warning ms-2">
+                        Hoàn thiện ngay
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+
+            // Thêm vào body
+            document.body.insertAdjacentHTML('beforeend', alertHtml);
+
+            // Tự động ẩn sau 10 giây
+            setTimeout(function() {
+                var alert = document.querySelector('.alert-warning');
+                if (alert) {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }
+            }, 10000);
+        }
+    });
+  </script>
+</body>
+
+</html>

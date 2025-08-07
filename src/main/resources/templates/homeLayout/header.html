@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-custom" th:fragment="header" lang="vi"
+  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+  <meta charset="UTF-8" />
+  <!-- Ngăn cache -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" th:href="@{/css/variables.css}" />
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="stylesheet" th:href="@{/css/components.css}" />
+  <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+  <link rel="stylesheet" th:href="@{/css/header-dropdown.css}" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <div class="container">
+    <a class="navbar-brand" th:href="@{/home}">
+      <img th:src="@{/images/logo.png}" class="rounded" alt="Fcine" style="width: 100%; height: 40px" />
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto" style="font-size: 1.1rem; font-weight: 500; gap: 1rem;">
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/home}">TRANG CHỦ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/home#now-showing}">
+            PHIM ĐANG CHIẾU
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/home#booking}">MUA VÉ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/home#combos}">BẮP NƯỚC</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/privacy-policy}">CHÍNH SÁCH</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/about-theater}">GIỚI THIỆU</a>
+        </li>
+      </ul>
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-flex search-container">
+          <div class="dropdown">
+            <button class="btn search-toggle-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-search text-white"></i>
+            </button>
+            <div class="dropdown-menu search-dropdown bg-transparent">
+              <input type="text" style="height: 40px;width: fit-content;" id="searchBox" placeholder="Tìm kiếm phim..."
+                class="form-control bg-transparent text-white" autocomplete="off">
+              <ul id="searchResults" class="list-group position-absolute z-3 shadow bg-white"
+                style="top: 100%; max-height: 400px; overflow-y: auto;width: 350px;">
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
+          <a class="btn btn-outline-light btn-sm" th:href="@{/auth/login}">
+            <i class="bi bi-person"></i> ĐĂNG NHẬP
+          </a>
+        </div>
+
+        <div sec:authorize="isAuthenticated()">
+          <div class="dropdown user-dropdown">
+            <a class="nav-link dropdown-toggle user-dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="bi bi-person-circle"></i>
+              <strong class="username-display" sec:authentication="name"></strong>
+            </a>
+            <ul class="dropdown-menu cinema-dropdown-menu">
+              <li>
+                <a class="cinema-dropdown-item" th:href="@{/customer/profile}">
+                  <i class="bi bi-person-gear"></i>
+                  <span>Thông tin cá nhân</span>
+                </a>
+              </li>
+              <li>
+                <a class="cinema-dropdown-item" th:href="@{/customer/my-tickets}">
+                  <i class="bi bi-ticket-perforated-fill"></i>
+                  <span>Vé của tôi</span>
+                </a>
+              </li>
+              <li>
+                <a class="cinema-dropdown-item" th:href="@{/auth/change-password}">
+                  <i class="bi bi-shield-lock-fill"></i>
+                  <span>Đổi mật khẩu</span>
+                </a>
+              </li>
+              <li>
+                <hr class="cinema-dropdown-divider" />
+              </li>
+              <li>
+                <form th:action="@{/auth/logout}" method="post" class="m-0">
+                  <button type="submit" class="cinema-logout-btn">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>ĐĂNG XUẤT</span>
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/js/search.js}"></script>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/main.js}"></script>
+
+<script>
+  document.querySelectorAll(".login-btn").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      window.location.href = link.getAttribute("href");
+    });
+  });
+
+  // Cắt tên người dùng chỉ hiển thị 3 chữ cái đầu
+  document.addEventListener("DOMContentLoaded", function () {
+    const usernameDisplay = document.querySelector(".username-display");
+    if (usernameDisplay) {
+      const fullName = usernameDisplay.textContent.trim();
+      if (fullName.length > 3) {
+        usernameDisplay.textContent = fullName.substring(0, 3) + "...";
+      }
+    }
+  });
+</script>

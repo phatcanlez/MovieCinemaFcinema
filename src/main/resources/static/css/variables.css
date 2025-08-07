@@ -1,0 +1,16 @@
+
+/*variable.css*/
+:root {
+    --primary-color: #dc2626;
+    --secondary-color: #1a1a1a;
+    --accent-color: #fbbf24;
+    --success-color: #16a34a;
+    --text-light: #ffffff;
+    --text-muted: #9ca3af;
+    --bg-dark: #0f0f0f;
+    --bg-card: #1f1f1f;
+    --gradient-primary: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    --gradient-dark: linear-gradient(135deg, #0f0f0f 0%, #000000 100%);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-hover: 0 16px 64px rgba(220, 38, 38, 0.3);
+}

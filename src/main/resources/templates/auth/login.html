@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đăng nhập - CinemaMax</title>
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@600;700;800&display=swap"
+    rel="stylesheet" />
+  <!-- Bootstrap and Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" th:href="@{/css/variables.css}" />
+  <link rel="stylesheet" th:href="@{/css/main.css}" />
+  <link rel="stylesheet" th:href="@{/css/components.css}" />
+  <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+  <link rel="stylesheet" href="../css/login.css" />
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <!-- Canvas for particle effects -->
+  <canvas id="animation-canvas"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></canvas>
+  <!-- Background effect layers -->
+  <div class="light-beams"></div>
+  <div class="lens-flares"></div>
+  <div class="ripple-effect-1"></div>
+  <div class="ripple-effect-2"></div>
+  <div class="starfield"></div>
+  <div class="pulse-rings">
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+  </div>
+  <div class="cursor-trail">
+    <canvas id="trail-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+  </div>
+  <!-- Transition overlay -->
+  <div class="transition-overlay"></div>
+
+  <section class="d-flex align-items-center"
+    style="min-height: calc(100vh - 70px); padding-top: 70px; padding-bottom: 20px;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <!-- Login Form -->
+        <div class="col-md-5">
+          <div class="login-container">
+            <h3 class="login-title">Đăng nhập</h3>
+
+            <!-- Thông báo lỗi và thành công -->
+            <div th:if="${loginError}" class="alert alert-danger d-none" th:text="${loginError}" id="login-error"></div>
+            <div th:if="${logoutMsg}" class="alert alert-info d-none" th:text="${logoutMsg}" id="logout-message"></div>
+            <div th:if="${registeredMsg}" class="alert alert-success d-none" th:text="${registeredMsg}"
+              id="registered-message"></div>
+
+            <form th:action="@{/auth/login}" method="post" class="needs-validation" novalidate>
+              <div class="form-group mb-3">
+                <label for="username" class="form-label">Tên đăng nhập</label>
+                <input type="text" class="form-control" id="username" name="username" required />
+                <div class="invalid-feedback">Vui lòng nhập tên đăng nhập</div>
+              </div>
+              <div class="form-group mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="password" name="password" required />
+                <div class="invalid-feedback">Vui lòng nhập mật khẩu</div>
+              </div>
+              <div class="forgot-links">
+                <p class="mt-3 text-center">
+                  <a th:href="@{/auth/forgot-password}"><button type="button" class="btn btn-link">
+                      Bạn quên mật khẩu?</button></a>
+                </p>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary w-100" id="loginBtn">
+                  <span class="btn-text">Đăng nhập</span>
+                </button>
+              </div>
+
+              <div class="form-group mb-3">
+                <a th:href="@{/oauth2/authorization/google}" class="btn btn-outline-light w-100">
+                  <i class="bi bi-google me-2"></i>Đăng nhập với Google
+                </a>
+              </div>
+
+            </form>
+
+            <div class="login-links">
+              <p class="mt-3 text-center">
+                Chưa có tài khoản?
+                <a th:href="@{/auth/register}">Đăng ký ngay</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{/js/slider.js}"></script>
+  <script src="../js/login.js"></script>
+</body>
+
+</html>

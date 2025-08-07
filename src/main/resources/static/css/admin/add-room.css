@@ -1,0 +1,372 @@
+/* --- General & Variables --- */
+:root {
+    /* Red & Black Theme */
+    --bg-color: #121212; /* Very dark background */
+    --card-bg-color: #1E1E1E; /* Slightly lighter card background */
+    --primary-color: #D32F2F; /* A strong, classic red */
+    --text-color: #EAEAEA; /* Off-white text for readability */
+    --text-muted-color: #888888; /* Muted gray for secondary text */
+    --border-color: #383838; /* Dark border color */
+
+    --seat-normal-bg: #5a5a5a; /* Neutral gray for normal seats */
+    --seat-normal-text: #FFFFFF;
+    --seat-vip-bg: var(--primary-color); /* VIP seats are primary red */
+    --seat-vip-text: #FFFFFF;
+    --seat-inactive-bg: #2a2a2a; /* Very dark gray for inactive seats */
+    --seat-inactive-text: #666666;
+    --screen-bg: #444444; /* Dark gray for the screen bar */
+
+    --font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* General body styling */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.card {
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+}
+
+/* Page Title */
+.page-title {
+    text-align: center;
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+}
+
+.page-title span {
+    color: var(--primary-color);
+}
+
+.page-title:hover {
+    color: var(--primary-color);
+}
+
+/* Combined Form */
+.combined-form {
+    max-width: 1200px;
+    margin: 0 auto 25px auto;
+    background-color: var(--card-bg-color);
+    padding: 25px;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.combined-form:hover {
+    transform: translateY(-2px);
+}
+
+.form-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.input-section, .guidelines-section {
+    flex: 1;
+}
+
+.input-section {
+    padding-right: 15px;
+    border-right: 1px solid var(--border-color);
+}
+
+.guidelines-section h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.guidelines-section h3:hover {
+    color: #ff4444;
+}
+
+.guidelines-section p {
+    font-size: 1rem;
+    margin: 8px 0;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.guidelines-section strong {
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+.guidelines-section strong:hover {
+    color: #ff4444;
+}
+
+/* Labels */
+label {
+    color: var(--text-muted-color);
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+label:hover {
+    color: #ffffff;
+}
+
+/* Text and number inputs */
+input[type="number"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    font-size: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(211, 47, 47, 0.25);
+    background-color: #2a2a2a;
+}
+
+/* Submit button for form */
+button[type="submit"] {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #ff4444;
+    transform: translateY(-2px);
+}
+
+/* Seat map container */
+#seatForm {
+    max-width: 900px;
+    margin: 0 auto 25px auto;
+    overflow-x: auto;
+    background-color: var(--card-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.2);
+    transition: transform 0.3s ease;
+}
+
+#seatForm:hover {
+    transform: translateY(-2px);
+}
+
+.content-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-center h3 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.content-center h3 span {
+    color: var(--primary-color);
+}
+
+/* Screen area matching room-detail style */
+.screen-area {
+    background: var(--screen-bg);
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.screen-area:hover {
+    background: #555555;
+    transform: translateY(-1px);
+}
+
+/* Seat map table */
+table {
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 8px 14px;
+    display: inline-block;
+}
+
+td {
+    padding: 2px;
+}
+
+/* Cinema seat buttons matching room-detail style */
+.btn {
+    font-family: var(--font-family);
+    width: 45px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border-radius: 8px 8px 3px 3px;
+    position: relative;
+    box-shadow: inset 0 -4px 5px rgba(0,0,0,0.3), 0 2px 3px rgba(0,0,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.btn:hover:not(.inactive) {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: inset 0 -4px 5px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.4);
+}
+
+.normal {
+    background: var(--seat-normal-bg);
+    color: var(--seat-normal-text);
+}
+
+.vip {
+    background: var(--seat-vip-bg);
+    color: var(--seat-vip-text);
+}
+
+.inactive {
+    background: var(--seat-inactive-bg);
+    color: var(--seat-inactive-text);
+    cursor: default;
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.2);
+}
+
+.inactive:hover {
+    transform: none;
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.2);
+}
+
+/* Save button */
+.save-button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    margin: 25px auto;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+}
+
+.save-button:hover {
+    background-color: #ff4444;
+    transform: translateY(-2px);
+}
+
+/* Alert styling to match theme */
+.alert {
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.alert-danger {
+    background-color: rgba(211, 47, 47, 0.2);
+    color: var(--primary-color);
+    border: 1px solid rgba(211, 47, 47, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .input-section, .guidelines-section {
+        width: 100%;
+    }
+
+    .input-section {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 15px;
+        padding-right: 0;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .guidelines-section h3 {
+        font-size: 1.25rem;
+    }
+
+    .guidelines-section p {
+        font-size: 0.9rem;
+    }
+
+    #seatForm {
+        padding: 15px;
+    }
+
+    .btn {
+        width: 38px;
+        height: 34px;
+        font-size: 11px;
+        border-radius: 6px 6px 2px 2px;
+    }
+
+    table {
+        border-spacing: 5px 10px;
+    }
+
+    .save-button {
+        padding: 12px 20px;
+    }
+}

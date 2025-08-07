@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chọn Ghế - FCine</title>
+  <link rel="icon" href="https://res.cloudinary.com/thaidev/image/upload/v1752116653/favicon_ij2fnu.png"
+    type="image/png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" th:href="@{/css/seat-selection.css}" />
+</head>
+
+<body>
+  <div class="alert-container" id="alertContainer"></div>
+  <div class="container">
+    <div class="header">
+      <div class="movie-info">
+        <div class="movie-poster"><img src="" alt="" /></div>
+        <div class="movie-details">
+          <h1></h1>
+          <div class="movie-meta">
+            <div class="meta-item">
+              <div class="meta-label"></div>
+              <div class="meta-value"></div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label"></div>
+              <div class="meta-value"></div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label"></div>
+              <div class="meta-value"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="cinema-section">
+        <!-- <div class="seat-quantity-section">
+            <label for="seat-quantity">Số lượng ghế:</label>
+            <select id="seat-quantity" class="seat-quantity-select">
+              <option value="1">1 ghế</option>
+              <option value="2">2 ghế</option>
+              <option value="3">3 ghế</option>
+              <option value="4">4 ghế</option>
+              <option value="5">5 ghế</option>
+              <option value="6">6 ghế</option>
+              <option value="7">7 ghế</option>
+              <option value="8">8 ghế</option>
+            </select>
+          </div> -->
+
+        <div class="screen"></div>
+
+        <div class="seating-area" id="seat-table"></div>
+
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-seat legend-available"></div>
+            <span>Ghế trống</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-seat legend-selected"></div>
+            <span>Ghế đã chọn</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-seat legend-occupied"></div>
+            <span>Ghế đã đặt</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-seat legend-vip"></div>
+            <span>Ghế VIP</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-panel">
+        <div class="panel-title">Thông tin đặt vé</div>
+
+        <div class="selected-seats">
+          <div class="section-title-small">Ghế đã chọn</div>
+          <div id="selected-seats-list">
+            <div style="
+                  text-align: center;
+                  color: #666;
+                  font-style: italic;
+                  padding: 20px;
+                " id="empty-seat-list">
+              Chưa chọn ghế nào
+            </div>
+          </div>
+        </div>
+
+        <div class="price-summary">
+          <div class="total-price">
+            <span>Tổng cộng</span>
+            <span id="total-price">0đ</span>
+          </div>
+        </div>
+
+        <button class="continue-btn" id="continue-btn" disabled>
+          Tiếp tục thanh toán
+        </button>
+      </div>
+    </div>
+  </div>
+  <script src="/js/seat-selection.js"></script>
+</body>
+
+</html>

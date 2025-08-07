@@ -1,0 +1,48 @@
+/* Responsive for side bar */
+.sidebar {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Responsive for list table */
+@media (max-width: 992px) {
+    table {
+        min-width: 600px;
+        font-size: 14px;
+    }
+    .table-responsive {
+        padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    table {
+        min-width: 480px;
+        font-size: 12px;
+    }
+    .table th, .table td {
+        padding: 6px 4px;
+    }
+    /* Ẩn các cột phụ nếu cần, ví dụ cột thứ 4, 5 */
+    .table th:nth-child(4),
+    .table td:nth-child(4),
+    .table th:nth-child(5),
+    .table td:nth-child(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    table {
+        min-width: 350px;
+        font-size: 11px;
+    }
+    .table th, .table td {
+        padding: 4px 2px;
+    }
+    /* Ẩn thêm cột nếu cần */
+    .table th:nth-child(3),
+    .table td:nth-child(3) {
+        display: none;
+    }
+}

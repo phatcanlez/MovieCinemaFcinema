@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Không Tìm Thấy Trang | CinemaMax</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/404.css}" />
+  </head>
+
+  <body class="error-page">
+    <!-- Animated Background -->
+    <div class="bg-animation">
+      <div class="floating-element" style="--delay: 0s; --duration: 8s">🎬</div>
+      <div class="floating-element" style="--delay: 2s; --duration: 10s">
+        🍿
+      </div>
+      <div class="floating-element" style="--delay: 4s; --duration: 12s">
+        🎭
+      </div>
+      <div class="floating-element" style="--delay: 6s; --duration: 9s">🎪</div>
+      <div class="floating-element" style="--delay: 1s; --duration: 11s">
+        🎵
+      </div>
+    </div>
+
+    <div class="container-fluid h-100">
+      <div class="row h-100 align-items-center justify-content-center">
+        <div class="col-12 text-center">
+          <div class="error-content">
+            <!-- Error Icon -->
+            <div class="error-icon mb-4">
+              <div class="cinema-reel">
+                <div class="reel-outer">
+                  <div class="reel-inner">
+                    <div class="image-container">
+                      <img
+                        th:src="@{/images/avatar_account/hoangnam123_1749366964719_b079f2c0-c2a4-4e8b-b654-1d6f9372cb3c.jpg}"
+                        alt="Cinema Reel"
+                        class="reel-image"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Error Code -->
+            <h1 class="error-code">4<span class="glitch">0</span>4</h1>
+
+            <!-- Error Title -->
+            <h2 class="error-title">
+              <i class="bi bi-film"></i>
+              Ối! Trang Không Tồn Tại
+            </h2>
+
+            <!-- Error Message -->
+            <p class="error-message">
+              <span class="sub-message"
+                >Hãy quay lại rạp chiếu phim chính để tiếp tục trải nghiệm</span
+              >
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+              <a
+                th:href="@{/home}"
+                class="btn btn-primary-custom btn-lg home-button me-3"
+              >
+                <i class="bi bi-house-fill"></i> Về Trang Chủ
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

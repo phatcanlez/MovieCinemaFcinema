@@ -1,0 +1,35 @@
+<div th:fragment="profileSidebar(activePage)" xmlns:th="http://www.thymeleaf.org">
+  <div class="sidebar"
+    style="min-height: calc(100vh - 80px); height: auto; position: fixed; top: 80px; left: 0; width: 250px; z-index: 100; background-color: #f8f9fa; border-right: 1px solid #dee2e6; padding: 20px; overflow-y: auto;">
+    <div class="user-profile" style="margin-top: 20px">
+      <img th:src="${account.image != null ? account.image : '/images/avatar_account/img.png'}" alt="Avatar"
+        class="user-avatar" />
+      <div class="user-name" th:text="${account.fullName}"></div>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a th:href="@{/customer/profile}" th:classappend="${activePage == 'profile' ? 'active' : ''}" class="nav-link"
+            data-section="profile">
+            <span class="nav-icon">👤</span>
+            Thông Tin Cá Nhân
+          </a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/customer/my-tickets}" th:classappend="${activePage == 'tickets' ? 'active' : ''}"
+            class="nav-link" data-section="tickets">
+            <span class="nav-icon">🎫</span>
+            Vé Của Tôi
+          </a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/auth/change-password}" th:classappend="${activePage == 'password' ? 'active' : ''}"
+            class="nav-link" data-section="password">
+            <span class="nav-icon">🔒</span>
+            Thay Đổi Mật Khẩu
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

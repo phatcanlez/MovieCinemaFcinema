@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FCinema - Employees Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/admin/admin-mainlayout.css}"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="d-flex flex-column min-vh-100">
+    <div th:replace="~{adminLayout/navbar :: adminNavbar(activePage='employees')}" th:error="true"></div>
+
+    <div class="main-content p-4 flex-grow-1">
+        <h2 class="text-danger">
+            <i class="fa fa-user me-2"></i>Employees Management
+        </h2>
+            <div class="card-body">
+                <!-- Search Section -->
+                <form th:action="@{/admin/employee-management}" method="get" class="mb-3">
+                    <div class="input-group" style="width: 400px;">
+                        <input type="text" class="form-control" id="searchInput" name="search"
+                               th:value="${search}" placeholder="Enter Username,..."/>
+                        <input type="hidden" name="page" th:value="${currentPage}"/>
+                        <input type="hidden" name="size" th:value="${pageSize}"/>
+                        <button class="btn btn-danger" type="submit">
+                            <i class="fas fa-search"></i>
+                            Search
+                        </button>
+                    </div>
+                </form>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <!-- Count accounts -->
+                    <div th:if="${employees != null}" class="mb-3">
+                        <p class="text-danger">
+                            Total Employees: <span th:text="${employeeStats.totalEmployees}"></span>
+                        </p>
+                    </div>
+                    <div th:if="${employees == null}" class="mb-3">
+                        <p class="text-danger">Employees list is null!</p>
+                    </div>
+                    <!-- Add button -->
+                    <button class="btn btn-danger mb-2" id="addEmployeeButton" data-bs-toggle="modal"
+                            data-bs-target="#addEmployeeModal">
+                        <i class="fas fa-plus"></i> Add Employee
+                    </button>
+                </div>
+
+                <!-- List table -->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+<!--                            <th>No</th>-->
+<!--                            <th>Avatar</th>-->
+                            <th>Username</th>
+                            <th>Full Name</th>
+<!--                            <th>Date of Birth</th>-->
+                            <th>Gender</th>
+                            <th>Email</th>
+<!--                            <th>Identity Card</th>-->
+<!--                            <th>Phone Number</th>-->
+<!--                            <th>Address</th>-->
+<!--                            <th>Register Date</th>-->
+                            <th>Edit</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="employeeTableBody">
+                        <tr th:each="employee, iterStat : ${employees}" th:if="${employees != null and employee != null and employee.account != null}">
+<!--                            <td th:text="${iterStat.count + (currentPage * pageSize)}"></td>-->
+<!--                            <td>-->
+<!--                                <img th:src="${employee.account.image != null ? employee.account.image : '/images/avatar_account/img.png'}"-->
+<!--                                     style="width: 50px; height: 50px; border-radius: 50%" loading="lazy"-->
+<!--                                     onerror="this.src='/images/avatar_account/img.png';"/>-->
+<!--                            </td>-->
+                            <td th:text="${employee.account.username}" class="searchable"></td>
+                            <td th:text="${employee.account.fullName}" class="searchable"></td>
+<!--                            <td th:text="${employee.account.dateOfBirth != null ? #temporals.format(employee.account.dateOfBirth, 'yyyy-MM-dd') : ''}"></td>-->
+                            <td th:text="${employee.account.gender == 'Nam' ? 'Nam' : employee.account.gender == 'Nữ' ? 'Nữ' : 'LGBT'}"></td>
+                            <td th:text="${employee.account.email}" class="searchable"></td>
+<!--                            <td th:text="${employee.account.identityCard}" class="searchable"></td>-->
+<!--                            <td th:text="${employee.account.phoneNumber}" class="searchable"></td>-->
+<!--                            <td th:text="${employee.account.address}" class="searchable"></td>-->
+<!--                            <td th:text="${employee.account.registerDate != null ? #temporals.format(employee.account.registerDate, 'yyyy-MM-dd') : ''}"></td>-->
+                            <td>
+                                <!-- Edit button -->
+                                <button class="btn btn-warning btn-sm editEmployeeButton"
+                                        th:attr="data-account-id=${employee.account.accountId},
+                                             data-username=${employee.account.username},
+                                             data-fullname=${employee.account.fullName},
+                                             data-dob=${employee.account.dateOfBirth != null ? #temporals.format(employee.account.dateOfBirth, 'yyyy-MM-dd') : ''},
+                                             data-gender=${employee.account.gender == 'Nam' ? 1 : employee.account.gender == 'Nữ' ? 2 : 3},
+                                             data-email=${employee.account.email},
+                                             data-identity-card=${employee.account.identityCard},
+                                             data-phone=${employee.account.phoneNumber},
+                                             data-address=${employee.account.address},
+                                             data-register-date=${employee.account.registerDate != null ? #temporals.format(employee.account.registerDate, 'yyyy-MM-dd') : ''},
+                                             data-image=${employee.account.image != null ? employee.account.image : '/images/avatar_account/img.png'}"
+                                        data-bs-toggle="modal" data-bs-target="#editEmployeeModal">
+                                    <i class="fas fa-edit"></i>
+
+                                </button>
+                            </td>
+                            <td>
+                                <form th:action="@{/admin/toggle-employee-status(page=${currentPage}, size=${pageSize}, search=${search})}"
+                                      method="post" style="display: inline">
+                                    <input type="hidden" name="accountId" th:value="${employee.account.accountId}"/>
+                                    <!-- Active button -->
+                                    <button type="submit" class="btn btn-sm"
+                                            th:classappend="${employee.account.status == 1} ? 'btn-danger' : 'btn-success'">
+                                        <i th:class="${employee.account.status == 1} ? 'fas fa-lock' : 'fas fa-unlock'"></i>
+<!--                                        <span th:text="${employee.account.status == 1} ? 'Lock' : 'Unlock'"></span>-->
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${employees == null or #lists.isEmpty(employees)}">
+                            <td colspan="13" class="text-center">Empty list!</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation" th:if="${totalPages > 1}">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/employee-management(page=${currentPage - 1}, size=${pageSize}, search=${search})}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                            th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link" th:href="@{/admin/employee-management(page=${i}, size=${pageSize}, search=${search})}"
+                               th:text="${i + 1}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/admin/employee-management(page=${currentPage + 1}, size=${pageSize}, search=${search})}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+        <div class="modal fade" id="addEmployeeModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Employee</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addEmployeeForm" th:action="@{/admin/add-employee}" method="post"
+                              enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="addUsername" name="username"
+                                           placeholder="Enter Username" required>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="addPassword" name="password"
+                                           placeholder="Enter Password" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addFullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="addFullName" name="fullName"
+                                           placeholder="Enter Full Name" required>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addDob" class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" id="addDob" name="dateOfBirth" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addGender" class="form-label">Gender</label>
+                                    <select class="form-control" id="addGender" name="gender" required>
+                                        <option value="1">Nam</option>
+                                        <option value="2">Nữ</option>
+                                        <option value="3">LGBT</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="addEmail" name="email"
+                                           placeholder="Enter Email" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addIdentityCard" class="form-label">Identity Card</label>
+                                    <input type="text" class="form-control" id="addIdentityCard" name="identityCard"
+                                           placeholder="Enter Identity Card" required>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addPhone" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="addPhone" name="phoneNumber"
+                                           placeholder="Enter Phone Number" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addAddress" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="addAddress" name="address"
+                                           placeholder="Enter Address" required>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="addImage" class="form-label">Avatar</label>
+                                    <input type="file" class="form-control" id="addImage" name="image" accept="image/*">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" id="saveAddEmployeeButton">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editEmployeeModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Employee</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editEmployeeForm" th:action="@{/admin/update-employee(page=${currentPage}, size=${pageSize}, search=${search})}" method="post"
+                              enctype="multipart/form-data">
+                            <input type="hidden" id="editAccountId" name="accountId">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="editUsername" name="username" readonly>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editFullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="editFullName" name="fullName"
+                                           placeholder="Enter Full Name" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editDob" class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" id="editDob" name="dateOfBirth" required>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editGender" class="form-label">Gender</label>
+                                    <select class="form-control" id="editGender" name="gender" required>
+                                        <option value="1">Nam</option>
+                                        <option value="2">Nữ</option>
+                                        <option value="3">LGBT</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="editEmail" name="email"
+                                           placeholder="Enter Email" required>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editIdentityCard" class="form-label">Identity Card</label>
+                                    <input type="text" class="form-control" id="editIdentityCard" name="identityCard"
+                                           placeholder="Enter Identity Card" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editPhone" class="form-label">Phone Number</label>
+                                    <input type="text" class="form-control" id="editPhone" name="phoneNumber"
+                                           placeholder="Enter Phone Number" required>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editAddress" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="editAddress" name="address"
+                                           placeholder="Enter Address" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editRegisterDate" class="form-label">Register Date</label>
+                                    <input type="date" class="form-control" id="editRegisterDate" name="registerDate"
+                                           required readonly>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label for="editImage" class="form-label">Avatar</label>
+                                    <input type="file" class="form-control" id="editImage" name="image"
+                                           accept="image/*">
+                                    <div class="mt-2" th:if="${employee != null and employee.account != null}">
+                                        <img th:src="${employee.account.image != null ? employee.account.image : '/images/avatar_account/img.png'}"
+                                             id="currentAvatar" style="width: 100px; height: 100px; border-radius: 50%;"
+                                             onerror="this.src='/images/avatar_account/img.png';"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" id="saveEditEmployeeButton">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const editButtons = document.querySelectorAll('.editEmployeeButton');
+        const editModal = document.getElementById('editEmployeeModal');
+        const saveEditButton = document.getElementById('saveEditEmployeeButton');
+        const currentAvatar = document.getElementById('currentAvatar');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const accountId = button.getAttribute('data-account-id');
+                const username = button.getAttribute('data-username');
+                const fullName = button.getAttribute('data-fullname');
+                const dob = button.getAttribute('data-dob');
+                const gender = button.getAttribute('data-gender');
+                const email = button.getAttribute('data-email');
+                const identityCard = button.getAttribute('data-identity-card');
+                const phone = button.getAttribute('data-phone');
+                const address = button.getAttribute('data-address');
+                const registerDate = button.getAttribute('data-register-date');
+                const image = button.getAttribute('data-image');
+
+                document.getElementById('editAccountId').value = accountId || '';
+                document.getElementById('editUsername').value = username || '';
+                document.getElementById('editFullName').value = fullName || '';
+                document.getElementById('editDob').value = dob || '';
+                document.getElementById('editGender').value = gender || '1';
+                document.getElementById('editEmail').value = email || '';
+                document.getElementById('editIdentityCard').value = identityCard || '';
+                document.getElementById('editPhone').value = phone || '';
+                document.getElementById('editAddress').value = address || '';
+                document.getElementById('editRegisterDate').value = registerDate || '';
+                currentAvatar.src = image || '/images/avatar_account/img.png';
+            });
+        });
+
+        saveEditButton.addEventListener('click', () => {
+            const form = document.getElementById('editEmployeeForm');
+            if (form.checkValidity()) {
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(text => {
+                        if (text === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công',
+                                text: 'Cập nhật thông tin nhân viên thành công!',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Đóng'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else if (text.startsWith('error:')) {
+                            const errorMessage = text.replace('error: ', '');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: 'Cập nhật thất bại: ' + errorMessage,
+                                confirmButtonColor: '#dc2626',
+                                confirmButtonText: 'Đóng'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: 'Đã xảy ra lỗi không xác định.',
+                                confirmButtonColor: '#dc2626',
+                                confirmButtonText: 'Đóng'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi cập nhật thông tin.',
+                            confirmButtonColor: '#dc2626',
+                            confirmButtonText: 'Đóng'
+                        });
+                    });
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+
+        const saveAddButton = document.getElementById('saveAddEmployeeButton');
+        saveAddButton.addEventListener('click', () => {
+            const form = document.getElementById('addEmployeeForm');
+            if (form.checkValidity()) {
+                const formData = new FormData(form);
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.text())
+                    .then(text => {
+                        if (text === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công',
+                                text: 'Thêm nhân viên thành công!',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Đóng'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            });
+                        } else if (text.startsWith('error:')) {
+                            const errorMessage = text.replace('error: ', '');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: 'Thêm nhân viên thất bại: ' + errorMessage,
+                                confirmButtonColor: '#dc2626',
+                                confirmButtonText: 'Đóng'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: 'Đã xảy ra lỗi không xác định.',
+                                confirmButtonColor: '#dc2626',
+                                confirmButtonText: 'Đóng'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi thêm nhân viên.',
+                            confirmButtonColor: '#dc2626',
+                            confirmButtonText: 'Đóng'
+                        });
+                    });
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+
+        const toggleForms = document.querySelectorAll('form[th\\:action*="/admin/toggle-employee-status"]');
+        toggleForms.forEach(form => {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const accountId = form.querySelector('input[name="accountId"]').value;
+                if (accountId) {
+                    fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `accountId=${encodeURIComponent(accountId)}`
+                    })
+                        .then(response => response.text())
+                        .then(text => {
+                            if (text === 'redirect:/admin/employee-management') {
+                                location.reload();
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công',
+                                    text: 'Cập nhật trạng thái nhân viên thành công!',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Đóng'
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi',
+                                    text: 'Cập nhật trạng thái thất bại.',
+                                    confirmButtonColor: '#dc2626',
+                                    confirmButtonText: 'Đóng'
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: 'Đã xảy ra lỗi khi cập nhật trạng thái.',
+                                confirmButtonColor: '#dc2626',
+                                confirmButtonText: 'Đóng'
+                            });
+                        });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi',
+                        text: 'Không thể tìm thấy ID tài khoản.',
+                        confirmButtonColor: '#dc2626',
+                        confirmButtonText: 'Đóng'
+                    });
+                }
+            });
+        });
+    });
+</script>
+<script th:src="@{/js/admin/search-movie.js}"></script>
+</body>
+</html>

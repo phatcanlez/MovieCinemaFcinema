@@ -1,0 +1,110 @@
+/* Combo Pricing Styles */
+.combo-pricing {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.discounted-price {
+  color: #dc3545;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.current-price {
+  color: #28a745;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.combo-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.combo-card.combo-popular {
+  border: 2px solid #dc3545;
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.15);
+}
+
+#combos-loading .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Combo Carousel Styles */
+#combos-carousel .carousel-control-prev,
+#combos-carousel .carousel-control-next {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(220, 53, 69, 0.8);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+#combos-carousel .carousel-control-prev {
+  left: -80px;
+}
+
+#combos-carousel .carousel-control-next {
+  right: -80px;
+}
+
+#combos-carousel .carousel-control-prev:hover,
+#combos-carousel .carousel-control-next:hover {
+  opacity: 1;
+  background-color: rgba(220, 53, 69, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+#combos-carousel .carousel-control-prev-icon,
+#combos-carousel .carousel-control-next-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive adjustments for carousel controls */
+@media (max-width: 768px) {
+  #combos-carousel .carousel-control-prev,
+  #combos-carousel .carousel-control-next {
+    width: 40px;
+    height: 40px;
+  }
+
+  #combos-carousel .carousel-control-prev {
+    left: -60px;
+  }
+
+  #combos-carousel .carousel-control-next {
+    right: -60px;
+  }
+}
+
+@media (max-width: 576px) {
+  #combos-carousel .carousel-control-prev {
+    left: -50px;
+  }
+
+  #combos-carousel .carousel-control-next {
+    right: -50px;
+  }
+}

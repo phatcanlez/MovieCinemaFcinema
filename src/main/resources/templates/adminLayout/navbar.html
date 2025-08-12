@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<div class="d-flex" th:fragment="adminNavbar(activePage)" id="adminSidebar" lang="en"
+  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+  <link rel="stylesheet" th:href="@{/css/admin/admin-sidebar.css}" />
+
+  <div class="sidebar bg-dark text-white">
+    <div class="sidebar-header p-3">
+      <h4 class="text-danger">
+        <i class="fas fa-film me-2"></i>Fcine Dashboard
+      </h4>
+    </div>
+    <!-- User Section -->
+    <div class="user-section text-center p-2" sec:authorize="isAuthenticated()" id="userSection">
+      <div class="d-flex flex-column align-items-center justify-content-center">
+
+        <img
+          src="https://marketplace.canva.com/FaoS8/MAErepFaoS8/1/tl/canva-person-icon-MAErepFaoS8.png"
+          alt="User Profile"
+          class="user-img rounded-circle mb-2"
+        />
+        <span class="user-name"
+          ><strong sec:authentication="name"></strong>
+        </span>
+
+        <!-- Logout Button -->
+        <div>
+          <a class="logout-button btn btn-danger btn-sm" th:href="@{../auth/logout}">
+            <i class="fas fa-sign-out-alt me-1"></i> Logout
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <ul class="nav flex-column">
+
+      <!-- Dashboard -->
+      <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'dashboard' ? 'active text-danger' : 'text-white'}"
+          th:href="@{/admin/dashboard}"
+        >
+          <i class="fa fa-line-chart me-2"></i>Dashboard
+        </a>
+      </li>
+
+      <!--Ticket-->
+      <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'EMPLOYEE')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'tickets' ? 'active text-danger' : 'text-white'}"
+          th:with="isAdmin=${#authorization.expression('hasRole(''ADMIN'')')}"
+          th:href="${isAdmin ? '/admin/ticket-management' : '/employee/ticket-management'}"
+        >
+          <i class="fa fa-ticket me-2"></i>Ticket
+        </a>
+      </li>
+
+      <!--Employee-->
+      <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'employees' ? 'active text-danger' : 'text-white'} "
+          th:href="@{/admin/employee-management}"
+        >
+          <i class="fa fa-user me-2"></i>Employee
+        </a>
+      </li>
+
+      <!--Member-->
+      <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'members' ? 'active text-danger' : 'text-white'}"
+          th:href="@{/admin/member-management}"
+        >
+          <i class="fas fa-users me-2"></i>Member
+        </a>
+      </li>
+
+      <!--Schedule-->
+      <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a
+                class="nav-link"
+                th:classappend="${activePage == 'schedules' ? 'active text-danger' : 'text-white'}"
+                th:href="@{/admin/schedule}"
+        >
+          <i class="fas fa-calendar me-2"></i>Schedule
+        </a>
+      </li>
+
+      <!--Room-->
+      <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'rooms' ? 'active text-danger' : 'text-white'}"
+          th:href="@{/admin/room-management}"
+        >
+          <i class="fas fa-chair me-2"></i>Room
+        </a>
+      </li>
+
+      <!--Movie-->
+      <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'movies' ? 'active text-danger' : 'text-white'}"
+          th:href="@{/admin/movie-management(page=1)}"
+        >
+          <i class="fa fa-film me-2"></i>Movie
+        </a>
+      </li>
+
+      <!--Promotion-->
+      <li class="nav-item" sec:authorize="hasAnyRole('ADMIN')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'promotions' ? 'active text-danger' : 'text-white'}"
+          th:href="@{/admin/promotion-management}"
+        >
+          <i class="fas fa-tags me-2"></i>Promotion
+        </a>
+      </li>
+
+      <!--Combo-->
+      <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'combos' ? 'active text-danger' : 'text-white'}"
+          th:href="@{/admin/combo-management}"
+        >
+          <i class="fas fa-utensils me-2"></i>Combo
+        </a>
+      </li>
+
+      <!-- Booking-->
+      <li class="nav-item" sec:authorize="hasAnyRole('EMPLOYEE')">
+        <a
+          class="nav-link"
+          th:classappend="${activePage == 'bookings' ? 'active text-danger' : 'text-white'}"
+          th:with="isAdmin=${#authorization.expression('hasRole(''ADMIN'')')}"
+          th:href="${isAdmin ? '/admin/booking' : '/employee/booking'}"
+        >
+          <i class="fa fa-calendar-plus me-2"></i>Booking
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

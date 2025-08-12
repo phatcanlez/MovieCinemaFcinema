@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn sử dụng - F-Cine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111;
+            color: #eee;
+        }
+        .header-section {
+            background-color: #b71c1c;
+            color: #fff;
+            padding: 140px 20px 40px;
+            text-align: center;
+        }
+        .header-section h1 {
+            font-weight: 700;
+            font-size: 40px;
+        }
+        .guide-section {
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+        .guide-step {
+            margin-bottom: 40px;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+        .guide-step:hover {
+            transform: translateY(-5px);
+        }
+        .guide-step h3 {
+            color: #ff3b3b;
+            margin-bottom: 15px;
+        }
+        .guide-step p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: #fff; border: 3px solid #ffcb05; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; display: none; }
+        #backToTop:hover { transform: scale(1.15); box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+        #backToTop img { width: 40px; height: 40px; }
+    </style>
+</head>
+<body>
+<div th:replace="homeLayout/header :: header"></div>
+<div class="header-section">
+    <h1><i class="bi bi-info-circle"></i> Hướng dẫn sử dụng hệ thống F-Cine</h1>
+</div>
+<div class="guide-section">
+    <div class="guide-step">
+        <h3><i class="bi bi-person-circle"></i> Đăng nhập tài khoản</h3>
+        <p>Truy cập trang chủ F-Cine, chọn biểu tượng người dùng góc phải trên cùng, sau đó nhập email và mật khẩu của bạn. Nếu chưa có tài khoản, bạn có thể đăng ký dễ dàng chỉ với vài bước.</p>
+    </div>
+    <div class="guide-step">
+        <h3><i class="bi bi-ticket-detailed"></i> Đặt vé trực tuyến</h3>
+        <p>Chọn phim, thời gian và rạp chiếu phù hợp, sau đó chọn ghế và hình thức thanh toán. Sau khi thanh toán thành công, mã vé sẽ được gửi đến email hoặc có thể kiểm tra tại mục "Vé của tôi".</p>
+    </div>
+    <div class="guide-step">
+        <h3><i class="bi bi-star"></i> Tích lũy và sử dụng điểm Stars</h3>
+        <p>Mỗi lần mua vé thành công, bạn sẽ tích lũy điểm Stars tương ứng với giá trị đơn hàng. Điểm này có thể đổi lấy vé miễn phí, combo ưu đãi hoặc nâng hạng thành viên.</p>
+    </div>
+    <div class="guide-step">
+        <h3><i class="bi bi-gift"></i> Nhận và sử dụng ưu đãi</h3>
+        <p>Vào mục "Ưu đãi của tôi" trong tài khoản để xem các khuyến mãi, quà sinh nhật hoặc quà tặng theo hạng thành viên. Nhấn "Dùng ngay" để áp dụng khi thanh toán.</p>
+    </div>
+    <div class="guide-step">
+        <h3><i class="bi bi-telephone-forward"></i> Liên hệ hỗ trợ</h3>
+        <p>Trong trường hợp có vấn đề như không nhận được vé, không tích điểm, hoặc lỗi thanh toán, vui lòng liên hệ qua hotline hoặc email để được hỗ trợ nhanh nhất.</p>
+    </div>
+</div>
+<div th:replace="homeLayout/footer :: footer"></div>
+
+<div id="backToTop">
+    <img src="/images/Postk.png" alt="Back to Top">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const scrollBtn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) { scrollBtn.style.display = "flex"; }
+        else { scrollBtn.style.display = "none"; }
+    });
+    scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
+
+</body>
+</html>

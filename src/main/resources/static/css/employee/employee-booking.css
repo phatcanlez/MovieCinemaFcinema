@@ -1,0 +1,655 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #2a2a2a 0%, #3d3d3d 50%, #252525 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    color: #e0e0e0;
+}
+
+.d-flex {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+}
+
+.main-content {
+    flex-grow: 1;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.content-container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* Styling for the new back button container */
+.back-button-container {
+    padding: 1rem 2rem 0; /* Căn lề trên và hai bên để thẳng hàng với nội dung */
+}
+
+/* Step Navigation */
+.step-container {
+    flex: 0 0 70%;
+    padding: 2rem;
+    background-color: #1c2526;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    border: 1px solid #ff4d4d;
+    transition: box-shadow 0.3s ease;
+}
+
+.step-container:hover {
+    box-shadow: 0 12px 32px rgba(255, 77, 77, 0.3); /* Enhanced shadow on hover */
+}
+
+.info-panel-container {
+    flex: 0 0 30%;
+}
+
+.info-panel {
+    background-color: #2c2f33;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid #ff4d4d;
+    height: 100%;
+    transition: border-left-color 0.3s ease;
+}
+
+.info-panel:hover {
+    border-left-color: #d32f2f; /* Darker red on hover */
+}
+
+.info-panel h5 {
+    color: #ff4d4d;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+    text-align: center;
+}
+
+.info-panel h5:hover {
+    color: #d32f2f; /* Darker red on hover */
+}
+
+.info-panel p {
+    margin: 0.5rem 0;
+    color: #d1d1d1;
+    transition: color 0.3s ease;
+}
+
+.info-panel p:hover {
+    color: #ffffff; /* Slightly brighter on hover */
+}
+
+.info-panel p strong {
+    color: #ff4d4d;
+    transition: color 0.3s ease;
+}
+
+.info-panel p strong:hover {
+    color: #d32f2f; /* Darker red on hover */
+}
+
+.info-details {
+    margin-bottom: 1rem; /* Space before the separator */
+}
+
+.info-separator {
+    border: 0;
+    height: 4px;
+    background: #ff4d4d; /* Red line to match theme */
+    background: linear-gradient(to right, transparent, #ff4d4d, transparent); /* Gradient for style */
+    margin: 1rem 0; /* Vertical spacing */
+}
+
+/* Updated pricing section styling */
+.info-panel .pricing {
+    padding: 1rem;
+    background-color: #25282b;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.info-panel .pricing p {
+    margin: 0.25rem 0;
+    font-size: 1rem;
+}
+
+.info-panel .pricing p strong {
+    min-width: 120px;
+    display: inline-block;
+}
+
+.info-panel .pricing #infoSeatPrice,
+.info-panel .pricing #infoComboPrice,
+.info-panel .pricing #infoOriginalAmount {
+    color: #d1d1d1;
+    font-weight: 500;
+
+}
+
+.info-panel .pricing #infoDiscountAmount {
+    color: #46d600;
+    text-decoration: line-through;
+    font-size: 1rem;
+}
+
+.info-panel .pricing #infoFinalAmount {
+    color: #ff4d4d;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: #1c2526;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.progress {
+    height: 40px;
+    background-color: #3a3a3a;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #ff4d4d; /* Thin red border */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Inner shadow for depth */
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #ff4d4d 0%, #d32f2f 100%); /* Red gradient */
+    font-size: 18px;
+    font-weight: 500;
+    transition: width 0.5s ease-in-out; /* Smoother animation */
+    border-radius: 6px; /* Slight curve */
+    box-shadow: 0 2px 6px rgba(255, 77, 77, 0.4); /* Outer glow */
+    text-align: center;
+    line-height: 40px; /* Center text vertically */
+    color: #ffffff; /* White text for contrast */
+}
+
+.step {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.step.active {
+    display: block;
+}
+
+.step h2 {
+    color: #ff4d4d;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Subtle shadow for text */
+    transition: color 0.3s ease;
+}
+
+.step h2:hover {
+    color: #d32f2f; /* Darker red on hover */
+}
+
+/* Animation for step transition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.form-label {
+    color: #e0e0e0;
+    font-weight: 500;
+}
+
+.form-select,
+.form-control {
+    background-color: #e0e0e0;
+    color: #000000;
+    border: 1px solid #4a4a4a;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: #ff4d4d;
+    box-shadow: 0 0 8px rgba(255, 77, 77, 0.3);
+}
+
+/* seat */
+.seat-map {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.screen-name {
+    text-align: center;
+    font: bold 16px sans-serif;
+}
+
+.screen {
+    background: linear-gradient(90deg, transparent 0%, #DC3545 50%, transparent 100%);
+    color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 5px;
+    font-weight: bold;
+    border: 1px solid rgba(220,53,69,0.2); /* Thin red border */
+    border-radius: 10px; /* Gentle curve */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+.column-labels {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.column-label {
+    width: 30px;
+    height: 20px;
+    margin: 2px;
+    display: inline-block;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    color: #e0e0e0;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2px;
+}
+
+.seat {
+    width: 50px;
+    height: 30px;
+    margin: 2px;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    border-radius: 6px; /* Slight curve */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seat:hover {
+    transform: translateY(-2px); /* Lift effect on hover */
+    box-shadow: 0 4px 8px rgba(255, 77, 77, 0.3); /* Subtle shadow on hover */
+}
+
+.available.standard {
+    background-color: #28a745; /* Vibrant green for standard */
+}
+
+.available.vip {
+    background-color: #dc3545; /* Vibrant red for VIP */
+}
+
+.occupied {
+    background-color: #6c757d; /* Darker gray for occupied */
+}
+
+.selected {
+    background-color: #ffc107; /* Vibrant yellow for selected */
+}
+
+.clicking {
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+/* combo */
+.combo-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.combo-card {
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.combo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(255, 0, 0, 0.3);
+}
+
+.combo-card .combo-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.combo-card .combo-details {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.combo-card .combo-details h5 {
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.combo-card .combo-details p {
+    color: #808080;
+    font-size: 15px;
+}
+
+.combo-card .combo-details .price {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Quantity */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quantity-btn {
+    background-color: #ff0000;
+    border: none;
+    color: #e0e0e0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.quantity-btn:hover {
+    background-color: #bb0000;
+    transform: translateY(-2px); /* Lift effect on hover */
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4); /* Glowing red shadow */
+}
+
+.quantity-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.quantity-btn:hover::after {
+    width: 100px;
+    height: 100px;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #ff0000; /* Red border to match theme */
+    border-radius: 4px;
+    color: #000000;
+    font-size: 20px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.quantity-input:focus {
+    border-color: #bb0000; /* Darker red on focus */
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.3); /* Subtle glow on focus */
+    outline: none;
+}
+
+/* form check */
+.form-check-input {
+    background-color: #2c2f33;
+    border: 1px solid #4a4a4a;
+}
+
+.form-check-input:checked {
+    background-color: #ff4d4d;
+    border-color: #ff4d4d;
+}
+
+.form-check-label {
+    color: #e0e0e0;
+}
+
+/* Danger button to match sidebar's red accent */
+.btn-danger {
+    background: linear-gradient(135deg, #DC3545 0%, #ff1744 100%);
+    border: 1px solid #DC3545;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #ff1744 0%, #DC3545 100%);
+    border-color: #ff1744;
+    transform: translateX(3px);
+    box-shadow:
+            0 5px 16px rgba(220, 53, 69, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-danger::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-danger:hover::before {
+    left: 100%;
+}
+
+/* Warning button with a complementary style */
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ffca2c 100%);
+    border: 1px solid #ffc107;
+    border-radius: 6px;
+    color: #212529;
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(255, 193, 7, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ffca2c 0%, #ffc107 100%);
+    border-color: #ffca2c;
+    transform: translateX(3px);
+    box-shadow:
+            0 5px 16px rgba(255, 193, 7, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-warning::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-warning:hover::before {
+    left: 100%;
+}
+
+/* Primary button with a complementary style */
+.btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #00aaff 100%);
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 123, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #00aaff 0%, #007bff 100%);
+    border-color: #00aaff;
+    transform: translateX(3px);
+    box-shadow:
+            0 5px 16px rgba(0, 123, 255, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:disabled {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Success button with a complementary style */
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #34c759 100%);
+    border: 1px solid #28a745;
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #34c759 0%, #28a745 100%);
+    border-color: #34c759;
+    transform: translateX(3px);
+    box-shadow:
+            0 5px 16px rgba(40, 167, 69, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-success:hover::before {
+    left: 100%;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%); /* Gray gradient */
+    border: 1px solid #6c757d; /* Matching border color */
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(108, 117, 125, 0.2); /* Adjusted shadow color */
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #495057 0%, #6c757d 100%); /* Reversed gradient on hover */
+    border-color: #495057; /* Darker gray on hover */
+    transform: translateX(3px);
+    box-shadow:
+            0 5px 16px rgba(108, 117, 125, 0.4), /* Darker shadow on hover */
+            inset 0 1px 0 rgba(255, 255, 255, 0.2); /* White inset for depth */
+}
+
+.btn-secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-secondary:hover::before {
+    left: 100%;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.card {
+    background-color: #2c2f33;
+    border: 1px solid #4a4a4a;
+    border-radius: 8px;
+}
+
+.card p {
+    color: #e0e0e0;
+}
+
+.card p strong {
+    color: #ff4d4d;
+}
+
+.text-success {
+    color: #ff4d4d !important;
+}

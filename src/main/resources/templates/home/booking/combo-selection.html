@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chọn Combo - FCine</title>
+  <link rel="icon" href="https://res.cloudinary.com/thaidev/image/upload/v1752116653/favicon_ij2fnu.png"
+    type="image/png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" th:href="@{/css/combo-selection.css}" />
+</head>
+
+<body>
+  <div class="alert-container" id="alertContainer"></div>
+
+  <div class="container">
+    <div class="main-content">
+      <div class="combo-section">
+        <div class="section-header">
+          <h2 class="section-title">Chọn Combo Bắp Nước</h2>
+          <p class="section-subtitle">
+            Thưởng thức phim với combo bắp nước thơm ngon
+          </p>
+          <button class="skip-combo-btn" onclick="skipCombo()">
+            Bỏ qua combo
+          </button>
+        </div>
+
+        <div class="combo-grid" id="combo-grid">
+          <!-- Combos will be loaded dynamically from API -->
+          <div class="loading-spinner" style="grid-column: 1 / -1; text-align: center; padding: 50px">
+            <div style="color: #dc2626; font-size: 18px">
+              <i class="bi bi-arrow-clockwise" style="animation: spin 1s linear infinite"></i>
+              Đang tải combo...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-panel">
+        <div class="time-left">
+          <div class="timer" id="timer"></div>
+          <div style="color: #999; font-size: 12px">Thời gian giữ ghế</div>
+        </div>
+
+        <div class="panel-title">Thông tin đặt vé</div>
+
+        <div class="selected-seats">
+          <div class="section-title-small">Ghế đã chọn</div>
+          <div id="selected-seats-list">
+            <div style="
+                  text-align: center;
+                  color: #666;
+                  font-style: italic;
+                  padding: 20px;
+                " id="empty-seat-list">
+              Chưa chọn ghế nào
+            </div>
+          </div>
+        </div>
+
+        <div class="combo-items">
+          <div class="section-title-small">Combo đã chọn</div>
+          <div id="combo-items-list">
+            <div style="
+                  text-align: center;
+                  color: #666;
+                  font-style: italic;
+                  padding: 20px;
+                " id="empty-combo-list">
+              Chưa chọn combo nào
+            </div>
+          </div>
+        </div>
+
+        <div class="price-summary">
+          <div class="section-title-small">Chi tiết giá</div>
+          <div class="price-row">
+            <span>Vé xem phim</span>
+            <span id="ticket-total"></span>
+          </div>
+          <div class="price-row">
+            <span>Combo bắp nước</span>
+            <span id="combo-total">0đ</span>
+          </div>
+          <div class="total-price">
+            <span>Tổng cộng</span>
+            <span id="total-price"></span>
+          </div>
+        </div>
+
+        <button class="continue-btn" id="continue-btn">
+          Tiếp tục thanh toán
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <script th:src="@{/js/combo-selection.js}"></script>
+</body>
+
+</html>

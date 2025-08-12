@@ -1,0 +1,398 @@
+.not-link {
+  color: #fff !important;
+  text-decoration: none !important;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+/* --- General & Variables --- */
+:root {
+  /* Red & Black Theme */
+  --bg-color: #121212; /* Very dark background */
+  --card-bg-color: #1e1e1e; /* Slightly lighter card background */
+  --primary-color: #d32f2f; /* A strong, classic red */
+  --text-color: #eaeaea; /* Off-white text for readability */
+  --text-muted-color: #888888; /* Muted gray for secondary text */
+  --border-color: #383838; /* Dark border color */
+
+  --seat-normal-bg: #5a5a5a; /* Neutral gray for normal seats */
+  --seat-normal-text: #ffffff;
+  --seat-vip-bg: var(--primary-color); /* VIP seats are primary red */
+  --seat-vip-text: #ffffff;
+  --seat-inactive-text: #666666;
+  --screen-bg: #444444; /* Dark gray for the screen bar */
+
+  --font-family: "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* General body styling */
+body {
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #2a2a2a 0%, #3d3d3d 50%, #252525 100%);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  line-height: 1.6;
+}
+
+.card {
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+}
+
+/* Page Title */
+.page-title {
+  text-align: center;
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: color 0.3s ease;
+}
+
+.page-title span {
+  color: var(--primary-color);
+}
+
+/* Combined Form */
+.combined-form {
+  max-width: 1200px;
+  margin: 0 auto 25px auto;
+  background-color: var(--card-bg-color);
+  padding: 25px;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px rgba(211, 47, 47, 0.2);
+  transition: transform 0.3s ease;
+  min-height: 650px; /* hoặc giá trị phù hợp, ví dụ 500px */
+}
+
+.combined-form:hover {
+  transform: translateY(-2px);
+}
+
+.form-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.guidelines-section h3 {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.guidelines-section p {
+  font-size: 1rem;
+  margin: 8px 0;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.guidelines-section strong {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+/* Labels */
+label {
+  color: var(--text-muted-color);
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+label:hover {
+  color: #ffffff;
+}
+
+/* Text and number inputs */
+input[type="number"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  color: var(--text-color);
+  font-size: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(211, 47, 47, 0.25);
+  background-color: #2a2a2a;
+}
+
+/* Submit button for form */
+button[type="submit"] {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 12px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.link-back {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  padding: 12px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.link-back:hover {
+  background-color: #ff4444;
+  transform: translateY(-2px);
+}
+
+button[type="submit"]:hover {
+  background-color: #ff4444;
+  transform: translateY(-2px);
+}
+
+/* Seat map container */
+#seatForm {
+  max-width: 900px;
+
+  overflow-x: auto;
+  border-radius: 0.75rem;
+
+  transition: transform 0.3s ease;
+}
+
+#seatForm:hover {
+  transform: translateY(-2px);
+}
+
+.content-center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content-center h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.content-center h3 span {
+  color: var(--primary-color);
+}
+
+/* Screen area matching room-detail style */
+.screen-area {
+  background: var(--screen-bg);
+  color: #ffffff;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.screen-area:hover {
+  background: #555555;
+  transform: translateY(-1px);
+}
+
+/* Seat map table */
+table {
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 8px 14px;
+  display: inline-block;
+}
+
+td {
+  padding: 2px;
+}
+
+/* Cinema seat buttons matching room-detail style */
+.btn {
+  font-family: var(--font-family);
+  width: 45px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border-radius: 8px 8px 3px 3px;
+  position: relative;
+  box-shadow: inset 0 -4px 5px rgba(0, 0, 0, 0.3), 0 2px 3px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Chỉ hiệu ứng hover cho ghế VIP */
+
+.normal {
+  background: var(--seat-normal-bg);
+  color: var(--seat-normal-text);
+}
+
+.vip {
+  background: var(--seat-vip-bg);
+  color: var(--seat-vip-text);
+}
+
+/* Save button */
+.save-button {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+}
+
+.save-button:hover {
+  background-color: #ff4444;
+  transform: translateY(-2px);
+}
+
+/* Alert styling to match theme */
+.alert {
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: rgba(40, 167, 69, 0.2);
+  color: #28a745;
+  border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.alert-danger {
+  background-color: rgba(211, 47, 47, 0.2);
+  color: var(--primary-color);
+  border: 1px solid rgba(211, 47, 47, 0.3);
+}
+
+/* Chỉ thêm đoạn CSS cần thiết */
+.form-content {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.input-section {
+  flex: 1;
+  min-width: 280px;
+}
+
+.guidelines-section {
+  display: none;
+}
+
+.content-center {
+  flex: 1;
+  min-width: 400px;
+}
+
+/* Tùy chỉnh layout cho seat map nếu cần */
+#seatMapContainer {
+  overflow-x: auto;
+}
+
+/* ==== FIX hover đen khi di chuột lên nút ghế ==== */
+.btn.normal:hover {
+  background: var(--seat-normal-bg) !important;
+  color: var(--seat-normal-text) !important;
+}
+
+.btn.vip:hover {
+  background: var(--seat-vip-bg) !important;
+  color: var(--seat-vip-text) !important;
+}
+
+.btn.inactive:hover {
+  background: transparent !important;
+  color: var(--seat-inactive-text) !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .input-section {
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    padding-right: 0;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .guidelines-section h3 {
+    font-size: 1.25rem;
+  }
+
+  .guidelines-section p {
+    font-size: 0.9rem;
+  }
+
+  #seatForm {
+    padding: 15px;
+  }
+
+  .btn {
+    width: 38px;
+    height: 34px;
+    font-size: 11px;
+    border-radius: 6px 6px 2px 2px;
+  }
+
+  table {
+    border-spacing: 5px 10px;
+  }
+
+  .save-button {
+    padding: 12px 20px;
+  }
+}

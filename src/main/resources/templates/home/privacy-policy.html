@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chính sách bảo mật - FCine</title>
+    <link rel="icon" href="https://res.cloudinary.com/thaidev/image/upload/v1752116653/favicon_ij2fnu.png"
+        type="image/png" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/variables.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/components.css}" />
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111;
+            color: #eee;
+            scroll-behavior: smooth;
+        }
+
+        .policy-header {
+            background-color: #b71c1c;
+            color: #fff;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .policy-header h1 {
+            font-weight: 700;
+            font-size: 42px;
+        }
+
+        .policy-container {
+            background: #1c1c1c;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .policy-card {
+            background: #222;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .policy-card h3 {
+            color: #ff3b3b;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .policy-card h3 i {
+            margin-right: 10px;
+            color: #ff3b3b;
+        }
+
+        .final-note {
+            font-weight: bold;
+            color: #ffc107;
+            text-align: center;
+            padding: 20px;
+            font-size: 18px;
+        }
+
+        .toc {
+            background: #222;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .toc h4 {
+            color: #ff3b3b;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .toc a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+            transition: 0.2s;
+        }
+
+        .toc a:hover {
+            color: #ffc107;
+        }
+
+        .policy-card {
+            background: #222;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .highlight {
+            background-color: #333;
+            box-shadow: 0 0 25px rgba(255, 59, 59, 0.7);
+            transition: 0.3s;
+        }
+
+        #scrollToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: #fff;
+            border: 3px solid #ffcb05;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: none;
+        }
+
+        #scrollToTop:hover {
+            transform: scale(1.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+        }
+
+
+        .policy-card:hover {
+            background: #333;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px);
+            border: 1px solid #ff3b3b;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        li::marker {
+            content: "";
+        }
+    </style>
+</head>
+
+<body>
+    <div th:replace="homeLayout/header :: header"></div>
+
+    <div class="policy-header">
+        <h1 style="padding-top: 100px;"><i class="bi bi-shield-lock"></i> Chính sách bảo mật FCine</h1>
+    </div>
+
+    <div class="container policy-container mt-5 mb-5">
+
+        <div class="toc">
+            <h4><i class="bi bi-list"></i> Mục lục nhanh</h4>
+            <a href="#intro">Lời mở đầu</a>
+            <a href="#definition">Định nghĩa</a>
+            <a href="#collection">Phạm vi thu thập dữ liệu</a>
+            <a href="#purpose">Mục đích xử lý</a>
+            <a href="#usage">Phạm vi sử dụng</a>
+            <a href="#storage">Lưu trữ dữ liệu</a>
+            <a href="#rights">Quyền khách hàng</a>
+            <a href="#obligation">Nghĩa vụ khách hàng</a>
+            <a href="#transfer">Chuyển dữ liệu quốc tế</a>
+            <a href="#security">Bảo mật</a>
+            <a href="#risk">Rủi ro</a>
+            <a href="#contact">Thông tin liên hệ</a>
+            <a href="#effect">Hiệu lực chính sách</a>
+        </div>
+
+        <div class="policy-card" id="intro">
+            <h3><i class="bi bi-door-open"></i> Lời mở đầu</h3>
+            <p>
+                Công ty trách nhiệm hữu hạn F-Cine Việt Nam cam kết tôn trọng quyền riêng tư và bảo vệ dữ liệu cá nhân
+                của khách hàng. Chính sách bảo mật dữ liệu cá nhân này quy định cụ thể phạm vi thu thập, mục đích xử lý,
+                quyền và nghĩa vụ của khách hàng, nguyên tắc bảo mật thông tin cũng như trách nhiệm của F-Cine trong
+                việc bảo vệ dữ liệu cá nhân phù hợp với các quy định pháp luật hiện hành của nước Cộng hòa xã hội chủ
+                nghĩa Việt Nam.
+            </p>
+        </div>
+
+        <div class="policy-card" id="definition">
+            <h3><i class="bi bi-book"></i> Định nghĩa và giải thích từ ngữ</h3>
+            < p> Dữ liệu cá nhân là bất kỳ thông tin dưới dạng ký hiệu, chữ viết, chữ số, hình ảnh, âm thanh hoặc dạng
+                tương tự trên môi trường điện tử gắn liền với một cá nhân cụ thể hoặc có thể xác định một cá nhân cụ
+                thể. Xử lý dữ liệu cá nhân là toàn bộ hoặc một phần các hoạt động liên quan đến dữ liệu cá nhân như thu
+                thập, ghi nhận, phân tích, xác nhận, lưu trữ, chỉnh sửa, công bố, kết hợp, truy cập, truy xuất, thu hồi,
+                mã hóa, giải mã, sao chép, chia sẻ, truyền đưa, cung cấp, chuyển giao, xóa, hủy dữ liệu cá nhân hoặc các
+                hành động khác có liên quan. Chủ thể dữ liệu là cá nhân mà dữ liệu cá nhân đó phản ánh. Bên kiểm soát dữ
+                liệu cá nhân là tổ chức quyết định mục đích và phương tiện xử lý dữ liệu cá nhân. Bên xử lý dữ liệu cá
+                nhân là tổ chức thực hiện việc xử lý dữ liệu cá nhân thay mặt bên kiểm soát dữ liệu cá nhân trên cơ sở
+                hợp đồng, thỏa thuận hoặc ủy quyền. Dữ liệu cá nhân cơ bản bao gồm các thông tin như họ tên, ngày tháng
+                năm sinh, giới tính, địa chỉ cư trú, số điện thoại, email, thông tin tài khoản, hình ảnh, lịch sử giao
+                dịch, thông tin thiết bị truy cập, cookie, lịch sử thao tác người dùng, đánh giá sản phẩm, thông tin
+                nhận hàng, lịch sử mua vé, lịch sử tương tác dịch vụ. Dữ liệu cá nhân nhạy cảm bao gồm thông tin tài
+                khoản ngân hàng, số thẻ tín dụng, thông tin giao dịch tài chính, dữ liệu định danh thiết bị, dữ liệu
+                định vị, dữ liệu nhận diện sinh trắc học, dữ liệu truy cập hệ thống camera an ninh tại rạp, dữ liệu ghi
+                âm ghi hình an ninh. </p>
+        </div>
+
+        <div class="policy-card" id="collection">
+            <h3><i class="bi bi-folder2-open"></i> Phạm vi thu thập dữ liệu cá nhân</h3>
+            <p> F-Cine có thể thu thập dữ liệu cá nhân của khách hàng thông qua các phương thức bao gồm khi khách hàng
+                đăng ký tài khoản thành viên trên website, ứng dụng F-Cine, khi khách hàng mua vé trực tiếp tại các rạp
+                chiếu phim F-Cine, khi khách hàng thực hiện các giao dịch trên các nền tảng số của F-Cine như website,
+                ứng dụng di động, khi khách hàng tham gia các chương trình khuyến mại, tích lũy điểm, sự kiện, khảo sát
+                do F-Cine tổ chức, khi khách hàng liên hệ với bộ phận chăm sóc khách hàng của F-Cine qua các kênh
+                hotline, email, ứng dụng chat, mạng xã hội, khi hệ thống camera an ninh, hệ thống kiểm soát ra vào, hệ
+                thống ghi hình tại rạp tự động ghi nhận, khi F-Cine tiếp nhận dữ liệu từ các bên đối tác, bên xử lý dữ
+                liệu được ủy quyền trong quá trình vận hành dịch vụ. </p>
+        </div>
+
+        <div class="policy-card" id="purpose">
+            <h3><i class="bi bi-bullseye"></i> Mục đích thu thập và xử lý dữ liệu cá nhân</h3>
+            <p> F-Cine thu thập và xử lý dữ liệu cá nhân của khách hàng cho các mục đích sau đăng ký, tạo lập, quản trị
+                và duy trì tài khoản thành viên trên hệ thống. Thực hiện các giao dịch mua vé xem phim, đặt vé, thanh
+                toán dịch vụ. Triển khai các chương trình khuyến mại, ưu đãi, tích điểm, chăm sóc thành viên thân thiết.
+                Gửi các thông báo liên quan đến giao dịch, lịch chiếu, sự kiện, thay đổi dịch vụ. Liên hệ, trao đổi,
+                giải đáp, hỗ trợ, chăm sóc khách hàng khi có yêu cầu phát sinh. Phân tích dữ liệu, nghiên cứu hành vi
+                tiêu dùng nhằm nâng cao chất lượng dịch vụ, cải thiện trải nghiệm khách hàng. Cá nhân hóa nội dung tiếp
+                thị, quảng cáo, giới thiệu sản phẩm dịch vụ phù hợp với sở thích và hành vi khách hàng. Nghiên cứu, phát
+                triển sản phẩm, dịch vụ, ứng dụng công nghệ mới. Đảm bảo an toàn hệ thống, kiểm soát gian lận, ngăn chặn
+                các hành vi phá hoại tài khoản người dùng, giả mạo thông tin. Đáp ứng các nghĩa vụ báo cáo, lưu trữ hồ
+                sơ, kiểm toán, tuân thủ quy định pháp luật. Hợp tác, cung cấp dữ liệu cho cơ quan nhà nước có thẩm quyền
+                khi có yêu cầu theo đúng quy định pháp luật. </p>
+        </div>
+
+        <div class="policy-card" id="usage">
+            <h3><i class="bi bi-share"></i> Phạm vi sử dụng dữ liệu cá nhân</h3>
+            <p> F-Cine cam kết chỉ sử dụng dữ liệu cá nhân của khách hàng cho các mục đích nêu trên, không tiết lộ,
+                chuyển giao, bán, cho thuê hoặc chia sẻ dữ liệu cá nhân của khách hàng cho bất kỳ bên thứ ba nào khác
+                ngoài phạm vi đã được khách hàng đồng ý, trừ các trường hợp sau. Chia sẻ dữ liệu cho các đối tác thực
+                hiện dịch vụ thanh toán, ngân hàng, cổng thanh toán, ví điện tử, đơn vị vận chuyển, lưu trữ đám mây, nhà
+                cung cấp giải pháp công nghệ, đơn vị bảo trì kỹ thuật, đối tác marketing, đơn vị kiểm toán, tư vấn pháp
+                lý để phục vụ hoạt động vận hành hợp pháp của F-Cine. Cung cấp thông tin theo yêu cầu của cơ quan quản
+                lý nhà nước có thẩm quyền theo quy định pháp luật. Chia sẻ dữ liệu trong trường hợp sáp nhập, mua bán,
+                chuyển nhượng doanh nghiệp, tái cấu trúc hoặc giải thể theo quy định pháp luật, đảm bảo quyền lợi khách
+                hàng được bảo vệ tương đương chính sách hiện tại. </p>
+        </div>
+
+        <div class="policy-card" id="storage">
+            <h3><i class="bi bi-archive"></i> Thời gian lưu trữ dữ liệu cá nhân</h3>
+            <p> Dữ liệu cá nhân của khách hàng sẽ được F-Cine lưu trữ trong suốt thời gian khách hàng còn duy trì tài
+                khoản và sử dụng dịch vụ tại hệ thống. Sau khi chấm dứt hợp đồng dịch vụ hoặc khi khách hàng yêu cầu xóa
+                dữ liệu, F-Cine sẽ thực hiện hủy hoặc ẩn danh hóa dữ liệu cá nhân theo đúng quy định pháp luật. Một số
+                dữ liệu nhất định có thể tiếp tục được lưu trữ theo thời hạn bắt buộc để phục vụ mục đích kiểm toán,
+                thuế, lưu trữ hồ sơ, phòng ngừa tranh chấp pháp lý. </p>
+        </div>
+
+        <div class="policy-card" id="rights">
+            <h3><i class="bi bi-shield-check"></i> Quyền của khách hàng</h3>
+            <p> Khách hàng có đầy đủ các quyền hợp pháp đối với dữ liệu cá nhân của mình, bao gồm quyền được biết về
+                hoạt động xử lý dữ liệu cá nhân, quyền đồng ý hoặc không đồng ý cho phép xử lý dữ liệu cá nhân, quyền
+                truy cập, chỉnh sửa, cập nhật dữ liệu cá nhân, quyền rút lại sự đồng ý đối với việc xử lý dữ liệu, quyền
+                yêu cầu xóa dữ liệu cá nhân khi không còn cần thiết, quyền hạn chế việc xử lý dữ liệu cá nhân, quyền yêu
+                cầu cung cấp bản sao dữ liệu cá nhân của mình, quyền phản đối việc xử lý dữ liệu cho mục đích tiếp thị,
+                quảng cáo, quyền khiếu nại, tố cáo, khởi kiện khi có vi phạm về bảo vệ dữ liệu, quyền yêu cầu bồi thường
+                thiệt hại nếu có thiệt hại xảy ra do vi phạm bảo mật dữ liệu, quyền tự bảo vệ quyền lợi của mình theo
+                quy định pháp luật. </p>
+        </div>
+
+        <div class="policy-card" id="obligation">
+            <h3><i class="bi bi-person-badge"></i> Nghĩa vụ của khách hàng</h3>
+            <p> Khách hàng có trách nhiệm cung cấp thông tin chính xác, trung thực khi đăng ký dịch vụ. Khách hàng có
+                nghĩa vụ bảo mật thông tin tài khoản đăng nhập, mật khẩu, mã xác thực. Khách hàng cần kịp thời thông báo
+                cho F-Cine khi phát hiện có rò rỉ dữ liệu, xâm phạm quyền riêng tư hoặc các hành vi sử dụng tài khoản
+                trái phép. Khách hàng cần thường xuyên cập nhật thông tin cá nhân khi có thay đổi. Khách hàng có trách
+                nhiệm cung cấp tài liệu chứng minh quyền đại diện hợp pháp trong trường hợp đăng ký tài khoản thay cho
+                người khác. Khách hàng cần tuân thủ các quy định pháp luật về bảo vệ dữ liệu cá nhân khi cung cấp thông
+                tin của bên thứ ba. </p>
+        </div>
+
+        <div class="policy-card" id="transfer">
+            <h3><i class="bi bi-globe"></i> Chuyển dữ liệu cá nhân ra nước ngoài</h3>
+            <p> Trong một số trường hợp cần thiết, dữ liệu cá nhân của khách hàng có thể được chuyển giao, lưu trữ, xử
+                lý tại máy chủ đặt ngoài lãnh thổ Việt Nam theo hợp đồng, thỏa thuận bảo mật phù hợp với quy định pháp
+                luật. F-Cine cam kết áp dụng đầy đủ biện pháp bảo vệ dữ liệu cá nhân khi thực hiện chuyển dữ liệu ra
+                nước ngoài, đảm bảo an toàn tuyệt đối cho khách hàng. </p>
+        </div>
+
+        <div class="policy-card" id="security">
+            <h3><i class="bi bi-lock"></i> Biện pháp bảo mật dữ liệu cá nhân</h3>
+            <p> F-Cine xây dựng hệ thống chính sách, quy trình, công nghệ bảo mật dữ liệu cá nhân bao gồm xây dựng quy
+                định bảo vệ dữ liệu áp dụng nội bộ, phân quyền truy cập dữ liệu chặt chẽ, sử dụng hệ thống bảo mật mạng,
+                mã hóa dữ liệu, sao lưu định kỳ, lưu trữ nhật ký toàn bộ hoạt động xử lý dữ liệu, kiểm tra bảo mật hệ
+                thống định kỳ, áp dụng các công nghệ xác thực đăng nhập, kiểm soát truy cập, giám sát an ninh, xử lý
+                nghiêm các sự cố vi phạm dữ liệu, thông báo kịp thời cho cơ quan chức năng và khách hàng. </p>
+        </div>
+
+        <div class="policy-card" id="risk">
+            <h3><i class="bi bi-exclamation-triangle"></i> Hậu quả và thiệt hại không mong muốn</h3>
+            <p> F-Cine luôn nỗ lực áp dụng các biện pháp bảo mật tốt nhất để bảo vệ dữ liệu cá nhân, tuy nhiên vẫn có
+                những rủi ro khách quan như tấn công mạng, sự cố an ninh thông tin ngoài tầm kiểm soát. Trong mọi trường
+                hợp, khi xảy ra vi phạm, F-Cine sẽ phối hợp kịp thời với cơ quan chức năng để xử lý, khắc phục và giảm
+                thiểu thiệt hại cho khách hàng. </p>
+        </div>
+
+        <div class="policy-card" id="contact">
+            <h3><i class="bi bi-telephone"></i> Thông tin liên hệ quản lý dữ liệu</h3>
+            <p>Đơn vị quản lý dữ liệu cá nhân: Công ty TNHH F-Cine Việt Nam</p>
+            <p>Địa chỉ: xxx</p>
+            <p>Điện thoại: xxx</p>
+            <p>Email: xxx</p>
+        </div>
+
+        <div class="policy-card" id="effect">
+            <h3><i class="bi bi-calendar-check"></i> Hiệu lực và sửa đổi chính sách</h3>
+            <p>Chính sách bảo mật dữ liệu cá nhân có hiệu lực kể từ ngày công bố. F-Cine có quyền điều chỉnh, bổ sung và
+                sẽ cập nhật công khai trên website, ứng dụng và hệ thống rạp.</p>
+        </div>
+
+        <div class="final-note">
+            F-CINE CAM KẾT BẢO VỆ DỮ LIỆU KHÁCH HÀNG TOÀN DIỆN - MINH BẠCH - TUYỆT ĐỐI AN TOÀN!
+        </div>
+
+    </div>
+    <div id="scrollToTop">
+        <img src="/images/Postk.png" alt="Pikachu" style="width: 40px; height: 40px;">
+    </div>
+    i class="bi bi-arrow-up"></i></div>
+    <div th:replace="homeLayout/footer :: footer"></div>
+    <script>
+        // Bắt toàn bộ click trên TOC
+        document.querySelectorAll(".toc a").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute("href").substring(1);
+                const card = document.getElementById(targetId);
+                if (card) {
+                    const rect = card.getBoundingClientRect();
+                    const offset = rect.top + window.scrollY - (window.innerHeight / 2) + (rect.height / 2);
+                    window.scrollTo({ top: offset, behavior: 'smooth' });
+
+                    card.classList.add("highlight");
+                    setTimeout(() => card.classList.remove("highlight"), 2000);
+                }
+            });
+        });
+
+    </script>
+    <script>
+        const scrollBtn = document.getElementById("scrollToTop");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                scrollBtn.style.display = "flex";
+            } else {
+                scrollBtn.style.display = "none";
+            }
+        });
+
+        scrollBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+    </script>
+
+
+</body>
+
+</html>

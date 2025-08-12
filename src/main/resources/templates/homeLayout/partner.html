@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đối tác & Đánh giá - F-Cine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/variables.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" th:href="@{/css/components.css}" />
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #111; color: #eee; scroll-behavior: smooth; }
+        .header-section { background-color: #b71c1c; color: #fff; padding: 20px 0; text-align: center; }
+        .header-section h1 { font-weight: 700; font-size: 42px; }
+        .content-container { max-width: 1000px; margin: 50px auto; background: #222; padding: 40px; border-radius: 15px; box-shadow: 0 0 25px rgba(0,0,0,0.5); }
+        .content-container p { font-size: 18px; line-height: 1.7; }
+        .review-section { max-width: 700px; margin: 50px auto; background: #222; padding: 40px; border-radius: 15px; box-shadow: 0 0 25px rgba(0,0,0,0.5); }
+        .review-section label { margin-top: 15px; font-weight: 500; }
+        .review-section input, .review-section textarea { background-color: #333; color: #eee; border: none; border-radius: 8px; padding: 12px; }
+        .review-section input:focus, .review-section textarea:focus { background-color: #444; color: #fff; }
+        .review-section button { margin-top: 20px; padding: 12px 30px; font-weight: 600; border-radius: 8px; }
+        footer { background-color: #222; color: #aaa; padding: 20px 0; text-align: center; margin-top: 50px; }
+        #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: #fff; border: 3px solid #ffcb05; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; display: none; }
+        #backToTop:hover { transform: scale(1.15); box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+        #backToTop img { width: 40px; height: 40px; }
+    </style>
+</head>
+
+<body>
+<div th:replace="homeLayout/header :: header"></div>
+
+<div style="padding-top: 130px" class="header-section">
+    <h1><i class="bi bi-people"></i> Thông tin Đối Tác - F-Cine</h1>
+</div>
+
+<div class="content-container">
+    <p style="color: yellow">Kính gửi Quý Đối Tác,</p>
+    <p>   Đầu tiên, chúng tôi đánh giá cao vai trò của Quý Đối Tác trong việc cung cấp các sản phẩm và dịch vụ chất lượng cao với giá cả phải chăng. Vai trò của Quý Đối Tác rất quan trọng đối với sự thành công của chúng tôi trong việc hoàn thành các mục tiêu kinh doanh.</p>
+    <p>   Để giữ vững vị thế là doanh nghiệp hàng đầu trong ngành điện ảnh Việt Nam, F-Cine không chỉ chú trọng đến dịch vụ đẳng cấp mà còn cam kết tuân thủ mọi luật lệ và quy định hiện hành của Việt Nam cũng như Giá trị cốt lõi của chúng tôi. Để đạt được điều đó, chúng tôi kỳ vọng rằng Quý Đối Tác sẵn sàng duy trì các Giá trị cốt lõi của chúng tôi về đạo đức và tính chính trực. F-Cine đã xây dựng Bộ Quy tắc Ứng xử dành cho Nhà Cung Cấp để trình bày rõ những kỳ vọng của chúng tôi về sự liêm chính trong kinh doanh, quyền lợi người lao động, sức khỏe và an toàn, và quản lý môi trường. Chúng tôi mong muốn Quý Đối Tác đáp ứng các tiêu chuẩn và thúc đẩy các nguyên tắc được nêu trong Bộ quy tắc này, nhằm thúc đẩy cam kết của F-Cine đối với tất cả các khía cạnh về tính bền vững.</p>
+    <p>   Nếu Quý Đối Tác có bất kỳ thắc mắc nào về các vấn đề đạo đức hoặc phát hiện hành vi vi phạm Quy tắc Ứng xử, vui lòng liên hệ ngay với chúng tôi:</p>
+    <ul>
+        <li style="color: yellow">Email: contact@fcine.vn</li>
+        <li style="color: yellow" >Gửi thư đến: Bộ phận Kiểm soát nội bộ – F-Cine Việt Nam, Tòa nhà F-Cine Center, TP. Hồ Chí Minh</li>
+    </ul>
+    <p><strong>Chúng tôi trân trọng chuyên môn, sản phẩm và dịch vụ mà Quý Đối Tác đã cung cấp đến F-Cine. Cảm ơn Quý Đối Tác vì những nỗ lực trong việc đáp ứng các yêu cầu kinh doanh của chúng tôi với sự chính trực không khoan nhượng.</p>
+</div>
+
+
+<div th:replace="homeLayout/footer :: footer"></div>
+
+<div id="backToTop">
+    <img src="/images/Postk.png" alt="Back to Top">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const scrollBtn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) { scrollBtn.style.display = "flex"; }
+        else { scrollBtn.style.display = "none"; }
+    });
+    scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
+</body>
+</html>

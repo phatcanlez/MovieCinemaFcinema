@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FCINE - Schedule by Date</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" th:href="@{/css/admin/schedule-movie.css}" />
+    <link rel="stylesheet" th:href="@{/css/admin/admin-mainlayout.css}" />
+  </head>
+
+  <body>
+    <div class="d-flex">
+      <!-- Sidebar (navbar) được thay thế bằng Thymeleaf fragment -->
+      <div
+        th:replace="~{adminLayout/navbar :: adminNavbar(activePage='schedules')}"
+      ></div>
+
+      <!-- Phần nội dung chính (main-content) -->
+      <div class="main-content p-4">
+        <h2 class="text-danger">
+          <i class="fas fa-calendar me-2"></i>Schedule by Date
+        </h2>
+        <!-- Modern Schedule Container -->
+        <div class="modern-schedule-wrapper">
+          <div class="controls p-4">
+            <label for="date-input">Choose date:</label>
+            <input type="date" id="date-input" />
+            <label for="room-search">Search room:</label>
+            <input
+              type="text"
+              id="room-search"
+              placeholder="Enter room name..."
+            />
+          </div>
+
+          <div class="schedule-container">
+            <div class="canvas-wrapper">
+              <canvas id="scheduleCanvas"></canvas>
+            </div>
+
+            <!-- Empty State -->
+            <div
+              class="schedule-empty"
+              id="scheduleEmpty"
+              style="display: none"
+            >
+              <div class="empty-icon">
+                <i class="fas fa-calendar-times"></i>
+              </div>
+              <h5>No schedules found</h5>
+              <p>There are no movie schedules for the selected date.</p>
+              <button class="btn-add-schedule" onclick="addNewSchedule()">
+                <i class="fas fa-plus me-2"></i>
+                Add New Schedule
+              </button>
+            </div>
+          </div>
+
+          <!-- Enhanced Modal -->
+          <!-- <div id="modal" class="modern-modal">
+            <div class="modal-container">
+              <div class="modal-header">
+                <h2 id="modalTitle" class="modal-title">
+                  <i class="fas fa-info-circle me-2"></i>
+                  Schedule Details
+                </h2>
+                <button
+                  class="modal-close-btn"
+                  onclick="document.getElementById('modal').style.display = 'none'"
+                  aria-label="Close Modal"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+
+              <div class="modal-body">
+                <div class="modal-content-section">
+                  <p id="modalContent" class="modal-description">Loading...</p>
+                </div>
+
+                <div class="time-info-section">
+                  <div class="time-info">
+                    <div class="time-item">
+                      <i class="fas fa-play me-2"></i>
+                      <span class="time-label">Giờ bắt đầu:</span>
+                      <span id="startTime" class="time-value">--:--</span>
+                    </div>
+                    <div class="time-item">
+                      <i class="fas fa-stop me-2"></i>
+                      <span class="time-label">Giờ kết thúc:</span>
+                      <span id="endTime" class="time-value">--:--</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="seating-section">
+                  <div class="section-title">
+                    <i class="fas fa-couch me-2"></i>
+                    Seat Layout
+                  </div>
+                  <div class="seating-area" id="seat-table"></div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button
+                  class="btn-secondary"
+                  onclick="document.getElementById('modal').style.display = 'none'"
+                >
+                  <i class="fas fa-times me-2"></i>
+                  Close
+                </button>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <script th:src="@{/js/admin/schedule-movie.js}"></script>
+  </body>
+</html>

@@ -1,0 +1,253 @@
+/* --- General & Variables --- */
+:root {
+    /* Red & Black Theme */
+    --bg-color: #121212; /* Very dark background */
+    --card-bg-color: #1E1E1E; /* Slightly lighter card background */
+    --primary-color: #D32F2F; /* A strong, classic red */
+    --text-color: #EAEAEA; /* Off-white text for readability */
+    --text-muted-color: #888888; /* Muted gray for secondary text */
+    --border-color: #383838; /* Dark border color */
+
+    --seat-normal-bg: #5a5a5a; /* Neutral gray for normal seats */
+    --seat-normal-text: #FFFFFF;
+    --seat-vip-bg: var(--primary-color); /* VIP seats are primary red */
+    --seat-vip-text: #FFFFFF;
+    --seat-inactive-bg: #2a2a2a; /* Very dark gray for inactive seats */
+    --seat-inactive-text: #666666;
+    --screen-bg: #444444; /* Dark gray for the screen bar */
+
+    --font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                url('https://wallpapers.com/images/hd/movie-theater-background-3769-x-2513-ovahaaxkhqwgc8tk.jpg') center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    padding: 20px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* Alternative background options - uncomment to use */
+/*
+body.cinema-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                url('https://images.unsplash.com/photo-1489599446123-b9bc86ed8c19?ixlib=rb-4.0.3') center center;
+}
+
+body.theater-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                url('https://images.unsplash.com/photo-1596206070889-7c5ff81e8ad4?ixlib=rb-4.0.3') center center;
+}
+
+body.movie-bg {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?ixlib=rb-4.0.3') center center;
+}
+*/
+
+.card {
+    background-color: rgba(30, 30, 30, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Page Header --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+}
+
+.page-title span {
+    color: var(--primary-color);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted-color);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #ffffff;
+}
+
+.back-link .bi {
+    font-size: 1.25rem;
+}
+
+/* --- Controls Panel --- */
+#selectSchedule .form-label {
+    color: var(--text-muted-color);
+    font-weight: 500;
+}
+
+#selectSchedule .form-control,
+#selectSchedule .form-select {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#selectSchedule .form-control:focus,
+#selectSchedule .form-select:focus {
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(211, 47, 47, 0.25);
+}
+
+/* Style for date picker icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.8);
+    cursor: pointer;
+}
+
+/* --- Seat Map --- */
+.table-wrapper {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+table {
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 8px 14px; /* Increased vertical spacing */
+}
+
+/* --- New Cinema Seat Design --- */
+.table-wrapper .btn {
+    font-family: var(--font-family);
+    width: 45px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border-radius: 8px 8px 3px 3px;
+    position: relative;
+    /* Create 3D effect */
+    box-shadow: inset 0 -4px 5px rgba(0,0,0,0.3), 0 2px 3px rgba(0,0,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.table-wrapper .btn:hover:not(.inactive) {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: inset 0 -4px 5px rgba(0,0,0,0.3), 0 6px 10px rgba(0,0,0,0.4);
+}
+
+/* Seat coloring */
+.table-wrapper .btn.normal {
+    background: var(--seat-normal-bg);
+    color: var(--seat-normal-text);
+}
+
+.table-wrapper .btn.vip {
+    background: var(--seat-vip-bg);
+    color: var(--seat-vip-text);
+}
+
+.table-wrapper .btn.inactive {
+    background: var(--seat-inactive-bg);
+    color: var(--seat-inactive-text);
+    cursor: default;
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.2); /* Flatter shadow */
+}
+
+.table-wrapper .btn.inactive:hover {
+    transform: none;
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,0.2);
+}
+
+/* --- Legend --- */
+.legend {
+    width: 100%;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem 2rem;
+}
+
+.legend-title {
+    font-weight: 600;
+    margin-right: 1rem;
+}
+
+.legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.legend-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+
+.legend-color.normal { background-color: var(--seat-normal-bg); }
+.legend-color.vip { background-color: var(--seat-vip-bg); }
+.legend-color.inactive { background-color: var(--seat-inactive-bg); }
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .table-wrapper .btn {
+        width: 38px;
+        height: 34px;
+        font-size: 11px;
+        border-radius: 6px 6px 2px 2px;
+    }
+
+    table {
+        border-spacing: 5px 10px;
+    }
+}

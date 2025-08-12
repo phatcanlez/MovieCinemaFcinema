@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Thanh toán vé xem phim</title>
+</head>
+<body>
+<h1>Thanh toán vé xem phim</h1>
+<form action="/api/public/payment/initiate-momo" method="post">
+    <input type="hidden" name="invoiceId" th:value="${invoiceId}"/>
+    <input type="hidden" name="amount" th:value="${amount}"/>
+    <input type="hidden" name="orderInfo" th:value="${orderInfo}"/>
+    <p>Hóa đơn: <span th:text="${invoiceId}"></span></p>
+    <p>Số tiền: <span th:text="${amount}"></span> VNĐ</p>
+    <p>Thông tin: <span th:text="${orderInfo}"></span></p>
+    <button type="submit">Thanh toán qua MoMo</button>
+</form>
+</body>
+</html>

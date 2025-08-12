@@ -1,0 +1,69 @@
+/* Header chính */
+/* Logo */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #ff3b3b; /* đỏ nổi bật */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar-brand i {
+    font-size: 1.6rem;
+}
+
+/* Menu nav-link */
+.navbar-nav .nav-link {
+    color: #fff;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #ff3b3b; /* đổi đỏ khi hover hoặc active */
+}
+
+/* Các nút ở phải */
+.d-flex.gap-2 button {
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.35rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Nút đăng nhập: viền trắng, chữ trắng, nền trong suốt */
+.btn-outline-light {
+    color: #fff;
+    border-color: #fff;
+    background-color: transparent;
+}
+
+.btn-outline-light:hover {
+    color: #000;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+/* Nút vé của tôi: nền đỏ, chữ trắng */
+.btn-primary-custom {
+    background-color: #ff3b3b;
+    border: none;
+    color: #fff;
+}
+
+.btn-primary-custom:hover {
+    background-color: #e03131; /* đỏ đậm hơn khi hover */
+    color: #fff;
+}
+
+/* Ẩn menu toggle khi màn hình lớn */
+@media (min-width: 992px) {
+    .navbar-toggler {
+        display: none;
+    }
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câu hỏi thường gặp - F-Cine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111;
+            color: #eee;
+            scroll-behavior: smooth;
+        }
+        .header-section {
+
+            background-color: #b71c1c;
+            color: #fff;
+            padding: 140px 20px 30px;
+            text-align: center;
+        }
+        .header-section h1 {
+            font-weight: 700;
+            font-size: 40px;
+        }
+        .faq-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .accordion-item {
+            background-color: #222;
+            border: 1px solid #333;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        .accordion-button {
+            background-color: #222;
+            color: #fff;
+            font-weight: 500;
+            padding: 15px 20px;
+            font-size: 18px;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #333;
+            color: #ff3b3b;
+            box-shadow: none;
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+        }
+        .accordion-body {
+            background-color: #1a1a1a;
+            color: #ff3b3b;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        #backToTop { position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: #fff; border: 3px solid #ffcb05; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; display: none; }
+        #backToTop:hover { transform: scale(1.15); box-shadow: 0 10px 25px rgba(0,0,0,0.7); }
+        #backToTop img { width: 40px; height: 40px; }
+    </style>
+</head>
+<body>
+<div th:replace="homeLayout/header :: header"></div>
+<div class="header-section">
+    <h1><i class="bi bi-question-circle"></i> Câu hỏi thường gặp</h1>
+</div>
+<div class="faq-container">
+    <div class="accordion" id="faqAccordion">
+        <!-- BEGIN FAQuestions -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading1">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                    Làm sao để sử dụng quà tặng tháng sinh nhật?
+                </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Trong tháng sinh nhật, bạn sẽ nhận được thông báo kèm voucher quà tặng trong tài khoản thành viên. Để sử dụng, đăng nhập tài khoản, chọn ưu đãi tại mục "Ưu đãi của tôi" và làm theo hướng dẫn.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                    Làm thế nào để sử dụng quà tặng hạng thành viên?
+                </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Quà tặng thành viên được hệ thống tự động gửi khi bạn đạt hạng G-Star hoặc X-Star. Bạn có thể kiểm tra trong phần "Ưu đãi của tôi" sau khi đăng nhập tài khoản thành viên.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                    Tôi có thể dùng tài khoản thành viên của mình để mua vé nhóm được không?
+                </button>
+            </h2>
+            <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Có, bạn có thể dùng tài khoản cá nhân để mua nhiều vé trong một giao dịch. Tuy nhiên điểm thưởng chỉ được cộng cho tài khoản đặt vé.
+                </div>
+            </div>
+        </div>
+        <!-- Trích đoạn HTML giữ nguyên phần đầu và phần đã có sẵn -->
+        <!-- ... phần đầu giữ nguyên ... -->
+        <div class="accordion" id="faqAccordion">
+            <!-- Câu 1–3 đã có sẵn, ta nối thêm từ câu 4 trở đi -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading4">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                        Làm sao để đặt vé online?
+                    </button>
+                </h2>
+                <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Truy cập website hoặc ứng dụng F-Cine, đăng nhập tài khoản, chọn phim, suất chiếu và ghế. Sau đó tiến hành thanh toán online qua các phương thức như ví điện tử, thẻ ngân hàng, hoặc mã quà tặng.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading5">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                        Làm sao để khiếu nại hoặc góp ý với F-Cine?
+                    </button>
+                </h2>
+                <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Bạn có thể gửi phản hồi thông qua mục "Liên hệ" trên website hoặc email về support@fcine.vn. Ngoài ra, đội ngũ chăm sóc khách hàng tại rạp cũng luôn sẵn sàng tiếp nhận phản ánh.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading6">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                        Thanh toán online đã bị trừ tiền nhưng không nhận được mã đặt vé?
+                    </button>
+                </h2>
+                <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Trong trường hợp giao dịch thành công nhưng chưa nhận được mã vé, bạn vui lòng chụp lại biên lai/ảnh giao dịch và gửi về email CSKH để được hỗ trợ nhanh chóng.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading7">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                        Tôi có thể hủy hoặc thay đổi thông tin của vé đã mua online được không?
+                    </button>
+                </h2>
+                <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Rất tiếc, vé đã mua online không thể hoàn/hủy hoặc đổi suất chiếu theo chính sách chung. Vui lòng kiểm tra kỹ thông tin trước khi xác nhận thanh toán.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading8">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                        Vé liệt kê trên Website áp dụng cho đối tượng nào?
+                    </button>
+                </h2>
+                <div id="collapse8" class="accordion-collapse collapse" aria-labelledby="heading8" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Giá vé trên website là mức giá cơ bản, chưa bao gồm ưu đãi thành viên hoặc chương trình khuyến mãi riêng. Một số đối tượng như học sinh/sinh viên/ưu đãi người cao tuổi cần xác minh tại quầy vé.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading9">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                        Khi mua vé online tôi có được tích điểm hay không?
+                    </button>
+                </h2>
+                <div id="collapse9" class="accordion-collapse collapse" aria-labelledby="heading9" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Có, nếu bạn đã đăng nhập tài khoản trước khi thanh toán online thì điểm tích lũy (Stars) sẽ được cộng tự động vào tài khoản thành viên.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading10">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse10" aria-expanded="false" aria-controls="collapse10">
+                        Trường hợp tôi có nhiều tài khoản thành viên, tôi có thể tích các Star vào 1 tài khoản không?
+                    </button>
+                </h2>
+                <div id="collapse10" class="accordion-collapse collapse" aria-labelledby="heading10" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Hiện tại, hệ thống không hỗ trợ gộp điểm từ nhiều tài khoản. Bạn nên dùng 1 tài khoản chính xuyên suốt để đảm bảo quyền lợi tích lũy tốt nhất.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading11">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse11" aria-expanded="false" aria-controls="collapse11">
+                        Trường hợp để kiểm tra số lượng Stars trong tài khoản, tôi phải liên hệ ai?
+                    </button>
+                </h2>
+                <div id="collapse11" class="accordion-collapse collapse" aria-labelledby="heading11" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Bạn có thể tự kiểm tra số Stars còn lại tại trang "Tài khoản cá nhân" sau khi đăng nhập. Nếu có vấn đề phát sinh, hãy liên hệ bộ phận CSKH qua email hoặc hotline.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading12">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse12" aria-expanded="false" aria-controls="collapse12">
+                        Làm thế nào để sử dụng số Stars trong tài khoản?
+                    </button>
+                </h2>
+                <div id="collapse12" class="accordion-collapse collapse" aria-labelledby="heading12" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Khi đặt vé, bạn có thể chọn dùng Stars để đổi vé miễn phí hoặc combo ưu đãi. Lựa chọn "dùng Stars" sẽ xuất hiện ở bước thanh toán nếu đủ điều kiện.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading13">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse13" aria-expanded="false" aria-controls="collapse13">
+                        Làm thế nào để tích lũy Stars?
+                    </button>
+                </h2>
+                <div id="collapse13" class="accordion-collapse collapse" aria-labelledby="heading13" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Bạn cần đăng nhập tài khoản trước khi đặt vé hoặc mua combo tại rạp. Với mỗi 10.000 VNĐ chi tiêu, bạn sẽ được tích 1 Star.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading14">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse14" aria-expanded="false" aria-controls="collapse14">
+                        Tài khoản thành viên Star/G-Star/X-Star có gì khác nhau?
+                    </button>
+                </h2>
+                <div id="collapse14" class="accordion-collapse collapse" aria-labelledby="heading14" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Các hạng thành viên được phân theo tổng chi tiêu trong năm: Star (dưới 1 triệu), G-Star (1–3 triệu), X-Star (trên 3 triệu). Mỗi hạng đi kèm quyền lợi và ưu đãi riêng.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading15">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse15" aria-expanded="false" aria-controls="collapse15">
+                        Quyền lợi tương ứng của các hạng thành viên Star/G-Star/X-Star:
+                    </button>
+                </h2>
+                <div id="collapse15" class="accordion-collapse collapse" aria-labelledby="heading15" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        - Star: ưu đãi sinh nhật, tích điểm.<br>
+                        - G-Star: ưu đãi sinh nhật, tặng vé/thức ăn mỗi năm, ưu tiên đặt vé sớm.<br>
+                        - X-Star: tất cả lợi ích G-Star + vé mời sự kiện đặc biệt + hotline hỗ trợ riêng.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading16">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse16" aria-expanded="false" aria-controls="collapse16">
+                        Làm thế nào để duy trì hạn mức G-Star/X-Star?
+                    </button>
+                </h2>
+                <div id="collapse16" class="accordion-collapse collapse" aria-labelledby="heading16" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Tổng chi tiêu trong 12 tháng cần giữ ở mức tương ứng với từng hạng. Hệ thống sẽ đánh giá lại vào cuối mỗi năm để xác định hạng mới.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading17">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse17" aria-expanded="false" aria-controls="collapse17">
+                        Thẻ thành viên Star/G-Star/X-Star có hết hạn sử dụng không?
+                    </button>
+                </h2>
+                <div id="collapse17" class="accordion-collapse collapse" aria-labelledby="heading17" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Thẻ không có ngày hết hạn, tuy nhiên hạng thành viên sẽ được đánh giá lại mỗi năm để đảm bảo duy trì quyền lợi đúng mức.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="homeLayout/footer :: footer"></div>
+
+<div id="backToTop">
+    <img src="/images/Postk.png" alt="Back to Top">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const scrollBtn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) { scrollBtn.style.display = "flex"; }
+        else { scrollBtn.style.display = "none"; }
+    });
+    scrollBtn.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
+
+</body>
+</html>

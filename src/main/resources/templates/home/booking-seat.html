@@ -1,0 +1,77 @@
+<!--booking-seat.html-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seat Booking</title>
+    <style>
+        .container {
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+        .screen {
+            background: #ccc;
+            height: 40px;
+            margin: 20px 0;
+            text-align: center;
+            line-height: 40px;
+        }
+        .seat-container {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin: 20px;
+        }
+        .seat {
+            padding: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .seat.available {
+            background-color: #a0ff9d;
+        }
+        .seat.selected {
+            background-color: #7fb1ff;
+        }
+        .seat.booked {
+            background-color: #ff9d9d;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Seat Booking</h1>
+    <div class="screen">SCREEN</div>
+    <div class="seat-container" id="seatContainer"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const seatContainer = document.getElementById('seatContainer');
+        const rows = 5;
+        const seatsPerRow = 8;
+
+        for (let row = 0; row < rows; row++) {
+            for (let seat = 0; seat < seatsPerRow; seat++) {
+                const seatElement = document.createElement('div');
+                const seatNumber = row * seatsPerRow + seat + 1;
+                seatElement.className = 'seat available';
+                seatElement.textContent = `${String.fromCharCode(65 + row)}${seat + 1}`;
+
+                seatElement.addEventListener('click', function() {
+                    if (!this.classList.contains('booked')) {
+                        this.classList.toggle('selected');
+                        this.classList.toggle('available');
+                    }
+                });
+
+                seatContainer.appendChild(seatElement);
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+body {
+    background-color: #212529;
+    color: #fff;
+}
+
+.back-link {
+    color: #dc3545;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 2rem;
+}
+.back-link:hover {
+    color: #a71d2a;
+    text-decoration: none;
+}
+
+.modal-header {
+    justify-content: center;
+}
+
+.modal-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+.modal-content {
+    background-color: #2c2c2c;
+    max-width: 1400px;
+    width: 95%;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer a {
+    margin-right: 15px;
+}
+
+.btn-close-white {
+    filter: invert(1);
+}
+
+.room-info-panel {
+    background-color: #2c2c2c;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+.info-item {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    background-color: #343a40;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+}
+
+.legend-seat {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.legend-seat.standard {
+    background-color: #6c757d;
+}
+
+.legend-seat.vip {
+    background-color: #dc3545;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.instructions {
+    font-size: 13px;
+}
+
+.seat-layout-editor {
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    width: 100%;
+    padding: 25px;
+    background-color: #232323;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.screen-display {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.screen-label {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    width: 60%;
+    margin: 0 auto 25px auto;
+}
+
+.seats-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.editable-seat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.row-label {
+    width: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: #dc3545;
+    margin-right: 12px;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.editable-seat {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    position: relative;
+    display: inline-block;
+}
+
+.editable-seat.standard {
+    background-color: #6c757d;
+}
+
+.editable-seat.vip {
+    background-color: #dc3545;
+}
+
+.editable-seat.standard:hover {
+    background-color: #5a6268;
+    transform: scale(1.1);
+}
+
+.editable-seat.vip:hover {
+    background-color: #c82333;
+    transform: scale(1.1);
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    border-top: 1px solid #495057;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+    .modal-content {
+        max-width: 95%;
+    }
+
+    .modal-body {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .modal-content {
+        max-width: 98%;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .editable-seat {
+        width: 25px;
+        height: 25px;
+    }
+
+    .row-label {
+        width: 20px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 992px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col-md-3, .col-md-9 {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .room-info-panel {
+        position: static;
+        margin-bottom: 20px;
+    }
+
+    .seat-layout-editor {
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-body {
+        padding: 15px;
+    }
+
+    .editable-seat {
+        width: 22px;
+        height: 22px;
+    }
+
+    .seats-grid {
+        gap: 6px;
+    }
+
+    .editable-seat-row {
+        gap: 6px;
+    }
+
+    .screen-label {
+        width: 80%;
+        font-size: 12px;
+        padding: 6px 0;
+    }
+}

@@ -23,12 +23,12 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
         @Query("SELECT COUNT(b) FROM Booking b WHERE b.accountId = :accountId")
         Integer countBookingsByAccountId(@Param("accountId") String accountId);
 
-        @Query(value = "SELECT b FROM Booking b " +
-                        "WHERE b.accountId = :accountId AND b.promotionId = :promotionId " +
-                        "ORDER BY b.bookingDate DESC" +
-                        " LIMIT 1")
-        Booking findLatestBookingWithPromotion(@Param("accountId") String accountId,
-                        @Param("promotionId") String promotionId);
+    @Query(value = "SELECT b FROM Booking b " +
+            "WHERE b.accountId = :accountId AND b.promotionId = :promotionId AND b.status = 'SUCCESS'" +
+            "ORDER BY b.bookingDate DESC" +
+            " LIMIT 1")
+    Booking findLatestBookingWithPromotion(@Param("accountId") String accountId,
+                                           @Param("promotionId") String promotionId);
 
         @Query("SELECT new com.example.projectwebmovie.dto.TopCustomerDTO(" +
                         "a.accountId, a.fullName, a.email, a.phoneNumber, " +

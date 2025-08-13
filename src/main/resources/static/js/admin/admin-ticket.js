@@ -20,12 +20,12 @@ let totalStats = {
 let currentSearchTerm = '';
 let currentStatus = '';
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     const bookingTableBody = document.getElementById('bookingTableBody');
     const pagination = document.getElementById('pagination');
     const paginationContainer = document.getElementById('paginationContainer');
-    
+
     if (!bookingTableBody || !pagination || !paginationContainer) {
         console.error('Missing required DOM elements');
         return;
@@ -39,119 +39,120 @@ document.addEventListener('DOMContentLoaded', function() {
     const statusFilter = document.getElementById('statusFilter');
 
     if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
+        searchForm.addEventListener('submit', function (e) {
             e.preventDefault();
             applyFilters();
         });
     }
-    
+
     if (searchInput) {
-        searchInput.addEventListener('input', debounce(function() {
+        searchInput.addEventListener('input', debounce(function () {
             applyFilters();
         }, 500));
     }
-    
+
     if (statusFilter) {
-        statusFilter.addEventListener('change', function() {
+        statusFilter.addEventListener('change', function () {
             applyFilters();
         });
     }
-    
- 
+
+
 
     function applyFilters() {
         currentSearchTerm = searchInput ? searchInput.value.trim() : '';
         currentStatus = statusFilter ? statusFilter.value : '';
-        
+
         // Reset về trang đầu tiên khi thay đổi filter
         loadBookingsPage(0);
     }
 
     function loadBookingsPage(page) {
-    if (isLoading) return;
-    
-    console.log(`Loading bookings page ${page} with filters:`, {
-        search: currentSearchTerm,
-        status: currentStatus
-    });
+        if (isLoading) return;
 
-    isLoading = true;
-    
-    // Hiển thị loading
-    showLoadingState();
-
-    // Xây dựng URL với các tham số tìm kiếm và lọc
-    let url = `/api/booking/getAllBooking?page=${page}&size=${pageSize}`;
-    if (currentSearchTerm) url += `&search=${encodeURIComponent(currentSearchTerm)}`;
-    if (currentStatus) url += `&status=${encodeURIComponent(currentStatus)}`;
-    
-    fetch(url)
-        .then(response => {
-            // Kiểm tra response status trước
-            console.log('Response status:', response.status);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('API Response:', data);
-            
-            // Kiểm tra nếu data là string (error message)
-            if (typeof data === 'string' || (data && data.message)) {
-                const errorMessage = typeof data === 'string' ? data : data.message;
-                throw new Error(errorMessage || 'Unknown error occurred');
-            }
-            
-            // Cập nhật thông tin phân trang từ server
-            currentPage = data.currentPage !== undefined ? data.currentPage : page;
-            totalPages = data.totalPages || 0;
-            totalElements = data.totalCount || 0;
-            
-            // Validate pagination data
-            if (currentPage >= totalPages && totalPages > 0) {
-                console.warn(`Current page ${currentPage} >= totalPages ${totalPages}, adjusting...`);
-                currentPage = totalPages - 1;
-            }
-            
-            // Cập nhật thống kê tổng từ PagedBookingInAdmin
-            totalStats = {
-                total: data.totalCount || 0,
-                totalCompletedBookings: data.totalCompletedBookings || 0,
-                totalCancelledBookings: data.totalCancelledBookings || 0,
-                totalPendingBookings: data.totalPendingBookings || 0
-            };
-            
-            // Lưu data cho trang hiện tại
-            currentPageBookings = data.bookings || [];
-            
-            console.log(`Loaded page ${currentPage + 1}/${totalPages} with ${currentPageBookings.length} bookings, total: ${totalElements}`);
-            
-            // Cập nhật thống kê UI
-            updateTotalStatistics();
-            
-            // Hiển thị dữ liệu
-            displayBookings(currentPageBookings);
-            
-            // Cập nhật pagination
-            updatePagination();
-        })
-        .catch(error => {
-            console.error('Error loading bookings:', error);
-            showError(error.message || 'Unknown error occurred');
-        })
-        .finally(() => {
-            isLoading = false;
+        console.log(`Loading bookings page ${page} with filters:`, {
+            search: currentSearchTerm,
+            status: currentStatus
         });
-}
-    
+
+        isLoading = true;
+
+        // Hiển thị loading
+        showLoadingState();
+
+        // Xây dựng URL với các tham số tìm kiếm và lọc
+        let url = `/api/booking/getAllBooking?page=${page}&size=${pageSize}`;
+        if (currentSearchTerm) url += `&search=${encodeURIComponent(currentSearchTerm)}`;
+        if (currentStatus) url += `&status=${encodeURIComponent(currentStatus)}`;
+
+        fetch(url)
+            .then(response => {
+                // Kiểm tra response status trước
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('API Response:', data);
+
+                // Kiểm tra nếu data là string (error message)
+                if (typeof data === 'string' || (data && data.message)) {
+                    const errorMessage = typeof data === 'string' ? data : data.message;
+                    throw new Error(errorMessage || 'Unknown error occurred');
+                }
+
+                // Cập nhật thông tin phân trang từ server
+                currentPage = data.currentPage !== undefined ? data.currentPage : page;
+                totalPages = data.totalPages || 0;
+                totalElements = data.totalCount || 0;
+
+                // Validate pagination data
+                if (currentPage >= totalPages && totalPages > 0) {
+                    console.warn(`Current page ${currentPage} >= totalPages ${totalPages}, adjusting...`);
+                    currentPage = totalPages - 1;
+                }
+
+                // Cập nhật thống kê tổng từ PagedBookingInAdmin
+                totalStats = {
+                    total: data.totalCount || 0,
+                    totalCompletedBookings: data.totalCompletedBookings || 0,
+                    totalCancelledBookings: data.totalCancelledBookings || 0,
+                    totalPendingBookings: data.totalPendingBookings || 0
+                };
+
+                // Lưu data cho trang hiện tại
+                currentPageBookings = data.bookings || [];
+
+                console.log(`Loaded page ${currentPage + 1}/${totalPages} with ${currentPageBookings.length} bookings, total: ${totalElements}`);
+
+                // Cập nhật thống kê UI
+                updateTotalStatistics();
+
+                // Hiển thị dữ liệu
+                displayBookings(currentPageBookings);
+
+                // Cập nhật pagination
+                updatePagination();
+            })
+            .catch(error => {
+                console.error('Error loading bookings:', error);
+                showError(error.message || 'Unknown error occurred');
+            })
+            .finally(() => {
+                isLoading = false;
+            });
+    }
+
     function updateTotalStatistics() {
-    document.getElementById('totalBookings').textContent = totalStats.total.toLocaleString('vi-VN');
-    document.getElementById('pendingBookings').textContent = totalStats.totalPendingBookings.toLocaleString('vi-VN');
-    document.getElementById('completedBookings').textContent = totalStats.totalCompletedBookings.toLocaleString('vi-VN');
-    document.getElementById('cancelledBookings').textContent = totalStats.totalCancelledBookings.toLocaleString('vi-VN');
-    }   
+        document.getElementById('totalBookings').textContent = totalStats.total.toLocaleString('vi-VN');
+        document.getElementById('pendingBookings').textContent = totalStats.totalPendingBookings.toLocaleString('vi-VN');
+        document.getElementById('completedBookings').textContent = totalStats.totalCompletedBookings.toLocaleString('vi-VN');
+        document.getElementById('cancelledBookings').textContent = totalStats.totalCancelledBookings.toLocaleString('vi-VN');
+    }
     function displayBookings(bookings) {
+        console.log('🚀 ~ displayBookings ~ bookings:', bookings)
         const tableBody = document.getElementById('bookingTableBody');
         tableBody.innerHTML = '';
 
@@ -160,14 +161,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        bookings.forEach(booking => {
+        bookings.forEach((booking) => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${booking.bookingId}</td>
                 <td>${booking.movieName || 'N/A'}</td>
                 <td>${formatDate(booking.showDate)}</td>
                 <td>${formatTime(booking.showTime)}</td>
-                <td>${booking.roomName || 'N/A'}</td>
                 <td>${formatPrice(booking.totalPrice)}</td>
                 <td>
                     <span class="badge ${getStatusBadgeClass(booking.status)}">
@@ -184,33 +184,33 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             tableBody.appendChild(row);
         });
-        
+
         // Thêm event listeners cho các nút xem chi tiết
         document.querySelectorAll('.view-booking').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function () {
                 const bookingId = this.getAttribute('data-id');
                 viewBookingDetails(bookingId);
             });
         });
     }
-    
+
     function updatePagination() {
         const paginationElement = document.getElementById('pagination');
         const paginationContainer = document.getElementById('paginationContainer');
-        
+
         if (!paginationElement || !paginationContainer) {
             return;
         }
-        
+
         paginationElement.innerHTML = '';
-        
+
         if (totalPages <= 1) {
             paginationContainer.style.display = 'none';
             return;
         }
-        
+
         paginationContainer.style.display = 'block';
-        
+
         // Nút Previous
         const prevLi = document.createElement('li');
         prevLi.className = `page-item ${currentPage == 0 ? 'disabled' : ''}`;
@@ -219,42 +219,42 @@ document.addEventListener('DOMContentLoaded', function() {
         prevLink.href = '#';
         prevLink.textContent = 'Previous';
         if (currentPage > 0) {
-            prevLink.addEventListener('click', function(e) {
+            prevLink.addEventListener('click', function (e) {
                 e.preventDefault();
                 loadBookingsPage(currentPage - 1);
             });
         }
         prevLi.appendChild(prevLink);
         paginationElement.appendChild(prevLi);
-        
+
         // Quyết định trang nào hiển thị
         const pagesToShow = new Set();
-        
+
         // Luôn hiển thị trang đầu tiên
         pagesToShow.add(0);
-        
+
         // Luôn hiển thị trang cuối cùng
         pagesToShow.add(totalPages - 1);
-        
+
         // Hiển thị trang hiện tại
         pagesToShow.add(currentPage);
-        
+
         // Hiển thị trang trước trang hiện tại (nếu có)
         if (currentPage > 0) {
             pagesToShow.add(currentPage - 1);
         }
-        
+
         // Hiển thị trang sau trang hiện tại (nếu có)
         if (currentPage < totalPages - 1) {
             pagesToShow.add(currentPage + 1);
         }
-        
+
         // Sắp xếp các trang theo thứ tự tăng dần
         const sortedPages = Array.from(pagesToShow).sort((a, b) => a - b);
-        
+
         // Tạo các nút trang và dấu "..."
         let prevPage = -1;
-        
+
         for (const page of sortedPages) {
             // Nếu có khoảng cách giữa các trang, thêm dấu "..."
             if (prevPage !== -1 && page > prevPage + 1) {
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ellipsisLi.appendChild(ellipsisLink);
                 paginationElement.appendChild(ellipsisLi);
             }
-            
+
             // Tạo nút cho trang
             const pageLi = document.createElement('li');
             pageLi.className = `page-item ${currentPage == page ? 'active' : ''}`;
@@ -275,21 +275,21 @@ document.addEventListener('DOMContentLoaded', function() {
             pageLink.className = 'page-link';
             pageLink.href = '#';
             pageLink.textContent = page + 1; // Hiển thị số trang bắt đầu từ 1, không phải 0
-            
+
             // Thêm event listener chỉ khi không phải trang hiện tại
             if (currentPage != page) {
-                pageLink.addEventListener('click', function(e) {
+                pageLink.addEventListener('click', function (e) {
                     e.preventDefault();
                     loadBookingsPage(page);
                 });
             }
-            
+
             pageLi.appendChild(pageLink);
             paginationElement.appendChild(pageLi);
-            
+
             prevPage = page;
         }
-        
+
         // Nút Next
         const nextLi = document.createElement('li');
         nextLi.className = `page-item ${currentPage == totalPages - 1 ? 'disabled' : ''}`;
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
         nextLink.href = '#';
         nextLink.textContent = 'Next';
         if (currentPage < totalPages - 1) {
-            nextLink.addEventListener('click', function(e) {
+            nextLink.addEventListener('click', function (e) {
                 e.preventDefault();
                 loadBookingsPage(currentPage + 1);
             });
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const originalContent = viewButton.innerHTML;
             viewButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
             viewButton.disabled = true;
-            
+
             // Fetch ticket details from API
             fetch(`/api/booking/ticket-detail/${bookingId}`)
                 .then(response => {
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(booking => {
                     console.log('Booking details:', booking);
                     fillBookingModal(booking);
-                    
+
                     // Open modal
                     const modal = new bootstrap.Modal(document.getElementById('bookingDetailsModal'));
                     modal.show();
@@ -352,15 +352,15 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         document.getElementById('modalPaymentMethod').textContent = booking.paymentMethod || 'N/A';
         document.getElementById('modalTotalAmount').textContent = formatPrice(booking.totalAmount);
-        
+
         // Customer Information
-        document.getElementById('modalCustomerId').textContent = booking.customerId || 'N/A';
+        // document.getElementById('modalCustomerId').textContent = booking.customerId || 'N/A';
         document.getElementById('modalCustomerName').textContent = booking.customerName || 'N/A';
         document.getElementById('modalCustomerEmail').textContent = booking.customerEmail || 'N/A';
         document.getElementById('modalCustomerPhone').textContent = booking.customerPhone || 'N/A';
-        document.getElementById('modalCustomerPoints').textContent = 
+        document.getElementById('modalCustomerPoints').textContent =
             booking.memberPoints ? booking.memberPoints.toLocaleString('vi-VN') + ' points' : 'N/A';
-        
+
         // Ticket Information
         document.getElementById('modalMovie').textContent = booking.movieName || 'N/A';
         document.getElementById('modalShowDate').textContent = formatDate(booking.showDate);
@@ -370,17 +370,17 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('modalTicketPrice').textContent = formatPrice(booking.ticketPrice);
         document.getElementById('modalFoodPrice').textContent = formatPrice(booking.foodBeveragePrice);
         document.getElementById('modalDiscount').textContent = formatPrice(booking.discountAmount);
-        
+
         // Food & Beverage Details
         const foodList = document.getElementById('modalFoodList');
         foodList.innerHTML = '';
-        
+
         // Xóa nội dung promotion/points cũ
         const promotionPointsContainer = document.getElementById('promotionPointsContainer');
         if (promotionPointsContainer) {
             promotionPointsContainer.innerHTML = '';
         }
-        
+
         if (booking.combos && booking.combos.length > 0) {
             booking.combos.forEach(combo => {
                 const li = document.createElement('li');
@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             foodList.innerHTML = '<li class="text-muted"><i class="fas fa-info-circle me-2"></i>No food & beverage items</li>';
         }
-        
+
         // Promotion Information (if exists)
         if (booking.promotionCode && promotionPointsContainer) {
             const promoInfo = document.createElement('div');
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             promotionPointsContainer.appendChild(promoInfo);
         }
-        
+
         // Points Information (if used)
         if (booking.usedPoints && booking.usedPoints > 0 && promotionPointsContainer) {
             const pointsInfo = document.createElement('div');
@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </tr>
         `;
     }
-    
+
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {

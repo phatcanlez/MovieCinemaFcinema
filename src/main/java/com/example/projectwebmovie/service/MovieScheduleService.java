@@ -101,12 +101,13 @@ public class MovieScheduleService {
                         return start.isBefore(selectedEnd) && end.isAfter(selectedStart);
                     });
             boolean isOccupied = occupiedRanges.stream()
-                    .anyMatch(range -> start.isBefore(range.getEnd().plusMinutes(MINIMUM_GAP_BETWEEN_SCHEDULES))
+                    .anyMatch(range -> start.isBefore(range.getEnd().plusMinutes(BREAK_TIME))
                             && end.isAfter(range.getStart().minusMinutes(BREAK_TIME)));
 
             boolean conflicted = conflictedTimeRanges.stream()
-                    .anyMatch(range -> (!start.isBefore(range.getStart()) &&
-                            start.isBefore(range.getStart().plusMinutes(MINIMUM_GAP_BETWEEN_SCHEDULES))));
+                    .anyMatch(range -> start.isBefore(range.getEnd()) &&
+                            end.isAfter(range.getStart().minusMinutes(BREAK_TIME)));
+
             if ((isOccupied || conflicted || overlapsWithSelected) && !selected)
                 continue;
 
@@ -188,22 +189,17 @@ public class MovieScheduleService {
      * @return Danh sách các khoảng thời gian (start → end) mà phim này đã chiếu ở
      *         các phòng khác
      */
-    private List<TimeRange> getConflictedTimeRanges(String movieId, int currentRoomId, LocalDate showDate) {
-        // 1. Lấy tất cả các suất chiếu của phim này trong ngày, ở tất cả các phòng
-        List<MovieSchedule> allMovieSchedules = movieScheduleRepository
-                .findByMovie_MovieIdAndShowDates_ShowDate(movieId, showDate);
+    private List<TimeRange> getConflictedTimeRanges(String currentMovieId, int currentRoomId, LocalDate showDate) {
+        // Lấy toàn bộ suất chiếu trong cùng phòng và ngày
+        List<MovieSchedule> allSchedulesInRoom = movieScheduleRepository
+                .findByCinemaRoom_CinemaRoomIdAndShowDates_ShowDate(currentRoomId, showDate);
 
-        // 2. Lọc ra các suất chiếu không phải ở phòng hiện tại
-        List<MovieSchedule> otherRoomSchedules = allMovieSchedules.stream()
-                .filter(ms -> ms.getCinemaRoom().getCinemaRoomId() != currentRoomId)
-                .toList();
-
-        // 3. Tạo danh sách các khoảng thời gian bị chiếm bởi các suất chiếu ở phòng
-        // khác
-        return otherRoomSchedules.stream()
+        // Lọc ra các suất của phim khác (khác movieId hiện tại)
+        return allSchedulesInRoom.stream()
+                .filter(ms -> !ms.getMovie().getMovieId().equals(currentMovieId))
                 .map(ms -> {
                     LocalTime start = LocalTime.parse(ms.getSchedule().getScheduleTime());
-                    LocalTime end = start.plusMinutes(ms.getMovie().getDuration() + BREAK_TIME); // thời lượng + nghỉ
+                    LocalTime end = start.plusMinutes(ms.getMovie().getDuration() + BREAK_TIME);
                     return new TimeRange(start.toString(), end.toString());
                 })
                 .collect(Collectors.toList());
@@ -229,7 +225,8 @@ public class MovieScheduleService {
                 .filter(ms -> !ms.getMovie().getMovieId().equals(movieId))
                 .map(ms -> {
                     LocalTime start = LocalTime.parse(ms.getSchedule().getScheduleTime());
-                    LocalTime end = start.plusMinutes(ms.getMovie().getDuration() + BREAK_TIME); // fixed
+                    LocalTime end = start
+                            .plusMinutes(ms.getMovie().getDuration() + MINIMUM_GAP_BETWEEN_SCHEDULES); // fixed
                     return new TimeRange(start.toString(), end.toString());
                 })
                 .collect(Collectors.toList());

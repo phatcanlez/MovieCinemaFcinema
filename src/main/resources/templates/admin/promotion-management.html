@@ -211,14 +211,13 @@
                                             <label for="discountLevel" class="form-label">Discount Level (%)</label>
                                             <input type="number" class="form-control" id="discountLevel"
                                                 name="discountLevel" min="1" max="20" placeholder="1-20%" />
-                                            <div class="form-text">Discount percentage (1-20%)</div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="maxAmountForPercentDiscount" class="form-label">Maximum discount
                                                 amount (VNĐ)</label>
                                             <input type="number" class="form-control" id="maxAmountForPercentDiscount"
-                                                name="maxAmountForPercentDiscount" min="1000"
-                                                placeholder="Min 1.000đ" />
+                                                name="maxAmountForPercentDiscount" min="1000" max="100000"
+                                                placeholder="Min 1.000đ - Max 100.000đ" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -240,44 +239,46 @@
                                             <label for="discountAmount" class="form-label">Direct discount amount
                                                 (VNĐ)</label>
                                             <input type="number" class="form-control" id="discountAmount"
-                                                name="discountAmount" min="1000" placeholder="Min 1.000đ" />
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="usageLimitDirect" class="form-label">Maximum usage</label>
-                                            <input type="number" class="form-control" id="usageLimitDirect"
-                                                name="usageLimit" min="1"
-                                                placeholder="Number of times this promotion can be used" />
-                                        </div>
+                                                name="discountAmount" min="1000" max="100000"
+                                                placeholder="Min 1.000đ - Max 100.000đ" />
+                                        </div> />
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="usageLimitDirect" class="form-label">Maximum usage</label>
+                                        <input type="number" class="form-control" id="usageLimitDirect"
+                                            name="usageLimit" min="1"
+                                            placeholder="Number of times this promotion can be used" />
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="promotionImage" class="form-label">Promotion Image</label>
-                                    <input type="file" class="form-control" id="promotionImage" name="image"
-                                        accept="image/*" required />
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="detail" class="form-label">Detail</label>
-                                    <textarea class="form-control" id="detail" name="detail" rows="3"
-                                        placeholder="Enter Promotion Details" required></textarea>
-                                </div>
-                            </div>
-                            <input type="hidden" name="isActive" value="true" />
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="submit" class="btn btn-danger" id="savePromotionButton">
-                                    Save
-                                </button>
-                            </div>
-                        </form>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="promotionImage" class="form-label">Promotion Image</label>
+                            <input type="file" class="form-control" id="promotionImage" name="image" accept="image/*"
+                                required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="detail" class="form-label">Detail</label>
+                            <textarea class="form-control" id="detail" name="detail" rows="3"
+                                placeholder="Enter Promotion Details" required></textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" name="isActive" value="true" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-danger" id="savePromotionButton">
+                            Save
+                        </button>
+                    </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

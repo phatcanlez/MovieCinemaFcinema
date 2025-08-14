@@ -253,9 +253,6 @@ public class PromotionService {
 
         if (promotion.getUsageLimit() != null && promotion.getUsageLimit() <= 0) {
             throw new IllegalArgumentException("Mã khuyến mãi đã hết lượt sử dụng");
-        } else {
-            promotion.setUsageLimit(promotion.getUsageLimit() != null ? promotion.getUsageLimit() - 1 : null);
-            promotionRepository.save(promotion);
         }
 
         // Tính giá sau khi áp dụng khuyến mãi

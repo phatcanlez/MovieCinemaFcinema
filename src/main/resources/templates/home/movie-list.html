@@ -31,42 +31,45 @@
       <div id="now-showing" class="tab-content active">
         <div class="movies-grid">
           <!-- Hiển thị danh sách phim đang chiếu từ showingMovieList -->
-          <div th:each="movie : ${showingMovieList}" class="movie-card">
-            <div class="movie-poster-container">
-              <a th:href="@{'/movie-detail/' + ${movie.movieId}}">
-                <img
-                  th:src="${movie.smallImage != null ? movie.smallImage : 'https://via.placeholder.com/280x400/990000/ffffff?text=NO+IMAGE'}"
-                  th:alt="${movie.movieNameVn}" class="movie-poster" />
-              </a>
-              <!-- Rating Badge ở góc trên phải -->
-              <div class="rating-badge" th:if="${movie.rating != null}">
-                <span class="rating-score" th:text="${movie.rating}">8.5</span>
-                <span class="rating-max">/10</span>
+          <div th:each="movie : ${showingMovieList}">
+            <a th:href="@{'/movie-detail/' + ${movie.movieId}}" class="movie-card-link">
+              <div class="movie-card">
+                <div class="movie-poster-container">
+                  <img
+                    th:src="${movie.smallImage != null ? movie.smallImage : 'https://via.placeholder.com/280x400/990000/ffffff?text=NO+IMAGE'}"
+                    th:alt="${movie.movieNameVn}" class="movie-poster" />
+                  <!-- Rating Badge ở góc trên phải -->
+                  <div class="rating-badge" th:if="${movie.rating != null}">
+                    <span class="rating-score" th:text="${movie.rating}">8.5</span>
+                    <span class="rating-max">/10</span>
+                  </div>
+                  <!-- Hover overlay -->
+                  <div class="hover-overlay">
+                    <div class="overlay-content">
+                      <i class="bi bi-card-text"></i> Xem Chi Tiết
+                    </div>
+                  </div>
+                </div>
+                <div class="movie-info">
+                  <div class="movie-content">
+                    <h3 class="movie-title" th:text="${movie.movieNameVn}">
+                      Tên phim tiếng Việt
+                    </h3>
+                    <p class="movie-genre" th:text="${'Thể loại: ' +#strings.listJoin(movie.types, ', ')}">
+                      Thể loại phim
+                    </p>
+                    <p class="movie-duration" th:text="${'Thời lượng: ' +movie.duration + ' phút'}">
+                      Thời lượng phim
+                    </p>
+                    <!-- Cho tab sắp chiếu, thêm thông tin ngày khởi chiếu -->
+                    <p class="movie-release-date" th:if="${movie.fromDate}"
+                      th:text="${'Khởi chiếu: ' + movie.fromDate}">
+                      Ngày khởi chiếu
+                    </p>
+                  </div>
+                </div>
               </div>
-              <!-- Hover overlay với nút chi tiết -->
-              <div class="hover-overlay">
-                <a th:href="@{'/movie-detail/' + ${movie.movieId}}" class="detail-btn">
-                  <i class="bi bi-card-text"></i> Chi Tiết
-                </a>
-              </div>
-            </div>
-            <div class="movie-info">
-              <div class="movie-content">
-                <h3 class="movie-title" th:text="${movie.movieNameVn}">
-                  Tên phim tiếng Việt
-                </h3>
-                <p class="movie-genre" th:text="${'Thể loại: ' +#strings.listJoin(movie.types, ', ')}">
-                  Thể loại phim
-                </p>
-                <p class="movie-duration" th:text="${'Thời lượng: ' +movie.duration + ' phút'}">
-                  Thời lượng phim
-                </p>
-                <!-- Cho tab sắp chiếu, thêm thông tin ngày khởi chiếu -->
-                <p class="movie-release-date" th:if="${movie.fromDate}" th:text="${'Khởi chiếu: ' + movie.fromDate}">
-                  Ngày khởi chiếu
-                </p>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -80,42 +83,44 @@
       <div id="coming-soon" class="tab-content">
         <div class="movies-grid">
           <!-- Hiển thị danh sách phim sắp chiếu từ comingSoonMovieList -->
-          <div th:each="movie : ${upcomingMovieList}" class="movie-card">
-            <div class="movie-poster-container">
-              <a th:href="@{'/movie-detail/' + ${movie.movieId}}">
-                <img
-                  th:src="${movie.smallImage != null ? movie.smallImage : 'https://via.placeholder.com/280x400/990000/ffffff?text=NO+IMAGE'}"
-                  th:alt="${movie.movieNameVn}" class="movie-poster" />
-              </a>
-              <!-- Rating Badge ở góc trên phải -->
-              <div class="rating-badge" th:if="${movie.rating != null}">
-                <span class="rating-score" th:text="${movie.rating}">8.5</span>
-                <span class="rating-max">/10</span>
+          <div th:each="movie : ${upcomingMovieList}">
+            <a th:href="@{'/movie-detail/' + ${movie.movieId}}" class="movie-card-link">
+              <div class="movie-card">
+                <div class="movie-poster-container">
+                  <img
+                    th:src="${movie.smallImage != null ? movie.smallImage : 'https://via.placeholder.com/280x400/990000/ffffff?text=NO+IMAGE'}"
+                    th:alt="${movie.movieNameVn}" class="movie-poster" />
+                  <!-- Rating Badge ở góc trên phải -->
+                  <div class="rating-badge" th:if="${movie.rating != null}">
+                    <span class="rating-score" th:text="${movie.rating}">8.5</span>
+                    <span class="rating-max">/10</span>
+                  </div>
+                  <!-- Hover overlay -->
+                  <div class="hover-overlay">
+                    <div class="overlay-content">
+                      <i class="bi bi-card-text"></i> Xem Chi Tiết
+                    </div>
+                  </div>
+                </div>
+                <div class="movie-info">
+                  <div class="movie-content">
+                    <h3 class="movie-title" th:text="${movie.movieNameVn}">
+                      Tên phim tiếng Việt
+                    </h3>
+                    <p class="movie-genre" th:text="${#strings.listJoin(movie.types, ', ')}">
+                      Thể loại phim
+                    </p>
+                    <p class="movie-duration"
+                      th:text="${movie.duration != null ? movie.duration + ' phút' : 'Chưa xác định'}">
+                      Thời lượng phim
+                    </p>
+                    <p class="movie-release-date" th:text="${'Khởi chiếu: ' + movie.fromDate}">
+                      Ngày khởi chiếu
+                    </p>
+                  </div>
+                </div>
               </div>
-              <!-- Hover overlay với nút chi tiết -->
-              <div class="hover-overlay">
-                <a th:href="@{'/movie-detail/' + ${movie.movieId}}" class="detail-btn">
-                  <i class="bi bi-card-text"></i> Chi Tiết
-                </a>
-              </div>
-            </div>
-            <div class="movie-info">
-              <div class="movie-content">
-                <h3 class="movie-title" th:text="${movie.movieNameVn}">
-                  Tên phim tiếng Việt
-                </h3>
-                <p class="movie-genre" th:text="${#strings.listJoin(movie.types, ', ')}">
-                  Thể loại phim
-                </p>
-                <p class="movie-duration"
-                  th:text="${movie.duration != null ? movie.duration + ' phút' : 'Chưa xác định'}">
-                  Thời lượng phim
-                </p>
-                <p class="movie-release-date" th:text="${'Khởi chiếu: ' + movie.fromDate}">
-                  Ngày khởi chiếu
-                </p>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
 

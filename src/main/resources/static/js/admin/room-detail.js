@@ -82,7 +82,7 @@ function handleScheduleSelect() {
 
   const bgContainer = document.body;
   if (bgContainer && largeImg) {
-    bgContainer.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0,0,0,0.8)), url('${largeImg}')`;
+    bgContainer.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0,0,0,0.5)), url('${largeImg}')`;
     bgContainer.style.backgroundSize = "cover";
     bgContainer.style.backgroundPosition = "center";
   }
@@ -125,14 +125,18 @@ function genSeatMap(data) {
   for (const [row, seats] of nestedMap) {
     const rowElement = document.createElement("tr");
 
+    // Tạo ô th đầu hàng
+    const rowHeader = document.createElement("th");
+    const firstSeat = seats.values().next().value; // Lấy ghế đầu tiên của hàng
+    rowHeader.textContent = `${firstSeat.seatType ?? ""}`;
+    rowElement.appendChild(rowHeader);
+
     for (const [col, seat] of seats) {
       const seatElement = document.createElement("td");
       const seatButton = document.createElement("button");
 
       // Style loại ghế
-      seatButton.className = `btn ${
-        seat.seatType?.toUpperCase() === "VIP" ? "vip" : "normal"
-      }`;
+      seatButton.className = `btn ${seat.seatType?.toUpperCase() === "VIP" ? "vip" : "normal"}`;
 
       seatButton.textContent = seat.seatColumn + seat.seatRow;
       seatButton.value = seat.seatId;
@@ -145,9 +149,11 @@ function genSeatMap(data) {
 
       // Nếu ghế đã được đặt
       if (seat.seatStatus === 1) {
-        //seatButton.classList.add("occupied");
-        seatButton.style.border = "1px solid gold";
+        seatButton.style.background = "red"; // ghi đè gradient
+        seatButton.style.backgroundImage = "none";
+        seatButton.style.opacity = "0.5";
       }
+
       seatButton.disabled = true;
       seatElement.appendChild(seatButton);
       rowElement.appendChild(seatElement);
@@ -155,6 +161,7 @@ function genSeatMap(data) {
 
     seatTable.appendChild(rowElement);
   }
+
 }
 
 let nestedMap = new Map();
@@ -315,13 +322,17 @@ function renderSeatTable() {
 
   for (const [row, seats] of nestedMap) {
     const rowElement = document.createElement("tr");
+    const rowHeader = document.createElement("th");
+
+    // Hiển thị loại ghế của hàng (lấy từ ghế đầu tiên của hàng)
+    const firstSeatType = seats.values().next().value.seatType;
+    rowHeader.textContent = firstSeatType;
+    rowElement.appendChild(rowHeader);
 
     for (const [col, seat] of seats) {
       const seatElement = document.createElement("td");
       const seatButton = document.createElement("button");
-      seatButton.className = `btn ${
-        seat.seatType === "VIP" ? "vip" : "normal"
-      }`;
+      seatButton.className = `btn ${seat.seatType === "VIP" ? "vip" : "normal"}`;
       seatButton.textContent = seat.seatColumn + seat.seatRow;
       seatButton.value = seat.seatColumn + seat.seatRow;
 
@@ -339,6 +350,7 @@ function renderSeatTable() {
     }
     seatTable.appendChild(rowElement);
   }
+
 }
 
 /* ---------- Đổi loại ghế trong một hàng ---------- */

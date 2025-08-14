@@ -1,6 +1,7 @@
 package com.example.projectwebmovie.service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -246,7 +247,7 @@ public class PromotionService {
         }
 
         // Kiểm tra promotion có hiệu lực không
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
         if (!promotion.getIsActive() || now.isBefore(promotion.getStartTime()) || now.isAfter(promotion.getEndTime())) {
             throw new IllegalArgumentException("Mã khuyến mãi đã hết hạn hoặc chưa có hiệu lực");
         }

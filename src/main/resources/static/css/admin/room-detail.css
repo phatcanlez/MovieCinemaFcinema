@@ -172,8 +172,7 @@ table {
 }
 
 .table-wrapper .btn.vip {
-    background: var(--seat-vip-bg);
-    color: var(--seat-vip-text);
+    background: linear-gradient(145deg, #f59e0b, #fbbf24);
 }
 
 .table-wrapper .btn.inactive {
@@ -229,8 +228,9 @@ table {
 }
 
 .legend-color.normal { background-color: var(--seat-normal-bg); }
-.legend-color.vip { background-color: var(--seat-vip-bg); }
+.legend-color.vip { background: linear-gradient(145deg, #f59e0b, #fbbf24); }
 .legend-color.inactive { background-color: var(--seat-inactive-bg); }
+.legend-color.booked { background-color: var(--seat-vip-bg); }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {

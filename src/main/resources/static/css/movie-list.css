@@ -91,6 +91,19 @@
             align-items: start; /* Căn chỉnh từ trên xuống */
         }
 
+        .movie-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .movie-card-link:hover {
+            transform: translateY(-10px);
+            text-decoration: none;
+            color: inherit;
+        }
+
         .movie-card {
             background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
             border-radius: 15px;
@@ -98,6 +111,10 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 0, 0, 0.2);
             position: relative;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             display: flex;
             flex-direction: column;
             height: 80%; /* Đảm bảo tất cả card có chiều cao bằng nhau */
@@ -137,12 +154,11 @@
             opacity: 1;
         }
 
-        .detail-btn {
+        .overlay-content {
             background: linear-gradient(45deg, #ff0000, #cc0000);
             color: white;
             padding: 12px 24px;
             border-radius: 25px;
-            text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
             transform: translateY(10px);
@@ -153,16 +169,14 @@
             gap: 8px;
         }
 
-        .movie-card:hover .detail-btn {
+        .movie-card:hover .overlay-content {
             transform: translateY(0);
         }
 
-        .detail-btn:hover {
+        .movie-card-link:hover .overlay-content {
             background: linear-gradient(45deg, #cc0000, #990000);
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 6px 20px rgba(255, 0, 0, 0.5);
-            color: white;
-            text-decoration: none;
         }
 
         /* Rating badge */
@@ -205,12 +219,12 @@
         }
 
         .movie-card:hover {
-            transform: translateY(-8px);
+            transform: none; /* Bỏ transform vì đã có ở movie-card-link */
             box-shadow: 0 15px 40px rgba(255, 0, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.2);
             border-color: #ff0000;
         }
 
-        .movie-card:hover .movie-poster {
+        .movie-card-link:hover .movie-poster {
             transform: scale(1.05);
         }
 

@@ -166,6 +166,7 @@ public class BookingService {
             baseTotalPrice = 0;
 
         // Apply promotion (if any) at the end
+        // Apply promotion (if any) at the end
         double finalTotalPrice = baseTotalPrice;
         String promotionId = form.getPromotionId(); // Assuming promotionId is added to BookingRequestDTO
         if (promotionId != null && !promotionId.isEmpty()) {

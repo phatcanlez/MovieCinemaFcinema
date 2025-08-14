@@ -388,6 +388,8 @@ public class BookingService {
                 .orElseThrow(() -> new RuntimeException("No payment found for booking: " + bookingId));
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Đơn hàng không tồn tại"));
+        Promotion promotion = promotionRepository.findById(booking.getPromotionId())
+                .orElseThrow(() -> new RuntimeException("Promotion not found for booking: " + bookingId));
         // Kiểm tra trạng thái của booking và payment
         if (booking == null || payment == null) {
             throw new RuntimeException("Booking or payment not found for bookingId: " + bookingId);
@@ -398,6 +400,13 @@ public class BookingService {
             }
         }
 
+        if (promotion != null) {
+            promotion.setUsageLimit(promotion.getUsageLimit() - 1);
+            if (promotion.getUsageLimit() <= 0) {
+                promotion.setIsActive(false); // Deactivate promotion if usage limit reached
+            }
+            promotionRepository.save(promotion);
+        }
         payment.setPaymentMethod(
                 paymentMethod != null ? PaymentMethod.valueOf(paymentMethod) : payment.getPaymentMethod());
         payment.setStatus(PaymentStatus.SUCCESS.toString());

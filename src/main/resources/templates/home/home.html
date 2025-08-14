@@ -374,11 +374,11 @@
       gap: 10px;
     ">
       <div style="color: #fff; font-weight: bold">Gợi ý nhanh:</div>
-      <button class="fc-chat-button" onclick="handleSuggestion('Trailer phim M3GAN 2.0')">
-        Trailer phim M3GAN 2.0
+      <button class="fc-chat-button" onclick="handleSuggestion('Trailer phim MANG MẸ ĐI BỎ')">
+        Trailer phim MANG MẸ ĐI BỎ
       </button>
-      <button class="fc-chat-button" onclick="handleSuggestion('Phim của đạo diễn Victor Vũ')">
-        Phim của đạo diễn Victor Vũ
+      <button class="fc-chat-button" onclick="handleSuggestion('Phim của đạo diễn Kung Siu Ping')">
+        Phim của đạo diễn Kung Siu Ping
       </button>
       <button class="fc-chat-button" onclick="handleSuggestion('Lịch phim hôm nay')">
         Lịch phim hôm nay
@@ -400,19 +400,19 @@
   <script th:src="@{/js/combo-carousel.js}"></script>
   <!-- Thêm vào cuối phần <body> trước các script khác -->
   <script th:inline="javascript">
-      document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       /*<![CDATA[*/
       var needsProfileCompletion = /*[[${needsProfileCompletion}]]*/ false;
       var isNewGoogleUser = /*[[${isNewGoogleUser}]]*/ false;
       /*]]>*/
 
       if (needsProfileCompletion) {
-          var message = isNewGoogleUser
-              ? 'Chào mừng bạn đến với FCine! Vui lòng hoàn thiện thông tin cá nhân để có trải nghiệm tốt nhất.'
-              : 'Vui lòng hoàn thiện thông tin cá nhân để có thể sử dụng đầy đủ các tính năng.';
+        var message = isNewGoogleUser
+          ? 'Chào mừng bạn đến với FCine! Vui lòng hoàn thiện thông tin cá nhân để có trải nghiệm tốt nhất.'
+          : 'Vui lòng hoàn thiện thông tin cá nhân để có thể sử dụng đầy đủ các tính năng.';
 
-          // Tạo thông báo bootstrap
-          var alertHtml = `
+        // Tạo thông báo bootstrap
+        var alertHtml = `
               <div class="alert alert-warning alert-dismissible fade show position-fixed"
                    style="top: 80px; right: 20px; z-index: 1050; max-width: 400px;" role="alert">
                   <i class="bi bi-info-circle me-2"></i>
@@ -426,23 +426,23 @@
               </div>
           `;
 
-          // Thêm vào body
-          document.body.insertAdjacentHTML('beforeend', alertHtml);
+        // Thêm vào body
+        document.body.insertAdjacentHTML('beforeend', alertHtml);
 
-          // Manual close handler for the alert
-          document.querySelector('.alert .btn-close').addEventListener('click', function() {
-              document.querySelector('.alert').remove();
-          });
+        // Manual close handler for the alert
+        document.querySelector('.alert .btn-close').addEventListener('click', function () {
+          document.querySelector('.alert').remove();
+        });
 
-          // Tự động ẩn sau 10 giây
-          setTimeout(function() {
-              var alert = document.querySelector('.alert-warning');
-              if (alert) {
-                  alert.remove();
-              }
-          }, 10000);
+        // Tự động ẩn sau 10 giây
+        setTimeout(function () {
+          var alert = document.querySelector('.alert-warning');
+          if (alert) {
+            alert.remove();
+          }
+        }, 10000);
       }
-  });
+    });
   </script>
 </body>
 

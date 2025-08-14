@@ -175,13 +175,13 @@ public class BookingService {
             if (promotion.getIsActive() && LocalDateTime.now().isBefore(promotion.getEndTime())
                     && LocalDateTime.now().isAfter(promotion.getStartTime())) {
                 if (promotion.getDiscountAmount() != null) {
-                    finalTotalPrice -= promotion.getDiscountAmount();
+                    finalTotalPrice = baseTotalPrice - promotion.getDiscountAmount();
                 } else if (promotion.getDiscountLevel() != null) {
                     double discountAmount = baseTotalPrice * (promotion.getDiscountLevel() / 100.0);
                     if (promotion.getMaxAmountForPercentDiscount() != null) {
                         discountAmount = Math.min(discountAmount, promotion.getMaxAmountForPercentDiscount());
                     }
-                    finalTotalPrice -= discountAmount;
+                    finalTotalPrice = baseTotalPrice - discountAmount;
                 }
             }
         }

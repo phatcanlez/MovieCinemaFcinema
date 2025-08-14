@@ -137,7 +137,7 @@ public class AuthenService implements ApplicationListener<ContextRefreshedEvent>
             memberRepository.findById(member.getMemberId())
                     .orElseThrow(() -> new Exception("Không thể tìm thấy thành viên trong cơ sở dữ liệu sau khi lưu"));
             emailService.sendWelcomeEmail(savedAccount.getEmail(), savedAccount.getUsername(),
-                    "http://localhost:8081/auth/login", "Đăng nhập ngay");
+                    "https://fcinema-7f3f9.ondigitalocean.app/auth/login", "Đăng nhập ngay");
         } catch (Exception e) {
             logger.error("Error verifying saved data or sending email: {}", e.getMessage(), e);
             throw new Exception("Lỗi khi xác minh dữ liệu hoặc gửi email: " + e.getMessage());

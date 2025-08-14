@@ -166,7 +166,6 @@ public class BookingService {
             baseTotalPrice = 0;
 
         // Apply promotion (if any) at the end
-        // Apply promotion (if any) at the end
         double finalTotalPrice = baseTotalPrice;
         String promotionId = form.getPromotionId(); // Assuming promotionId is added to BookingRequestDTO
         if (promotionId != null && !promotionId.isEmpty()) {
@@ -175,7 +174,7 @@ public class BookingService {
             if (promotion.getIsActive() && LocalDateTime.now().isBefore(promotion.getEndTime())
                     && LocalDateTime.now().isAfter(promotion.getStartTime())) {
                 if (promotion.getDiscountAmount() != null) {
-                    finalTotalPrice = baseTotalPrice - promotion.getDiscountAmount();
+                    finalTotalPrice = Math.max(0, baseTotalPrice - promotion.getDiscountAmount());
                 } else if (promotion.getDiscountLevel() != null) {
                     double discountAmount = baseTotalPrice * (promotion.getDiscountLevel() / 100.0);
                     if (promotion.getMaxAmountForPercentDiscount() != null) {
@@ -306,9 +305,9 @@ public class BookingService {
                         booking.getBookingId());
                 result = payUrl; // Trả về URL để redirect đến MoMo
             } else if (form.getPaymentMethod() != null && form.getPaymentMethod() == PaymentMethod.CASH) { // Default to
-                                                                                                           // CASH or
-                                                                                                           // other
-                                                                                                           // methods
+                // CASH or
+                // other
+                // methods
                 payment.setStatus(PaymentStatus.SUCCESS.toString());
                 paymentRepository.save(payment);
                 booking.setStatus(BookingStatus.SUCCESS);
@@ -344,10 +343,10 @@ public class BookingService {
             if (form.getSeatsIds() != null) {
                 for (Integer seatId : form.getSeatsIds()) {
                     ScheduleSeat scheduleSeat = scheduleSeatRepository.findById(
-                            bookingSeatRepository.findByBookingId(booking.getBookingId()).stream()
-                                    .filter(bs -> bs.getScheduleSeat().getSeat().getSeatId().equals(seatId))
-                                    .findFirst().map(BookingSeat::getScheduleSeatId)
-                                    .orElseThrow(() -> new RuntimeException("Seat not found for rollback: " + seatId)))
+                                    bookingSeatRepository.findByBookingId(booking.getBookingId()).stream()
+                                            .filter(bs -> bs.getScheduleSeat().getSeat().getSeatId().equals(seatId))
+                                            .findFirst().map(BookingSeat::getScheduleSeatId)
+                                            .orElseThrow(() -> new RuntimeException("Seat not found for rollback: " + seatId)))
                             .orElseThrow();
                     if (scheduleSeat.getSeatStatus() == 1) {
                         scheduleSeat.setSeatStatus(0);
@@ -384,13 +383,32 @@ public class BookingService {
     }
 
     public Booking confirmPayment(String bookingId, String paymentMethod) {
+        //
+        System.out.println(
+                "Confirming payment for bookingId: " + bookingId + ", paymentMethod: " + paymentMethod
+        );
         Optional<Payment> paymentOpt = paymentRepository.findTopByBookingIdOrderByPaymentDateDesc(bookingId);
         Payment payment = paymentOpt
                 .orElseThrow(() -> new RuntimeException("No payment found for booking: " + bookingId));
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Đơn hàng không tồn tại"));
-        Promotion promotion = promotionRepository.findById(booking.getPromotionId())
-                .orElseThrow(() -> new RuntimeException("Promotion not found for booking: " + bookingId));
+
+
+
+
+        if (booking.getPromotionId() != null && !booking.getPromotionId().isEmpty()) {
+            System.out.println("Booking has promotion ID: " + booking.getPromotionId());
+            Promotion promotion = promotionRepository.findById(booking.getPromotionId())
+                    .orElseThrow(() -> new RuntimeException("Promotion not found for booking: " + bookingId));
+
+            if (promotion != null) {
+                promotion.setUsageLimit(promotion.getUsageLimit() != null ? promotion.getUsageLimit() - 1 : null);
+                promotionRepository.save(promotion);
+            }
+        } else {
+            System.out.println("Booking does not have a promotion ID.");
+        }
+
         // Kiểm tra trạng thái của booking và payment
         if (booking == null || payment == null) {
             throw new RuntimeException("Booking or payment not found for bookingId: " + bookingId);
@@ -401,13 +419,8 @@ public class BookingService {
             }
         }
 
-        if (promotion != null) {
-            promotion.setUsageLimit(promotion.getUsageLimit() - 1);
-            if (promotion.getUsageLimit() <= 0) {
-                promotion.setIsActive(false); // Deactivate promotion if usage limit reached
-            }
-            promotionRepository.save(promotion);
-        }
+
+
         payment.setPaymentMethod(
                 paymentMethod != null ? PaymentMethod.valueOf(paymentMethod) : payment.getPaymentMethod());
         payment.setStatus(PaymentStatus.SUCCESS.toString());
@@ -569,40 +582,24 @@ public class BookingService {
         // Chuyển đổi status từ String sang enum nếu cần
         String statusValue = null;
         if (status != null && !status.isEmpty()) {
-            try {
-                // Đảm bảo status được truyền vào đúng là một enum hợp lệ
-                BookingStatus.valueOf(status);
-                // Nếu không có exception, nghĩa là status hợp lệ, gán cho statusValue
-                statusValue = status;
-            } catch (IllegalArgumentException e) {
-                // Log lỗi và giữ statusValue là null
-                System.err.println("Invalid status value: " + status);
-            }
+            statusValue = status;
         }
 
+        // Search term trống thì set null
+        String searchTermValue = (searchTerm != null && !searchTerm.trim().isEmpty()) ? searchTerm.trim() : null;
+
+        // Lấy tổng số booking và phân trang
         Long totalCount = bookingRepository.countTotalBookings();
-
-        String searchTermValue = (searchTerm != null && !searchTerm.trim().isEmpty()) ? searchTerm.trim().toUpperCase()
-                : null;
-
-        List<Booking> bookings = bookingRepository.findBookingsWithFilters(
-                searchTermValue, statusValue, size, offset);
-
-        Long totalFound = totalCount;
-        if (searchTermValue != null || statusValue != null) {
-            // Sử dụng phương thức mới để đếm
-            totalFound = bookingRepository.countBookingsBySearchTermAndStatus(searchTermValue, statusValue);
-        }
-
-        int totalPages = (int) Math.ceil((double) totalFound / size);
-
-        System.out.println("Total Page: " + totalPages + " Total Found: " + totalFound);
+        int totalPages = (int) Math.ceil((double) totalCount / size);
 
         // Điều chỉnh page nếu vượt quá tổng số trang
         if (page >= totalPages && totalPages > 0) {
             page = totalPages - 1;
             offset = page * size;
         }
+
+        List<Booking> bookings = bookingRepository.findBookingsWithFilters(
+                searchTermValue, statusValue, size, offset);
 
         // Ánh xạ sang DTO
         List<BookingAdminDTO> bookingAdminDTOs = bookings.stream()
@@ -614,9 +611,9 @@ public class BookingService {
                             : null;
                     String roomName = booking.getSchedule() != null
                             && !booking.getSchedule().getMovieSchedules().isEmpty()
-                                    ? booking.getSchedule().getMovieSchedules().get(0).getCinemaRoom()
-                                            .getCinemaRoomName()
-                                    : "Unknown";
+                            ? booking.getSchedule().getMovieSchedules().get(0).getCinemaRoom()
+                            .getCinemaRoomName()
+                            : "Unknown";
                     String bookingStatus = booking.getStatus() != null ? booking.getStatus().name() : "UNKNOWN";
 
                     return new BookingAdminDTO(
@@ -719,6 +716,7 @@ public class BookingService {
                             bs.getScheduleSeat().getSeat().getSeatColumn())
                     .collect(Collectors.joining(", "));
             dto.setSeats(seats);
+
             // Calculate ticket price
             double ticketPrice = booking.getBookingSeats().stream()
                     .mapToDouble(bs -> bs.getScheduleSeat().getSeatPrice())

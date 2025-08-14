@@ -57,7 +57,7 @@ public class BookingController {
                 // totalseats, ghế
 
                 // Gửi email xác nhận đặt vé
-                emailService.sendPaymentConfirmationEmail(booking.getAccount().getEmail(), booking);
+//                emailService.sendPaymentConfirmationEmail(booking.getAccount().getEmail(), booking);
 
 
                 model.addAttribute("booking", booking);
